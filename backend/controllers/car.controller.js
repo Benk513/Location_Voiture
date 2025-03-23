@@ -49,9 +49,24 @@ export const getAllCars = async (req, res, next) => {
   });
 };
 
+// deleteVehicle	Supprimer un véhicule (propriétaire ou admin)	DELETE	/api/vehicles/:id
+export const deleteCarById = async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    // if (!car) return next(new AppError("La voiture n'existe pas", 404));
+    await Car.findByIdAndDelete(id);
+
+    res.status(204).json({
+      status: "success",
+      message: "le voiture a ete supprime avec success",
+      data: null,
+    });
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+};
 
 // updateVehicle	Modifier les informations d'un véhicule (propriétaire)	PUT	/api/vehicles/:id
-// deleteVehicle	Supprimer un véhicule (propriétaire ou admin)	DELETE	/api/vehicles/:id
 // searchVehicles	Rechercher des véhicules selon des filtres (ville, modèle, prix, etc.)	GET	/api/vehicles/search
 // uploadVehicleImages	Ajouter des images d'un véhicule	POST	/api/vehicles/:id/upload
 // getUserVehicles	Récupérer tous les véhicules d'un propriétaire	GET	/api/vehicles/user/:userId
