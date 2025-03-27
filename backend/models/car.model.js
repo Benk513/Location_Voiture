@@ -12,7 +12,7 @@ const carSchema = new mongoose.Schema(
       required: true,
     },
 
-    model: {
+    modele: {
       type: String,
     },
 
@@ -29,28 +29,32 @@ const carSchema = new mongoose.Schema(
       // ],
     },
 
-    plateNumber: {
+    numeroImmatriculation: {
       type: String,
     },
-    year: {
+    annee: {
       type: Number,
     },
-    location: {
+    kilometrage: {
+      type: Number,
+      required: [true, "Veuillez inscrire le kilometrage de votrre vehicule"],
+    },
+    adresse: {
       type: String,
     },
-    pricePerDay: {
+    prixParJour: {
       type: Number,
       required: [true, "Une voiture doit avoir un tarif journalier"],
     },
     transmission: {
       type: String,
     },
-    fuelType: {
+    carburant: {
       type: String,
       enum: ["essence", "gazoile", "electrique"],
       default: "essence",
     },
-    isAvailable: {
+    estDisponible: {
       type: Boolean,
       default: true,
     },
@@ -58,18 +62,23 @@ const carSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    carOwner: {
+    proprietaire: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
       // required: [true, "Une voiture doit appartenir a un Proprietaire"],
     },
-    ratingsAverage: {
+    nombreDeSieges: {
+      type: Number,
+      default: 3,
+      required: true,
+    },
+    avis: {
       type: Number,
       default: 4.5,
       min: [1, "Rating must be above 1.0"],
       max: [5, "Rating must be below 5.0"],
     },
-    ratingsQuantity: {
+    nombreAvis: {
       type: Number,
       default: 0,
     },
