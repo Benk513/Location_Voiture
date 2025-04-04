@@ -1,6 +1,6 @@
 import mongoose, { model } from "mongoose";
 import validator from "validator";
-const carSchema = new mongoose.Schema(
+const schemaVoiture = new mongoose.Schema(
   {
     images: {
       type: Array,
@@ -16,7 +16,7 @@ const carSchema = new mongoose.Schema(
       type: String,
     },
 
-    name: {
+    nom: {
       type: String,
       required: [true, "Une voiture doit avoir un nom"],
       unique: true,
@@ -42,7 +42,7 @@ const carSchema = new mongoose.Schema(
     adresse: {
       type: String,
     },
-    prixParJour: {
+    tarifParJour: {
       type: Number,
       required: [true, "Une voiture doit avoir un tarif journalier"],
     },
@@ -63,8 +63,9 @@ const carSchema = new mongoose.Schema(
       default: false,
     },
     proprietaire: {
-      type: mongoose.Schema.ObjectId,
-      ref: "User",
+      type:String
+      // type: mongoose.Schema.ObjectId,
+      // ref: "User",
       // required: [true, "Une voiture doit appartenir a un Proprietaire"],
     },
     nombreDeSieges: {
@@ -89,4 +90,4 @@ const carSchema = new mongoose.Schema(
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-export const Car = mongoose.model("Car", carSchema);
+export const Voiture = mongoose.model("Voiture", schemaVoiture);
