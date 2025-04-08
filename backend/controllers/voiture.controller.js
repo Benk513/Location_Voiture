@@ -38,17 +38,32 @@ export const listerVoitures = catchAsync(async (req, res, next) => {
 });
 
 // consulter les details d'une voiture
-
 export const detailVoiture = catchAsync(async (req, res, next) => {
   const voiture = await Voiture.findById(req.params.id);
 
-  if (!voiture)
-    return next(new AppError("Aucune voiture trouvée", 404));
+  if (!voiture) return next(new AppError("Aucune voiture trouvée", 404));
 
   res.status(200).json({
     status: "succes",
     data: voiture,
   });
+});
+
+export const modifierVoiture = catchAsync(async (req, res, next) => {
+  const voiture = await Voiture.findById(req.params.id);
+
+  if (!voiture) return next(new AppError("Voiture non trouvée ", 404));
+
+  if (voiture.proprietaire.toString() !== req.user.id.toString())
+    return next(new AppError("Acces refusé", 403));
+
+  const nouvelleVoiture = await Voiture.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true }
+  );
+
+  res.status(200).json({ status: 'succes', message:"Voiture mise a jour", data: nouvelleVoiture })
 });
 
 // supprimer une voiture du systeme
