@@ -63,22 +63,16 @@ const schemaVoiture = new mongoose.Schema(
       default: false,
     },
     proprietaire: {
-      type:String
-      // type: mongoose.Schema.ObjectId,
-      // ref: "User",
-      // required: [true, "Une voiture doit appartenir a un Proprietaire"],
+      type: mongoose.Schema.ObjectId,
+      ref: "Utilisateur",
+      required: [true, "Une voiture doit appartenir a un Proprietaire"],
     },
     nombreDeSieges: {
       type: Number,
       default: 3,
       required: true,
     },
-    avis: {
-      type: Number,
-      default: 4.5,
-      min: [1, "Rating must be above 1.0"],
-      max: [5, "Rating must be below 5.0"],
-    },
+   
     nombreAvis: {
       type: Number,
       default: 0,
