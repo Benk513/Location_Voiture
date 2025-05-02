@@ -2,10 +2,11 @@ import mongoose, { model } from "mongoose";
 import validator from "validator";
 const schemaVoiture = new mongoose.Schema(
   {
-    images: {
-      type: Array,
-      required: [true, "Une voiture doit avoir au moins une image"],
-    },
+    // images: {
+    //   type: Array,
+    //   required: [true, "Une voiture doit avoir au moins une image"],
+    // },
+    images: [{ type: String }],
 
     marque: {
       type: String,

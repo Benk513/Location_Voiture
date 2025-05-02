@@ -1,5 +1,5 @@
-import { Annonce } from "../models/annonce.model";
-import catchAsync from "../utils/catchAsync";
+import  {Annonce}  from "../models/annonce.model.js";
+import catchAsync from "../utils/catchAsync.js";
 
 export const creerAnnonce = catchAsync(async (req, res, next) => {
   const annonce = await Annonce.create({
@@ -31,6 +31,7 @@ export const listerAnnonces = catchAsync(async (req, res, next) => {
   const annonces = await Annonce.find(filters).populate("voiture");
   res.status(200).json({
     status: "succes",
+    resultats:annonces.length,
     data: annonces,
   });
 });
@@ -38,7 +39,7 @@ export const listerAnnonces = catchAsync(async (req, res, next) => {
 // consulter une annonce en detail
 export const detailAnnonce = catchAsync(async (req, res, next) => {
   try {
-    const annonce = await Annonce.findById(req.params.id).populate("vehicule");
+    const annonce = await Annonce.findById(req.params.id).populate("voiture");
     if (!annonce)
       return res.status(404).json({ message: "Annonce non trouvée" });
     res.status(200).json(annonce);

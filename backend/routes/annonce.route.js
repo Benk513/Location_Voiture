@@ -1,20 +1,20 @@
 import express from "express";
-import { proteger } from "../controllers/auth.controller";
+import { proteger, restreindreA } from "../controllers/auth.controller.js";
 import {
   creerAnnonce,
   detailAnnonce,
   listerAnnonces,
-  mettreAJourAnnonce,
+  mettreAJourAnnonce, 
   supprimerAnnonce,
-} from "../controllers/annonce.controller";
+} from "../controllers/annonce.controller.js";
 
-const router = express.Router();
+const router = express.Router(); 
 
 // CRUD
-router.post("/", proteger, creerAnnonce);
-router.get("/", listerAnnonces);
+router.post("/", proteger, restreindreA("proprietaire"), creerAnnonce);
+router.get("/", proteger,listerAnnonces);
 router.get("/:id", detailAnnonce);
-router.patch("/:id", proteger, mettreAJourAnnonce);
-router.delete("/:id", proteger, supprimerAnnonce);
+router.patch("/:id", proteger,restreindreA("proprietaire"), mettreAJourAnnonce);
+router.delete("/:id", proteger,restreindreA("proprietaire", "admin"), supprimerAnnonce);
 
 export default router;

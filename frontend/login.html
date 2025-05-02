@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <title>Rentaly - Multipurpose Vehicle Car Rental Website Template</title>
+    <link rel="icon" href="images/icon.png" type="image/gif" sizes="16x16">
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Rentaly - Multipurpose Vehicle Car Rental Website Template" name="description">
+    <meta content="" name="keywords">
+    <meta content="" name="author">
+    <!-- CSS Files
+    ================================================== -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap">
+    <link href="css/mdb.min.css" rel="stylesheet" type="text/css" id="mdb">
+    <link href="css/plugins.css" rel="stylesheet" type="text/css">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link href="css/coloring.css" rel="stylesheet" type="text/css">
+    <!-- color scheme -->
+    <link id="colors" href="css/colors/scheme-01.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="wrapper">
+        
+        <!-- page preloader begin -->
+        <div id="de-preloader"></div>
+        <!-- page preloader close -->
+
+        <!-- header begin -->
+        <header class="transparent scroll-light has-topbar">
+            
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="de-flex sm-pt10">
+                            <div class="de-flex-col">
+                                <div class="de-flex-col">
+                                 
+                                </div>
+                            </div>
+                            
+                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- header close -->
+        <!-- content begin -->
+        <div class="no-bottom no-top" id="content">
+            <div id="top"></div>
+            <section id="section-hero" aria-label="section" class="jarallax">
+                <img src="images/background/2.jpg" class="jarallax-img" alt="">
+                <div class="v-center">
+                    <div class="container">
+                            <div class="row align-items-center">
+                                <div class="col-lg-4 offset-lg-4">
+                                    <div class="padding40 rounded-3 shadow-soft" data-bgcolor="#ffffff">
+                                        <h4>Connexion</h4>
+                                        <div class="spacer-10"></div>
+                                        <!-- <form id="form_register" class="form-border" method="post">
+                                            <div class="field-set">
+                                                <input type="text" name="name" id="name" class="form-control" placeholder="Votre Adrese Email" />
+                                            </div>
+                                            <div class="field-set">
+                                                <input type="password" name="name" id="name" class="form-control" placeholder="Votre mot de passe" />
+                                            </div>
+                                            <div id="submit">
+                                                <input type="submit" id="send_message" value="Se connecter" class="btn-main btn-fullwidth rounded-3" />
+                                            </div>
+                                        </form> -->
+                                        <form id="form_login" class="form-border" method="post">
+                                            <div class="field-set">
+                                                <input type="email" name="email" id="email" class="form-control" placeholder="Votre Adresse Email" required />
+                                            </div>
+                                            <div class="field-set">
+                                                <input type="password" name="motDePasse" id="motDePasse" class="form-control" placeholder="Votre mot de passe" required />
+                                            </div>
+                                            <div id="submit">
+                                                <input type="submit" value="Se connecter" class="btn-main btn-fullwidth rounded-3" />
+                                            </div>
+                                        </form>
+                                        <div id="loginMessage" class="mt-2 text-danger"></div>
+                                        
+                                        <div class="title-line"> Vous&nbsp;n'avez&nbsp;pas&nbsp;un&nbsp;compte&nbsp;? </div>
+                                         <div class="row g-2">
+                                            <div class=" ">
+                                                <a class=" btn-fullwidth mb10" href="register.html"> S'enregistrer </a>
+                                            </div>
+                                             
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </section>
+        </div>
+        <!-- content close -->
+    
+    <!-- Javascript Files
+    ================================================== -->
+    <script src="js/plugins.js"></script>
+    <script src="js/designesia.js"></script>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<!-- 
+  <script>
+        $(document).ready(function () {
+          $("#form_login").on("submit", function (e) {
+            e.preventDefault();
+      
+            const email = $("#email").val();
+            const motDePasse = $("#motDePasse").val();
+      
+            $.ajax({
+              url: "http://localhost:5000/api/utilisateurs/connexion",
+              method: "POST",
+              contentType: "application/json",
+              data: JSON.stringify({ email, motDePasse }),
+              success: function (response) {
+                $("#loginMessage").html("<span style='color:green;'>Connexion réussie !</span>");
+                // Tu peux rediriger vers le dashboard ici par exemple :
+                // window.location.href = "/dashboard.html";
+                console.log(response);
+              },
+              error: function (xhr) {
+                const message = xhr.responseJSON?.message || "Erreur lors de la connexion.";
+                $("#loginMessage").text(message);
+              },
+            });
+          });
+        });
+      </script>   -->
+<!--       
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const form = document.getElementById("form_login");
+          const emailInput = document.getElementById("email");
+          const motDePasseInput = document.getElementById("motDePasse");
+          const messageBox = document.getElementById("loginMessage");
+      
+          form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+      
+            const email = emailInput.value.trim();
+            const motDePasse = motDePasseInput.value.trim();
+      
+            try {
+              const response = await fetch("http://localhost:5000/api/utilisateurs/connexion", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, motDePasse }),
+              });
+      
+              const data = await response.json();
+      
+              if (!response.ok) {
+                throw new Error(data.message || "Erreur lors de la connexion.");
+              }
+      
+              messageBox.innerHTML = "<span style='color:green;'>Connexion réussie !</span>";
+      
+              // Enregistrer le token dans localStorage si présent
+              if (data.token) {
+                localStorage.setItem("token", data.token);
+                // Rediriger vers le dashboard ou autre page
+                // window.location.href = "/dashboard.html";
+              }
+      
+            } catch (error) {
+              messageBox.textContent = error.message;
+            }
+          });
+        });
+      </script> -->
+      
+      <!-- <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const form = document.getElementById("form_login");
+          const emailInput = document.getElementById("email");
+          const motDePasseInput = document.getElementById("motDePasse");
+          const messageBox = document.getElementById("loginMessage");
+      
+          form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+      
+            const email = emailInput.value.trim();
+            const motDePasse = motDePasseInput.value.trim();
+      
+            try {
+              const response = await fetch("http://localhost:5000/api/utilisateurs/connexion", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, motDePasse }),
+              });
+      
+              const data = await response.json();
+      
+              if (!response.ok) {
+                throw new Error(data.message || "Erreur lors de la connexion.");
+              }
+      
+              messageBox.innerHTML = "<span style='color:green;'>Connexion réussie !</span>";
+      
+              // 🔐 Sauvegarde dans localStorage
+              localStorage.setItem("token", data.token);
+              localStorage.setItem("utilisateur", JSON.stringify(data.utilisateur));
+      
+              // 🔁 Redirection selon le rôle
+              switch (data.data.role) {
+                case "admin":
+                  window.location.href = "account-dashboard.html";
+                  break;
+                case "proprietaire":
+                  window.location.href = "account-dashboard.html";
+                  break;
+                case "locataire":
+                  window.location.href = "account-dashboard.html";
+                  break;
+                default:
+                  window.location.href = "index.html"; // fallback
+              }
+      
+            } catch (error) {
+              messageBox.textContent = error.message;
+            }
+          });
+        });
+      </script> -->
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const form = document.getElementById("form_login");
+          const emailInput = document.getElementById("email");
+          const passwordInput = document.getElementById("motDePasse");
+          const messageBox = document.getElementById("loginMessage");
+      
+          form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+      
+            const email = emailInput.value.trim();
+            const motDePasse = passwordInput.value.trim();
+      
+            try {
+              const response = await fetch("http://localhost:5000/api/utilisateurs/connexion", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, motDePasse }),
+              });
+      
+              const result = await response.json();
+      
+              if (!response.ok) {
+                throw new Error(result.message || "Échec de la connexion.");
+              }
+      
+              // ✅ Affichage message
+              messageBox.innerHTML = `<span style="color:green;">${result.message}</span>`;
+      
+              // 🔐 Stockage des infos
+              localStorage.setItem("token", result.token);
+              localStorage.setItem("utilisateur", JSON.stringify(result.data));
+      
+              // 🔁 Redirection selon le rôle
+              switch (result.data.role) {
+                case "admin":
+                  window.location.href = "account-dashboard.html";
+                  break;
+                case "proprietaire":
+                  window.location.href = "account-dashboard.html";
+                  break;
+                case "client":
+                  window.location.href = "account-dashboard.html";
+                  break;
+                default:
+                  window.location.href = "account-dashboard.html";
+              }
+      
+            } catch (error) {
+              messageBox.innerHTML = `<span style="color:red;">${error.message}</span>`;
+            }
+          });
+        });
+      </script>
+      
+      
+</body>
+
+</html>

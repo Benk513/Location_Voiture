@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import validator from "validator";
-
+import bcrypt from "bcryptjs";
 const schemaUtilsateur = new mongoose.Schema(
   {
     photo: {
@@ -19,15 +19,15 @@ const schemaUtilsateur = new mongoose.Schema(
     motDePasse: {
       type: String,
       required: [true, "Veuillez inserer un mot de passe"],
-      minlength: 8,
-      select: false,
+      minlength:[6,"le mot de passe doit contenir au minimum 6 characteres"],
+      
     },
     confirmationMotDePasse: {
       type: String,
       required: [true, "Veuillez confirmer votre mot de passe"],
       validate: {
         validator: function (val) {
-          return val === this.password;
+          return val === this.motDePasse;
         },
         message: "Les Mots de passe ne correspondent pas!",
       },
@@ -51,6 +51,9 @@ const schemaUtilsateur = new mongoose.Schema(
       type: String,
       default: "-",
     },
+    adresse:{
+      type:String
+    },
 
     lastLogin: {
       type: Date,
@@ -60,7 +63,7 @@ const schemaUtilsateur = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-
+    motDePasseChangeLe: { type: String },
     resetPasswordToken: String,
     resetPasswordExpiresAt: Date,
     verificationTOken: String,
@@ -73,10 +76,30 @@ const schemaUtilsateur = new mongoose.Schema(
 
 schemaUtilsateur.pre("save", async function (next) {
   //execute si et seulement si le mot de passe a ete modifié
-  if (!this.isModified("password")) return next();
+  if (!this.isModified("motDePasse")) return next();
 
-  this.password = await bcrypt.hash(this.password, 12);
-  this.passwordConfirm = undefined;
+  //crypte le mot de passe
+  this.motDePasse = await bcrypt.hash(this.motDePasse, 12);
+  // supprime le champ confirmation de mot de passe
+  this.confirmationMotDePasse = undefined;
 });
+ 
+schemaUtilsateur.methods.correctMotDePasse = async function (
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
 
+schemaUtilsateur.methods.motDePasseChangeApres = function (JWTTimestamp) {
+  if (this.motDePasseChangeLe) {
+    const passwordChangedTimestamp = parseInt(
+      this.motDePasseChangeLe.getTime() / 1000,
+      10
+    );
+
+    return JWTTimestamp < passwordChangedTimestamp;
+  }
+  return false;
+};
 export const Utilisateur = mongoose.model("Utilisateur", schemaUtilsateur);

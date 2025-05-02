@@ -1,17 +1,47 @@
 import express from "express";
-import { signup } from "../controllers/auth.controller.js";
-import { listerUtilisateurs } from "../controllers/utilisateur.controller.js";
+import {
+  connexion,
+  inscription,
+  proteger,
+  restreindreA,
+} from "../controllers/auth.controller.js";
+import {
+  creerUtilisateur,
+  detailUtilisateur,
+  listerUtilisateurs,
+  obtenirMonProfil,
+  supprimerUtilisateur,
+  miseAJourProfile,
+  televerserPhotoProfil,
+  redimensionerPhotoUtilisateur,
+} from "../controllers/utilisateur.controller.js";
 
 const router = express.Router();
 
-router.post("/signup", signup);
+// Authentification
+router.post("/inscription", inscription);
+router.post("/connexion", connexion);
 
+// Gestion de profil utilisateur
 
+router.patch(
+  "/miseAJourProfile",
+  proteger,
+  televerserPhotoProfil,
+  redimensionerPhotoUtilisateur,
+  miseAJourProfile
+);
+router.get("/obtenirMonProfil", proteger, obtenirMonProfil);
 
+// administrer les utlisateurs par admin
+router
+  .route("/")
+  .get(proteger, restreindreA("admin", "proprietaire"), listerUtilisateurs)
+  .post(proteger, creerUtilisateur);
 
-
-// CRUD
-
-router.route('/').get(listerUtilisateurs).post(creerUtilisateur)
+router
+  .route("/:id")
+  .get(proteger, detailUtilisateur)
+  .delete(proteger, supprimerUtilisateur);
 
 export default router;
