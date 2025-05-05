@@ -1,3 +1,11 @@
+<script>
+    const token = localStorage.getItem("token");
+    const role= localStorage.getItem("role")
+    if (!token) {
+      window.location.href = "/frontend/login.html"; // Redirige vers login
+    }
+ 
+  </script>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -94,25 +102,25 @@
                                     <div class="de-login-menu">
 
                                         <span id="de-click-menu-profile" class="de-menu-profile">                           
-                                            <img src="images/profile/1.jpg" class="img-fluid" alt="">
+                                            <img src="images/profile/1.jpg" class="img-fluid photo" alt="">
                                         </span>
 
                                         
 
                                         <div id="de-submenu-profile" class="de-submenu">
                                             <div class="d-name">
-                                                <h4>Monica Lucas</h4>
-                                                <span class="text-gray">monica@rentaly.com</span>
+                                                <h4 class="nom">Monica Lucas</h4>
+                                                <span class="text-gray email">monica@rentaly.com</span>
                                             </div>
 
                                             <div class="d-line"></div>
 
                                             <ul class="menu-col">
-                                                <li><a href="account-dashboard.html"><i class="fa fa-home"></i>Dashboard</a></li>
-                                                <li><a href="account-profile.html"><i class="fa fa-user"></i>My Profile</a></li>
-                                                <li><a href="account-booking.html"><i class="fa fa-calendar"></i>My Orders</a></li>
-                                                <li><a href="account-favorite.html"><i class="fa fa-car"></i>My Favorite Cars</a></li>
-                                                <li><a href="login.html"><i class="fa fa-sign-out"></i>Sign Out</a></li>
+                                                <li><a href="account-dashboard.html"><i class="fa fa-home"></i>Tableau de bord</a></li>
+                                                <li><a href="account-profile.html"><i class="fa fa-user"></i>Mon profile</a></li>
+                                                <li><a href="account-booking.html"><i class="fa fa-calendar"></i>Mes locaitons</a></li>
+                                                <li><a href="account-favorite.html"><i class="fa fa-car"></i>Mes voitures</a></li>
+                                                <li><span class="deconnexion"><i class="fa fa-sign-out"></i> Se deconnecter</span></li>
                                             </ul>
                                         </div>
                                         <span id="menu-btn"></span>
@@ -152,13 +160,13 @@
                             <div class="card p-4 rounded-5">
                                 <div class="profile_avatar">
                                     <div class="profile_img">
-                                        <img src="images/profile/frPatrickBanza.jpg" alt="">
+                                        <img src="images/profile/frPatrickBanza.jpg" class="photo" alt="">
                                     </div>
                                     <div class="profile_name">
-                                        <h4>
+                                        <h4 class="nom">
                                             Patrick Banza                                                
-                                            <span class="profile_username text-gray">patrickbanza@ardias.com</span>
                                         </h4>
+                                        <span class="profile_username text-gray" id="email">patrickbanza@ardias.com</span>
                                     </div>
                                 </div>
                                 <div class="spacer-20"></div>
@@ -166,8 +174,8 @@
                                     <li><a href="" class="active"><i class="fa fa-home"></i>Tableau de bord</a></li>
                                     <li><a href="account-profile.html"><i class="fa fa-user"></i>Mon Profil</a></li>
                                     <li><a href="account-booking.html"><i class="fa fa-calendar"></i>Mes locations</a></li>
-                                    <li><a href="account-favorite.html"><i class="fa fa-car"></i>Mes Voitures </a></li>
-                                    <li><a href="login.html"><i class="fa fa-sign-out"></i>Se deconnecter</a></li>
+                                    <li><a href="mes_voitures.html"><i class="fa fa-car"></i>Mes Voitures </a></li>
+                                    <li><span class="deconnexion" type="button" onclick="location.href='logout.html'"><i class="fa fa-sign-out"></i>Se deconnecter</button=></li>
                                 </ul>
                             </div>
                         </div>
@@ -444,8 +452,61 @@
 
     <!-- Javascript Files
     ================================================== -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script src="js/plugins.js"></script>
     <script src="js/designesia.js"></script>
+
+    <script>
+        $(".deconnexion").click(function () {
+          alert("À bientôt !");
+          localStorage.clear();
+          window.location.href = "login.html";
+        });
+      </script>
+
+
+    <script>
+
+        $(document).ready(function () {
+            // Charger les données du profil
+
+            const userProfileUrl = "http://localhost:5000/uploads/utilisateurs/";
+
+        $.ajax({
+          url: "http://localhost:5000/api/utilisateurs/obtenirMonProfil",
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+          success: function (user) {
+              const profileUrl = userProfileUrl + user?.data.photo;
+            console.log(user?.data.photo)
+            $(".nom").text(user?.data?.nom);
+            $(".email").text(user?.data.email);
+            $(".photo").attr("src", profileUrl);
+            $("#photo").attr("src", profileUrl);
+            $("#pays").text(user?.data.pays || "Non renseigné.");
+            $("#dateNaissance").text(user?.data.dateNaissance || "Non renseigné.");
+            $("#biographie").text(user?.data.biographie || "Aucune biographie fournie.");
+            $("#adresse").text(user?.data.adresse || "Non renseigné.");
+            $("#telephone").text(user?.data.telephone || "Non renseignné.");
+            $(".role").text(user?.data.role || "Non renseignné.");
+            $("#sexe").text(user?.data.sexe || "Non renseignné.");
+
+
+                 // Affichage conditionnel
+      if (user?.data.role === "admin" || user?.data.role === "ambassadeur" || user?.data.role === "etudiant") {
+        $("#info-administrative").hide();     // Masquer mot de passe
+        $("#info-academique").hide();     // Masquer mot de passe
+        $("#saveBtn").hide();         // Masquer bouton "Enregistrer"
+      }
+          },
+          error: function () {
+              console.log("Erreur lors du chargement du profil !");
+            },
+        });})
+        </script>
 
 </body>
 

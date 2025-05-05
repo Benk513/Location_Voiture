@@ -1,6 +1,7 @@
 import express from "express";
 import {
   connexion,
+  deconnexion,
   inscription,
   proteger,
   restreindreA,
@@ -18,11 +19,14 @@ import {
 
 const router = express.Router();
 
-// Authentification
+// inscription 🟦
 router.post("/inscription", inscription);
+// login 🟦
 router.post("/connexion", connexion);
 
+router.post("/deconnexion", deconnexion);
 // Gestion de profil utilisateur
+
 
 router.patch(
   "/miseAJourProfile",

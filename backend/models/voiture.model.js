@@ -6,7 +6,7 @@ const schemaVoiture = new mongoose.Schema(
     //   type: Array,
     //   required: [true, "Une voiture doit avoir au moins une image"],
     // },
-    images: [{ type: String }],
+    images: [{ type: String, required: true, default: [""] }],
 
     marque: {
       type: String,
@@ -73,7 +73,12 @@ const schemaVoiture = new mongoose.Schema(
       default: 3,
       required: true,
     },
-   
+    nombreDePortes: {
+      type: Number,
+      default: 4,
+      required: true,
+    },
+
     nombreAvis: {
       type: Number,
       default: 0,

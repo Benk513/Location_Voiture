@@ -360,338 +360,7 @@
           </div>
         </section>
 
-        <!-- <section
-          id="section-hero"
-          aria-label="section"
-          class="jarallax text-light"
-        >
-          <img src="images/slider/1.jpg" class="jarallax-img" alt="" />
-
-          <div class="overlay-bg no-top no-bottom">
-            <div class="v-center">
-              <div class="container position-relative z1000">
-                <div class="row align-items-center">
-                  <div class="col-lg-6 text-light">
-                    <h4>
-                      <span class="id-color"
-                        >Fast and Easy Way to Rent a Car</span
-                      >
-                    </h4>
-                    <div class="spacer-10"></div>
-                    <h1 class="mb-2">Explore the world with comfortable car</h1>
-                    <div class="spacer-10"></div>
-                    <p class="lead">
-                      Embark on unforgettable adventures and discover the world
-                      in unparalleled comfort and style with our fleet of
-                      exceptionally comfortable cars.
-                    </p>
-                  </div>
-
-                  <div class="col-lg-6">
-                    <div class="spacer-single sm-hide"></div>
-                    <div
-                      class="p-4 rounded-3 shadow-soft text-light"
-                      data-bgcolor="rgba(255, 255, 255, .7)"
-                    >
-                      <form name="contactForm" id="contact_form" method="post">
-                        <h5>What is your vehicle type?</h5>
-
-                        <div class="spacer-20"></div>
-
-                        <div class="row">
-                          <div class="col-lg-6 mb20">
-                        <h5>Adresse de retrait </h5>
-                            <input
-                              type="text"
-                              name="PickupLocation"
-                              onfocus="geolocate()"
-                              placeholder="Enter your pickup location"
-                              id="autocomplete"
-                              autocomplete="off"
-                              class="form-control"
-                            />
-
-                            <div
-                              class="jls-address-preview jls-address-preview--hidden"
-                            >
-                              <div class="jls-address-preview__header"></div>
-                            </div>
-                          </div>
-
-                          <div class="col-lg-6 mb20">
-                            <h5>Adresse de depot</h5>
-                            <input
-                              type="text"
-                              name="DropoffLocation"
-                              onfocus="geolocate()"
-                              placeholder="Enter your dropoff location"
-                              id="autocomplete2"
-                              autocomplete="off"
-                              class="form-control"
-                            />
-
-                            <div
-                              class="jls-address-preview jls-address-preview--hidden"
-                            >
-                              <div class="jls-address-preview__header"></div>
-                            </div>
-                          </div>
-
-                          <div class="col-lg-6 mb20">
-                            <h5>Pick Up Date & Time</h5>
-                            <div class="date-time-field">
-                              <input
-                                type="text"
-                                id="date-picker"
-                                name="Pick Up Date"
-                                value=""
-                              />
-                              <select name="Pick Up Time" id="pickup-time">
-                                <option selected disabled value="Select time">
-                                  Time
-                                </option>
-                                <option value="00:00">00:00</option>
-                                <option value="00:30">00:30</option>
-                                <option value="01:00">01:00</option>
-                                <option value="01:30">01:30</option>
-                                <option value="02:00">02:00</option>
-                                <option value="02:30">02:30</option>
-                                <option value="03:00">03:00</option>
-                                <option value="03:30">03:30</option>
-                                <option value="04:00">04:00</option>
-                                <option value="04:30">04:30</option>
-                                <option value="05:00">05:00</option>
-                                <option value="05:30">05:30</option>
-                                <option value="06:00">06:00</option>
-                                <option value="06:30">06:30</option>
-                                <option value="07:00">07:00</option>
-                                <option value="07:30">07:30</option>
-                                <option value="08:00">08:00</option>
-                                <option value="08:30">08:30</option>
-                                <option value="09:00">09:00</option>
-                                <option value="09:30">09:30</option>
-                                <option value="10:00">10:00</option>
-                                <option value="10:30">10:30</option>
-                                <option value="11:00">11:00</option>
-                                <option value="11:30">11:30</option>
-                                <option value="12:00">12:00</option>
-                                <option value="12:30">12:30</option>
-                                <option value="13:00">13:00</option>
-                                <option value="13:30">13:30</option>
-                                <option value="14:00">14:00</option>
-                                <option value="14:30">14:30</option>
-                                <option value="15:00">15:00</option>
-                                <option value="15:30">15:30</option>
-                                <option value="16:00">16:00</option>
-                                <option value="16:30">16:30</option>
-                                <option value="17:00">17:00</option>
-                                <option value="17:30">17:30</option>
-                                <option value="18:00">18:00</option>
-                                <option value="18:30">18:30</option>
-                                <option value="19:00">19:00</option>
-                                <option value="19:30">19:30</option>
-                                <option value="20:00">20:00</option>
-                                <option value="20:30">20:30</option>
-                                <option value="21:00">21:00</option>
-                                <option value="21:30">21:30</option>
-                                <option value="22:00">22:00</option>
-                                <option value="22:30">22:30</option>
-                                <option value="23:00">23:00</option>
-                                <option value="23:30">23:30</option>
-                              </select>
-                            </div>
-                          </div>
-
-                          <div class="col-lg-6 mb20">
-                            <h5>Return Date & Time</h5>
-                            <div class="date-time-field">
-                              <input
-                                type="text"
-                                id="date-picker-2"
-                                name="Collection Date"
-                                value=""
-                              />
-                              <select
-                                name="Collection Time"
-                                id="collection-time"
-                              >
-                                <option selected disabled value="Select time">
-                                  Time
-                                </option>
-                                <option value="00:00">00:00</option>
-                                <option value="00:30">00:30</option>
-                                <option value="01:00">01:00</option>
-                                <option value="01:30">01:30</option>
-                                <option value="02:00">02:00</option>
-                                <option value="02:30">02:30</option>
-                                <option value="03:00">03:00</option>
-                                <option value="03:30">03:30</option>
-                                <option value="04:00">04:00</option>
-                                <option value="04:30">04:30</option>
-                                <option value="05:00">05:00</option>
-                                <option value="05:30">05:30</option>
-                                <option value="06:00">06:00</option>
-                                <option value="06:30">06:30</option>
-                                <option value="07:00">07:00</option>
-                                <option value="07:30">07:30</option>
-                                <option value="08:00">08:00</option>
-                                <option value="08:30">08:30</option>
-                                <option value="09:00">09:00</option>
-                                <option value="09:30">09:30</option>
-                                <option value="10:00">10:00</option>
-                                <option value="10:30">10:30</option>
-                                <option value="11:00">11:00</option>
-                                <option value="11:30">11:30</option>
-                                <option value="12:00">12:00</option>
-                                <option value="12:30">12:30</option>
-                                <option value="13:00">13:00</option>
-                                <option value="13:30">13:30</option>
-                                <option value="14:00">14:00</option>
-                                <option value="14:30">14:30</option>
-                                <option value="15:00">15:00</option>
-                                <option value="15:30">15:30</option>
-                                <option value="16:00">16:00</option>
-                                <option value="16:30">16:30</option>
-                                <option value="17:00">17:00</option>
-                                <option value="17:30">17:30</option>
-                                <option value="18:00">18:00</option>
-                                <option value="18:30">18:30</option>
-                                <option value="19:00">19:00</option>
-                                <option value="19:30">19:30</option>
-                                <option value="20:00">20:00</option>
-                                <option value="20:30">20:30</option>
-                                <option value="21:00">21:00</option>
-                                <option value="21:30">21:30</option>
-                                <option value="22:00">22:00</option>
-                                <option value="22:30">22:30</option>
-                                <option value="23:00">23:00</option>
-                                <option value="23:30">23:30</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-
-                        <input
-                          type="submit"
-                          id="send_message"
-                          value="Find a Vehicle"
-                          class="btn-main pull-right"
-                        />
-
-                        <div class="clearfix"></div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-                <div class="position-absolute d-flex bottom-20">
-                <div class="de-marquee-list d-marquee-small">
-                  <div class="d-item">
-                    <span class="d-item-txt">SUV</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Hatchback</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Crossover</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Convertible</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Sedan</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Sports Car</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Coupe</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Minivan</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Station Wagon</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Truck</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Minivans</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Exotic Cars</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="de-marquee-list d-marquee-small">
-                  <div class="d-item">
-                    <span class="d-item-txt">SUV</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Hatchback</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Crossover</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Convertible</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Sedan</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Sports Car</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Coupe</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Minivan</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Station Wagon</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Truck</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Minivans</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                    <span class="d-item-txt">Exotic Cars</span>
-                    <span class="d-item-display">
-                      <i class="d-item-dot"></i>
-                    </span>
-                  </div>
-                </div>
-              </div> -->
+        
             </div>
           </div>
         </section>  
@@ -761,265 +430,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
-
-                <div class="col-lg-12">
-                  <div class="de-item mb30">
-                    <div class="d-img">
-                      <img
-                        src="images/cars/bmw-m5.jpg"
-                        class="img-fluid"
-                        alt=""
-                      />
-                    </div>
-                    <div class="d-info">
-                      <div class="d-text">
-                        <h4>BMW M2</h4>
-                        <div class="d-item_like">
-                          <i class="fa fa-heart"></i><span>36</span>
-                        </div>
-                        <div class="d-atr-group">
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/1-green.svg"
-                              alt=""
-                            />5</span
-                          >
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/2-green.svg"
-                              alt=""
-                            />2</span
-                          >
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/3-green.svg"
-                              alt=""
-                            />4</span
-                          >
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/4-green.svg"
-                              alt=""
-                            />Sedan</span
-                          >
-                        </div>
-                        <div class="d-price">
-                          Prix par jour a <span>$244</span>
-                          <a class="btn-main" href="car-single.html"
-                            >Reserver maintenant</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-12">
-                  <div class="de-item mb30">
-                    <div class="d-img">
-                      <img
-                        src="images/cars/ferrari-enzo.jpg"
-                        class="img-fluid"
-                        alt=""
-                      />
-                    </div>
-                    <div class="d-info">
-                      <div class="d-text">
-                        <h4>Ferarri Enzo</h4>
-                        <div class="d-item_like">
-                          <i class="fa fa-heart"></i><span>85</span>
-                        </div>
-                        <div class="d-atr-group">
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/1-green.svg"
-                              alt=""
-                            />5</span
-                          >
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/2-green.svg"
-                              alt=""
-                            />2</span
-                          >
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/3-green.svg"
-                              alt=""
-                            />4</span
-                          >
-                          <span class="d-atr"
-                            ><img src="images/icons/4-green.svg" alt="" />Exotic
-                            Car</span
-                          >
-                        </div>
-                        <div class="d-price">
-                          Prix par jour a <span>$167</span>
-                          <a class="btn-main" href="car-single.html"
-                            >Reserver maintenant</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-12">
-                  <div class="de-item mb30">
-                    <div class="d-img">
-                      <img
-                        src="images/cars/ford-raptor.jpg"
-                        class="img-fluid"
-                        alt=""
-                      />
-                    </div>
-                    <div class="d-info">
-                      <div class="d-text">
-                        <h4>Ford Raptor</h4>
-                        <div class="d-item_like">
-                          <i class="fa fa-heart"></i><span>59</span>
-                        </div>
-                        <div class="d-atr-group">
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/1-green.svg"
-                              alt=""
-                            />5</span
-                          >
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/2-green.svg"
-                              alt=""
-                            />2</span
-                          >
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/3-green.svg"
-                              alt=""
-                            />4</span
-                          >
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/4-green.svg"
-                              alt=""
-                            />Truck</span
-                          >
-                        </div>
-                        <div class="d-price">
-                          Prix par jour a <span>$147</span>
-                          <a class="btn-main" href="car-single.html"
-                            >Reserver maintenant</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-12">
-                  <div class="de-item mb30">
-                    <div class="d-img">
-                      <img
-                        src="images/cars/mini-cooper.jpg"
-                        class="img-fluid"
-                        alt=""
-                      />
-                    </div>
-                    <div class="d-info">
-                      <div class="d-text">
-                        <h4>Mini Cooper</h4>
-                        <div class="d-item_like">
-                          <i class="fa fa-heart"></i><span>19</span>
-                        </div>
-                        <div class="d-atr-group">
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/1-green.svg"
-                              alt=""
-                            />5</span
-                          >
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/2-green.svg"
-                              alt=""
-                            />2</span
-                          >
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/3-green.svg"
-                              alt=""
-                            />4</span
-                          >
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/4-green.svg"
-                              alt=""
-                            />Hatchback</span
-                          >
-                        </div>
-                        <div class="d-price">
-                          Prix par jour a <span>$238</span>
-                          <a class="btn-main" href="car-single.html"
-                            >Reserver maintenant</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-12">
-                  <div class="de-item mb30">
-                    <div class="d-img">
-                      <img
-                        src="images/cars/vw-polo.jpg"
-                        class="img-fluid"
-                        alt=""
-                      />
-                    </div>
-                    <div class="d-info">
-                      <div class="d-text">
-                        <h4>VW Polo</h4>
-                        <div class="d-item_like">
-                          <i class="fa fa-heart"></i><span>79</span>
-                        </div>
-                        <div class="d-atr-group">
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/1-green.svg"
-                              alt=""
-                            />5</span
-                          >
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/2-green.svg"
-                              alt=""
-                            />2</span
-                          >
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/3-green.svg"
-                              alt=""
-                            />4</span
-                          >
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/4-green.svg"
-                              alt=""
-                            />Hatchback</span
-                          >
-                        </div>
-                        <div class="d-price">
-                          Prix par jour a <span>$106</span>
-                          <a class="btn-main" href="car-single.html"
-                            >Reserver maintenant</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                </div>            
               </div>
             </div>
           </div>
@@ -1248,6 +659,8 @@
 
     <!-- Javascript Files
     ================================================== -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script src="js/plugins.js"></script>
     <script src="js/designesia.js"></script>
     <script
@@ -1255,5 +668,144 @@
       async=""
       defer=""
     ></script>
+
+
+    <!-- <script>
+      $(document).ready(function () {
+        $.ajax({
+          url: 'http://localhost:5000/api/annonces/recentes',
+          method: 'GET',
+          success: function (annonces) {
+            console.log(annonces);
+            const $carousel = $('#items-carousel');
+            $carousel.empty(); // vider le contenu existant
+      
+            annonces.forEach(function (annonce) {
+              const voiture = annonce.voiture;
+              const image = voiture.images[0] || 'default.jpg'; // fallback si aucune image
+      
+              const html = `
+              <div class="col-lg-12">
+                <div class="de-item mb30">
+                  <div class="d-img">
+                    <img src="/uploads/${image}" class="img-fluid" alt="${voiture.nom}" />
+                  </div>
+                  <div class="d-info">
+                    <div class="d-text">
+                      <h4>${voiture.nom}</h4>
+                      <div class="d-item_like">
+                        <i class="fa fa-heart"></i><span>${voiture.nombreAvis || 0}</span>
+                      </div>
+                      <div class="d-atr-group">
+                        <span class="d-atr"><img src="images/icons/1-green.svg" alt="" />${voiture.nombreDeSieges}</span>
+                        <span class="d-atr"><img src="images/icons/2-green.svg" alt="" />${voiture.nombreDePortes}</span>
+                        <span class="d-atr"><img src="images/icons/3-green.svg" alt="" />${voiture.transmission}</span>
+                        <span class="d-atr"><img src="images/icons/4-green.svg" alt="" />${voiture.carburant}</span>
+                      </div>
+                      <div class="d-price">
+                        Prix par jour à <span>$${voiture.tarifParJour}</span>
+                        <a class="btn-main" href="/annonce/${annonce._id}">Réserver maintenant</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>`;
+      
+              $carousel.append(html);
+            });
+      
+            // Réinitialiser OwlCarousel
+            $carousel.owlCarousel('destroy');
+            $carousel.owlCarousel({
+              items: 3,
+              loop: true,
+              autoplay: true,
+              margin: 30,
+              nav: true,
+              dots: true
+            });
+          },
+            
+          error: function () {
+            console.error("Erreur lors du chargement des annonces récentes.");
+          }
+        });
+      });
+      </script> -->
+      <script>
+        $(document).ready(function () {
+          const $carousel = $('#items-carousel');
+      
+          // Si déjà initialisé, détruire proprement Owl Carousel
+          if ($carousel.hasClass('owl-loaded')) {
+            $carousel.trigger('destroy.owl.carousel');
+            $carousel.removeClass('owl-loaded owl-carousel owl-theme');
+            $carousel.find('.owl-stage-outer').children().unwrap(); // retire les wrappers Owl
+            $carousel.html(''); // vide le carrousel
+          }
+      
+          $.ajax({
+            url: 'http://localhost:5000/api/annonces/recentes',
+            method: 'GET',
+            success: function (annonces) {
+              if (!annonces.length) {
+                $carousel.html('<p>Aucune annonce trouvée.</p>');
+                return;
+              }
+              const baseUrl = "http://localhost:5000/uploads/voitures/";
+              annonces.forEach(function (annonce) {
+                const voitureUrl = baseUrl + annonce.voiture.images[0];
+                const voiture = annonce.voiture;
+                const image = voiture.images[0] || 'default.jpg';
+      
+                const html = `
+                  <div class="item">
+                    <div class="de-item mb30">
+                      <div class="d-img">
+                        <img src="${voitureUrl}" class="img-fluid" alt="${voiture.nom}" />
+                      </div>
+                      <div class="d-info">
+                        <div class="d-text">
+                          <h4>${voiture.nom}</h4>
+                          <div class="d-item_like">
+                            <i class="fa fa-heart"></i><span>${voiture.nombreAvis || 0}</span>
+                          </div>
+                          <div class="d-atr-group">
+                            <span class="d-atr"><img src="images/icons/1-green.svg" alt="" />${voiture.nombreDeSieges}</span>
+                            <span class="d-atr"><img src="images/icons/2-green.svg" alt="" />${voiture.nombreDePortes}</span>
+                            <span class="d-atr"><img src="images/icons/3-green.svg" alt="" />${voiture.transmission}</span>
+                            <span class="d-atr"><img src="images/icons/4-green.svg" alt="" />${voiture.carburant}</span>
+                          </div>
+                          <div class="d-price">
+                            Prix par jour à <span>$${voiture.tarifParJour}</span>
+                            <a class="btn-main" href="car-single.html?id=${annonce._id}">Reserver maintenant</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                `;
+      
+                $carousel.append(html);
+              });
+      
+              // Réinitialiser Owl Carousel après avoir ajouté les items
+              $carousel.owlCarousel({
+                items: 3,
+                loop: annonces.length > 3,
+                autoplay: true,
+                margin: 30,
+                nav: true,
+                dots: true
+              });
+            },
+            error: function () {
+              console.error("Erreur lors du chargement des annonces récentes.");
+              $carousel.html('<p>Impossible de charger les annonces.</p>');
+            }
+          });
+        });
+      </script>
+      
   </body>
 </html>

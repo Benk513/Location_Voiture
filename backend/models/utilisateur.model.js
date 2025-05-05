@@ -5,8 +5,7 @@ const schemaUtilsateur = new mongoose.Schema(
   {
     photo: {
       type: String,
-      default: "default.jpg",
-    },
+      default: "default.webp" },
     email: {
       type: String,
       required: [true, "Please provide your email"],

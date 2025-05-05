@@ -41,7 +41,7 @@ const creerEtEnvoyerToken = (utilisateur, statusCode, message, res) => {
 
 // registerUser	Inscription d’un nouvel utilisateur (Locataire ou Propriétaire)	POST	/api/users/register
 export const inscription = catchAsync(async (req, res, next) => {
-  const { nom, email, motDePasse, confirmationMotDePasse } = req.body;
+  const { nom, email, motDePasse, confirmationMotDePasse ,role } = req.body;
 
   if (!nom || !email || !motDePasse || !confirmationMotDePasse)
     return next(
@@ -50,11 +50,13 @@ export const inscription = catchAsync(async (req, res, next) => {
         404
       )
     );
+    
   const nouvelUtilisateur = new Utilisateur({
     nom,
     email,
     motDePasse,
     confirmationMotDePasse,
+    role
   });
   await nouvelUtilisateur.save();
 
@@ -95,59 +97,18 @@ export const connexion = catchAsync(async (req, res, next) => {
   );
 });
 
-// export const proteger = catchAsync(async (req, res, next) => {
-//   //1.get token and check if it's there
-
-//   let token;
-
-//   if (
-//     req.headers.authorization &&
-//     req.headers.authorization.startsWith("Bearer")
-//   ) {
-//     token = req.headers.authorization.split(" ")[1];
-//   } else if (req.cookies.jwt) {
-//     token = req.cookies.jwt;
-//   }
-//   console.log(token);
-
-//   if (!token)
-//     return next(
-//       new AppError("Vous n'etes pas connecté ! veuillez vous connectez ", 401)
-//     );
-//   //2. verify the token
-//   const decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-
-//   //3. check if user still exists
-//   //here we deal with the case the user was deleted after the token was created , then another user cannot grab this token and access
-//   const freshUser = await Utilisateur.findById(decode.id);
-
-//   if (!freshUser)
-//     return next(
-//       new AppError(" L'utilisateur appartenant a ce compte n'existe plus .")
-//     );
-
-//   //4. check if user changed password after the was token was issued.
-//   if (freshUser.motDePasseChangeApres(decode.iat)) {
-//     return next(
-//       new AppError("User recently changed password! Please log in again.", 401)
-//     );
-//   }
-//   req.user = freshUser;
-//   console.log(req.user);
-
-//   next();
-// });
-
-// export const restreindreA = (...roles) => {
-//   return (req, res, next) => {
-//     if (!roles.includes(req.user.role)) {
-//       return next(new AppError("Vous n'avez pas acces a cette ressource"), 403);
-//     }
-//     next();
-//   };
-// };
 
 
+export const deconnexion = catchAsync(async (req, res, next) => {
+  //as we cannot delete the cookie in the browser due to the httpOnly to true , we must send a false value to log out
+  res.cookie("jwt", "loggedout", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res
+    .status(200)
+    .json({ status: "success", message: "Déconnexion effectué avec success" });
+});
 
 
 export const proteger = catchAsync(async (req, res, next) => {

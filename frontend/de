@@ -1,0 +1,13 @@
+             $('#voiture-nom').text(voiture.nom);
+                $('#voiture-image').attr('src', `/uploads/${voiture.images[0]}`); // adapte le chemin selon ton backend
+                $('#voiture-marque').text(voiture.marque);
+                $('#voiture-modele').text(voiture.modele);
+                $('#voiture-km').text(voiture.kilometrage.toLocaleString());
+                $('#voiture-tarif').text(voiture.tarifParJour +'$');
+                $('#voiture-transmission').text(voiture.transmission);
+                $('#voiture-carburant').text(voiture.carburant);
+                $('#voiture-adresse').text(voiture.adresse);
+                $('#voiture-sieges').text(voiture.nombreDeSieges);
+                $('#voiture-portes').text(voiture.nombreDePortes);
+                $('#annonce-description').text(data.description);
+            },

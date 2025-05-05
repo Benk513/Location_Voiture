@@ -16,6 +16,9 @@
     <link href="css/plugins.css" rel="stylesheet" type="text/css">
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <link href="css/coloring.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
     <!-- color scheme -->
     <link id="colors" href="css/colors/scheme-01.css" rel="stylesheet" type="text/css">
 </head>
@@ -143,72 +146,50 @@
 
                   
                         <div class="col-lg-3">
-                            <h3>BMW M2 2020</h3>
-                            <p>La BMW M2 est la version haute performance du coupé 2 portes de la Série 2. La première génération de la M2 est le coupé F87 et est propulsée par un moteur turbocompressé.</p>
+                            <h3 id="voiture-nom">BMW M2 2020</h3>
+                            <p id="annonce-description">La BMW M2 est la version haute performance du coupé 2 portes de la Série 2. La première génération de la M2 est le coupé F87 et est propulsée par un moteur turbocompressé.</p>
 
                             <div class="spacer-10"></div>
 
                             <h4>Spécifications</h4>
                             <div class="de-spec">
-                                    <div class="d-row">
-                                            <span class="d-title">Carrosserie</span>
-                                            <spam class="d-value">Berline</spam>
-                                    </div>
+                                   
                                     <div class="d-row">
                                             <span class="d-title">Sièges</span>
-                                            <spam class="d-value">2 sièges</spam>
+                                            <span class="d-value" id="voiture-sieges">2 sièges</span>
                                     </div>
                                     <div class="d-row">
                                             <span class="d-title">Portières</span>
-                                            <spam class="d-value">2 portes</spam>
+                                            <span class="d-value" id="voiture-portes"> 2 portes</span>
                                     </div>
-                                    <div class="d-row">
-                                            <span class="d-title">Bagages</span>
-                                            <spam class="d-value">150</spam>
-                                    </div>
+                                
                                     <div class="d-row">
                                             <span class="d-title">Type de carburant</span>
-                                            <spam class="d-value">Hybride</spam>
+                                            <span class="d-value" id="voiture-carburant">Hybride</span>
                                     </div>
-                                    <div class="d-row">
-                                            <span class="d-title">Moteur</span>
-                                            <spam class="d-value">3000</spam>
-                                    </div>
+                             
                                     <div class="d-row">
                                             <span class="d-title">Année</span>
-                                            <spam class="d-value">2020</spam>
+                                            <span class="d-value" id="voiture-annee">2020</span>
                                     </div>
                                     <div class="d-row">
                                             <span class="d-title">Kilométrage</span>
-                                            <spam class="d-value">200</spam>
+                                            <span class="d-value" id="voiture-km">200</span>
                                     </div>
                                     <div class="d-row">
                                             <span class="d-title">Transmission</span>
-                                            <spam class="d-value">Automatique</spam>
+                                            <span class="d-value" id="voiture-transmission">Automatique</span>
                                     </div>
-                                    <div class="d-row">
-                                            <span class="d-title">Transmission</span>
-                                            <spam class="d-value">4x4</spam>
-                                    </div>
-                                    <div class="d-row">
-                                            <span class="d-title">Consommation de carburant</span>
-                                            <spam class="d-value">18.5</spam>
-                                    </div>
-                                    <div class="d-row">
-                                            <span class="d-title">Couleur extérieure</span>
-                                            <spam class="d-value">Bleu Métallisé</spam>
-                                    </div>
-                                    <div class="d-row">
-                                            <span class="d-title">Couleur intérieure</span>
-                                            <spam class="d-value">Noir</spam>
-                                    </div>
+                                     
+                                    
+                                     
                             </div>
                     </div>
 
                         <div class="col-lg-3">
                             <div class="de-price text-center">
                                 Tarif journalier
-                                <h3>$265</h3>
+                                <h3 id="voiture-tarif">$265</h3>
                             </div>
                             <div class="spacer-30"></div>
                             <div class="de-box mb25">
@@ -243,7 +224,7 @@
                                             <div class="date-time-field">
                                                 <input type="text" id="date-picker" name="Pick Up Date" value="">
                                                 <select name="Pick Up Time" id="pickup-time">
-                                                    <option selected disabled value="Select time">Time</option>
+                                                    <option selected disabled value="Select time">Heure</option>
                                                     <option value="00:00">00:00</option>
                                                     <option value="00:30">00:30</option>
                                                     <option value="01:00">01:00</option>
@@ -302,7 +283,7 @@
                                             <div class="date-time-field">
                                                 <input type="text" id="date-picker-2" name="Collection Date" value="">
                                                 <select name="Collection Time" id="collection-time">
-                                                    <option selected disabled value="Select time">Time</option>
+                                                    <option selected disabled value="Select time">Heure</option>
                                                     <option value="00:00">00:00</option>
                                                     <option value="00:30">00:30</option>
                                                     <option value="01:00">01:00</option>
@@ -363,19 +344,7 @@
                                 </form>
                             </div>
 
-                            <div class="de-box">
-                                <h4>Share</h4>
-                                <div class="de-color-icons">
-                                    <span><i class="fa fa-twitter fa-lg"></i></span>
-                                    <span><i class="fa fa-facebook fa-lg"></i></span>
-                                    <span><i class="fa fa-reddit fa-lg"></i></span>
-                                    <span><i class="fa fa-linkedin fa-lg"></i></span>
-                                    <span><i class="fa fa-pinterest fa-lg"></i></span>
-                                    <span><i class="fa fa-stumbleupon fa-lg"></i></span>
-                                    <span><i class="fa fa-delicious fa-lg"></i></span>
-                                    <span><i class="fa fa-envelope fa-lg"></i></span>
-                                </div>
-                            </div>
+                          
                         </div>                
                     </div>
                 </div>
@@ -453,9 +422,161 @@
 
     <!-- Javascript Files
     ================================================== -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/designesia.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    <!-- <script>
+    $(document).ready(function () {
+        // 🔍 Récupérer l'ID depuis l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const annonceId = urlParams.get("id");
+    
+        if (!annonceId) {
+            $("#section-car-details").html("<p>ID de l'annonce non trouvé dans l'URL.</p>");
+            return;
+        }
+    
+        // 🔄 Appeler l'API backend pour récupérer les détails
+        $.ajax({
+            url: `http://localhost:5000/api/annonces/${annonceId}`,
+            method: "GET",
+            success: function (data) {
+                console.log(data);
+                // ✅ Injecter les données dans le HTML
+                $(".col-lg-6 .owl-carousel").html(
+                    data.images.map(img => `<div class="item"><img src="${img}" alt=""></div>`).join("")
+                );
+    
+                $(".col-lg-3 h3").first().text(data.titre);
+                $(".col-lg-3 p").first().text(data.description);
+    
+                const specHtml = `
+                    <div class="d-row"><span class="d-title">Carrosserie</span><span class="d-value">${data.carrosserie || '-'}</span></div>
+                    <div class="d-row"><span class="d-title">Sièges</span><span class="d-value">${data.sieges || '-'}</span></div>
+                    <div class="d-row"><span class="d-title">Portières</span><span class="d-value">${data.portes || '-'}</span></div>
+                    <div class="d-row"><span class="d-title">Type de carburant</span><span class="d-value">${data.carburant || '-'}</span></div>
+                    <div class="d-row"><span class="d-title">Année</span><span class="d-value">${data.annee || '-'}</span></div>
+                    <div class="d-row"><span class="d-title">Kilométrage</span><span class="d-value">${data.kilometrage || '-'}</span></div>
+                    <div class="d-row"><span class="d-title">Transmission</span><span class="d-value">${data.transmission || '-'}</span></div>
+                `;
+                $(".de-spec").html(specHtml);
+    
+                $(".de-price h3").text(`$${data.prix_par_jour}`);
+            },
+            error: function () {
+                $("#section-car-details").html("<p>Erreur lors du chargement de l'annonce.</p>");
+            }
+        });
+    });
+    </script> -->
+
+
+
+
+
+    <script>
+    $(document).ready(function () {
+
+          // 🔍 Récupérer l'ID depuis l'URL
+          const urlParams = new URLSearchParams(window.location.search);
+        const annonceId = urlParams.get("id");
+    
+        if (!annonceId) {
+            $("#section-car-details").html("<p>ID de l'annonce non trouvé dans l'URL.</p>");
+            return;
+        }
+    
+        $.ajax({
+            url: `http://localhost:5000/api/annonces/${annonceId}`,
+            method: 'GET',
+            success: function (data) {
+                const voiture = data.voiture;
+    console.log(voiture)
+                $('#voiture-nom').text(voiture.nom);
+                $('#voiture-image').attr('src', `/uploads/${voiture.images[0]}`); // adapte le chemin selon ton backend
+                $('#voiture-marque').text(voiture.marque);
+                $('#voiture-modele').text(voiture.modele);
+                $('#voiture-km').text(voiture.kilometrage.toLocaleString());
+                $('#voiture-tarif').text(voiture.tarifParJour +'$');
+                $('#voiture-transmission').text(voiture.transmission);
+                $('#voiture-carburant').text(voiture.carburant);
+                $('#voiture-adresse').text(voiture.adresse);
+                $('#voiture-sieges').text(voiture.nombreDeSieges);
+                $('#voiture-portes').text(voiture.nombreDePortes);
+                $('#annonce-description').text(data.description);
+
+                  // Vider le slider avant d'injecter
+            $('#slider-carousel').empty();
+
+// Ajouter chaque image dans le carousel
+voiture.images.forEach(function (img) {
+    const imagePath = `http://localhost:5000/uploads/voitures/${img}`; // adapte au chemin réel
+    const slide = `<div class="item"><img src="${imagePath}" alt="Voiture" /></div>`;
+    $('#slider-carousel').append(slide);
+});
+
+// Initialiser ou réinitialiser le carousel OwlCarousel
+$('#slider-carousel').owlCarousel('destroy'); // si déjà initialisé
+$('#slider-carousel').owlCarousel({
+    items: 1,
+    loop: true,
+    autoplay: true,
+    autoplayTimeout: 3000,
+    nav: true,
+    dots: true
+});
+            },
+            error: function (xhr, status, error) {
+                console.error('Erreur lors du chargement de l’annonce :', xhr.responseText);
+                $('#annonce-detail').html('<p>Impossible de charger les détails de l’annonce.</p>');
+            }
+        });
+    });
+    </script>
+    
+
+
+
+<script>
+$(document).ready(function () {
+    $('#contact_form').on('submit', function (e) {
+        e.preventDefault(); // empêche le rechargement de la page
+
+        const formData = {
+            pickupLocation: $('input[name="PickupLocation"]').val(),
+            dropoffLocation: $('input[name="DropoffLocation"]').val(),
+            pickupDate: $('#date-picker').val(),
+            pickupTime: $('#pickup-time').val(),
+            collectionDate: $('#date-picker-2').val(),
+            collectionTime: $('#collection-time').val(),
+            carId: "bmw-m2-2020" // ou à remplacer dynamiquement si tu as un système d'ID
+        };
+
+        // Afficher dans la console pour debug
+        console.log("Formulaire envoyé :", formData);
+
+        $.ajax({
+            url: '/api/rentals', // À adapter selon ta route backend Express
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function (response) {
+                alert('Réservation réussie ! Nous vous contacterons sous peu.');
+                $('#contact_form')[0].reset(); // Réinitialiser le formulaire
+            },
+            error: function (xhr, status, error) {
+                console.error("Erreur serveur :", xhr.responseText);
+                alert('Une erreur est survenue. Veuillez réessayer plus tard.');
+            }
+        });
+    });
+});
+</script>
+
+    
 </body>
 
 </html>

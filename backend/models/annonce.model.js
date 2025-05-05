@@ -12,10 +12,7 @@ const annonceSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    prixJournalier: {
-      type: Number,
-      required: true,
-    },
+    
     dateDebut: {
       type: Date,
       required: true,
@@ -24,10 +21,14 @@ const annonceSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    lieu: {
+      type: String,
+    },
+  
     statut: {
       type: String,
-      enum: ["active", "inactive"],
-      default: "active",
+      enum: ["actif", "inactif"],
+      default: "actif",
     },
     description: {
       type: String,

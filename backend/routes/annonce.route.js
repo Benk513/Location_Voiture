@@ -4,17 +4,29 @@ import {
   creerAnnonce,
   detailAnnonce,
   listerAnnonces,
-  mettreAJourAnnonce, 
+  listerRecentAnnonces,
+  mettreAJourAnnonce,
   supprimerAnnonce,
 } from "../controllers/annonce.controller.js";
 
-const router = express.Router(); 
+const router = express.Router();
 
 // CRUD
 router.post("/", proteger, restreindreA("proprietaire"), creerAnnonce);
-router.get("/", proteger,listerAnnonces);
+router.get("/", listerAnnonces);
+router.get("/recentes", listerRecentAnnonces);
 router.get("/:id", detailAnnonce);
-router.patch("/:id", proteger,restreindreA("proprietaire"), mettreAJourAnnonce);
-router.delete("/:id", proteger,restreindreA("proprietaire", "admin"), supprimerAnnonce);
+router.patch(
+  "/:id",
+  proteger,
+  restreindreA("proprietaire"),
+  mettreAJourAnnonce
+);
+router.delete(
+  "/:id",
+  proteger,
+  restreindreA("proprietaire", "admin"),
+  supprimerAnnonce
+);
 
 export default router;

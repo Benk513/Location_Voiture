@@ -2,10 +2,11 @@ import express from "express";
 import {
   ajouterVoiture,
   detailVoiture,
+  listerMesVoitures,
   listerVoitures,
   modifierVoiture,
   supprimerVoiture,
-  televerserPhotoVoiture,
+  televerserPhotosVoiture,
 } from "./../controllers/voiture.controller.js";
 import { proteger, restreindreA } from "../controllers/auth.controller.js";
 
@@ -16,8 +17,21 @@ const router = express.Router();
 
 // router.route("/").get(listerVoitures).post(ajouterVoiture);
 
-router.post("/", proteger,  televerserPhotoVoiture, ajouterVoiture);
+router.post(
+  "/",
+  proteger,
+  televerserPhotosVoiture,
+  restreindreA("proprietaire"),
+  ajouterVoiture
+);
+
 router.get("/", proteger, listerVoitures);
+router.get(
+  "/mesVoitures",
+  proteger,
+  restreindreA("proprietaire"),
+  listerMesVoitures
+);
 
 router
   .route("/:id")
