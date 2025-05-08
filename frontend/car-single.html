@@ -148,6 +148,9 @@
                         <div class="col-lg-3">
                             <h3 id="voiture-nom">BMW M2 2020</h3>
                             <p id="annonce-description">La BMW M2 est la version haute performance du coupé 2 portes de la Série 2. La première génération de la M2 est le coupé F87 et est propulsée par un moteur turbocompressé.</p>
+                            <p id="conteneur-dates">Disponible du ... au ....</p>
+                            <!-- <p id="annonce-dateDebut"></p> -->
+                            <!-- <p id="annonce-dateFin"></p> -->
 
                             <div class="spacer-10"></div>
 
@@ -193,7 +196,7 @@
                             </div>
                             <div class="spacer-30"></div>
                             <div class="de-box mb25">
-                                <form name="contactForm" id='contact_form' method="post">
+                                <form  id='reservation'>
                                     <h4>Reserver cette voiture</h4>
 
                                     <div class="spacer-20"></div>
@@ -201,7 +204,7 @@
                                     <div class="row">
                                         <div class="col-lg-12 mb20">
                                             <h5>Adresse de retrait</h5>
-                                            <input type="text" name="PickupLocation" onfocus="geolocate()" placeholder="Entrer votre addresse de retrait" id="autocomplete" autocomplete="off" class="form-control">
+                                            <input type="text" name="PickupLocation" onfocus="geolocate()" placeholder="Entrer votre addresse de retrait" id="adresseRetrait" autocomplete="off" class="form-control">
 
                                             <div class="jls-address-preview jls-address-preview--hidden">
                                                 <div class="jls-address-preview__header">
@@ -211,7 +214,7 @@
 
                                         <div class="col-lg-12 mb20">
                                             <h5>Adresse de depot</h5>
-                                            <input type="text" name="DropoffLocation" onfocus="geolocate()" placeholder="Entrer votre addresse de retrait" id="autocomplete2" autocomplete="off" class="form-control">
+                                            <input type="text" name="DropoffLocation" onfocus="geolocate()" placeholder="Entrer votre addresse de retrait" id="adresseDepot" autocomplete="off" class="form-control">
 
                                             <div class="jls-address-preview jls-address-preview--hidden">
                                                 <div class="jls-address-preview__header">
@@ -222,8 +225,8 @@
                                         <div class="col-lg-12 mb20">
                                             <h5>Date de retrait</h5>
                                             <div class="date-time-field">
-                                                <input type="text" id="date-picker" name="Pick Up Date" value="">
-                                                <select name="Pick Up Time" id="pickup-time">
+                                                <input type="datetime-local" id="date-retrait" name="Pick Up Date" value="">
+                                                <!-- <select name="Pick Up Time" id="heure-retrait">
                                                     <option selected disabled value="Select time">Heure</option>
                                                     <option value="00:00">00:00</option>
                                                     <option value="00:30">00:30</option>
@@ -273,16 +276,16 @@
                                                     <option value="22:30">22:30</option>
                                                     <option value="23:00">23:00</option>
                                                     <option value="23:30">23:30</option>
-                                                </select>
+                                                </select> -->
                                             </div>
                                         </div>
 
                                         <div class="col-lg-12 mb20">
-                                            <h5>Date de la livraison : </h5>
+                                            <h5>Date de depot : </h5>
  Date & Time</h5>
                                             <div class="date-time-field">
-                                                <input type="text" id="date-picker-2" name="Collection Date" value="">
-                                                <select name="Collection Time" id="collection-time">
+                                                <input type="datetime-local" id="date-depot" name="Collection Date" value="">
+                                                <!-- <select name="Collection Time" id="heure-depot">
                                                     <option selected disabled value="Select time">Heure</option>
                                                     <option value="00:00">00:00</option>
                                                     <option value="00:30">00:30</option>
@@ -332,7 +335,7 @@
                                                     <option value="22:30">22:30</option>
                                                     <option value="23:00">23:00</option>
                                                     <option value="23:30">23:30</option>
-                                                </select>
+                                                </select> -->
                                             </div>
                                         </div>
                                     </div>
@@ -356,66 +359,7 @@
 
         <a href="#" id="back-to-top"></a>
         
-        <!-- footer begin -->
-        <footer class="text-light">
-            <div class="container">
-              <div class="row g-custom-x">
-                <div class="col-lg-6">
-                  <div class="widget">
-                    <h5>A propos de Aridias Cars</h5>
-                    <p>
-                      Ardias Cars est une solution moderne de location de véhicules entre particuliers. Que vous soyez conducteur à la recherche d’un véhicule ou propriétaire souhaitant rentabiliser votre voiture, notre plateforme est faite pour vous.
-                    </p>
-                  </div>
-                </div>
-    
-                <div class="col-lg-3">
-                  <div class="widget">
-                    <h5>Contact Info</h5>
-                    <address class="s1">
-                      <span
-                        ><i class="id-color fa fa-map-marker fa-lg"></i>08 W 36th
-                        St, New York, NY 10001</span
-                      >
-                      <span
-                        ><i class="id-color fa fa-phone fa-lg"></i>+1 333 9296</span
-                      >
-                      <span
-                        ><i class="id-color fa fa-envelope-o fa-lg"></i
-                        ><a href="mailto:contact@example.com"
-                          >contact@example.com</a
-                        ></span
-                      >
-                      <span
-                        ><i class="id-color fa fa-file-pdf-o fa-lg"></i
-                        ><a href="#">Download Brochure</a></span
-                      >
-                    </address>
-                  </div>
-                </div>
-    
-                <div class="col-lg-3">
-                  <h5>Quick Links</h5>
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="widget">
-                        <ul>
-                          <li><a href="#">About</a></li>
-                          <li><a href="#">Blog</a></li>
-                          <li><a href="#">Careers</a></li>
-                          <li><a href="#">News</a></li>
-                          <li><a href="#">Partners</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-     
-              </div>
-            </div>
-           
-          </footer>
-        <!-- footer close -->
+  
         
     </div>
 
@@ -428,52 +372,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
-    <!-- <script>
-    $(document).ready(function () {
-        // 🔍 Récupérer l'ID depuis l'URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const annonceId = urlParams.get("id");
-    
-        if (!annonceId) {
-            $("#section-car-details").html("<p>ID de l'annonce non trouvé dans l'URL.</p>");
-            return;
-        }
-    
-        // 🔄 Appeler l'API backend pour récupérer les détails
-        $.ajax({
-            url: `http://localhost:5000/api/annonces/${annonceId}`,
-            method: "GET",
-            success: function (data) {
-                console.log(data);
-                // ✅ Injecter les données dans le HTML
-                $(".col-lg-6 .owl-carousel").html(
-                    data.images.map(img => `<div class="item"><img src="${img}" alt=""></div>`).join("")
-                );
-    
-                $(".col-lg-3 h3").first().text(data.titre);
-                $(".col-lg-3 p").first().text(data.description);
-    
-                const specHtml = `
-                    <div class="d-row"><span class="d-title">Carrosserie</span><span class="d-value">${data.carrosserie || '-'}</span></div>
-                    <div class="d-row"><span class="d-title">Sièges</span><span class="d-value">${data.sieges || '-'}</span></div>
-                    <div class="d-row"><span class="d-title">Portières</span><span class="d-value">${data.portes || '-'}</span></div>
-                    <div class="d-row"><span class="d-title">Type de carburant</span><span class="d-value">${data.carburant || '-'}</span></div>
-                    <div class="d-row"><span class="d-title">Année</span><span class="d-value">${data.annee || '-'}</span></div>
-                    <div class="d-row"><span class="d-title">Kilométrage</span><span class="d-value">${data.kilometrage || '-'}</span></div>
-                    <div class="d-row"><span class="d-title">Transmission</span><span class="d-value">${data.transmission || '-'}</span></div>
-                `;
-                $(".de-spec").html(specHtml);
-    
-                $(".de-price h3").text(`$${data.prix_par_jour}`);
-            },
-            error: function () {
-                $("#section-car-details").html("<p>Erreur lors du chargement de l'annonce.</p>");
-            }
-        });
-    });
-    </script> -->
-
-
+ 
 
 
 
@@ -494,11 +393,13 @@
             method: 'GET',
             success: function (data) {
                 const voiture = data.voiture;
-    console.log(voiture)
+    console.log(data)
                 $('#voiture-nom').text(voiture.nom);
                 $('#voiture-image').attr('src', `/uploads/${voiture.images[0]}`); // adapte le chemin selon ton backend
                 $('#voiture-marque').text(voiture.marque);
                 $('#voiture-modele').text(voiture.modele);
+                $('#annonce-dateDebut').text(data.dateDebut)
+                $('#annonce-dateFin').text(data.dateFin)
                 $('#voiture-km').text(voiture.kilometrage.toLocaleString());
                 $('#voiture-tarif').text(voiture.tarifParJour +'$');
                 $('#voiture-transmission').text(voiture.transmission);
@@ -507,7 +408,18 @@
                 $('#voiture-sieges').text(voiture.nombreDeSieges);
                 $('#voiture-portes').text(voiture.nombreDePortes);
                 $('#annonce-description').text(data.description);
+              
 
+                const conteneur = $("#conteneur-dates");
+                conteneur.empty(); // vide avant remplissage
+                const html = `<p>Disponible du  ${new Date(
+                          data.dateDebut
+                        ).toLocaleDateString()}  au ${new Date(
+                          data.dateFin
+                        ).toLocaleDateString()} </p>`
+
+
+                conteneur.append(html)
                   // Vider le slider avant d'injecter
             $('#slider-carousel').empty();
 
@@ -536,47 +448,160 @@ $('#slider-carousel').owlCarousel({
         });
     });
     </script>
-    
-
 
 
 <script>
-$(document).ready(function () {
-    $('#contact_form').on('submit', function (e) {
-        e.preventDefault(); // empêche le rechargement de la page
+    window.annonceId = "6818c2e1961a0ad1680f8a07"; // ← ID réel injecté côté serveur
+    window.isAuthenticated = true; // ← true si utilisateur connecté
+  </script>
+  
 
-        const formData = {
-            pickupLocation: $('input[name="PickupLocation"]').val(),
-            dropoffLocation: $('input[name="DropoffLocation"]').val(),
-            pickupDate: $('#date-picker').val(),
-            pickupTime: $('#pickup-time').val(),
-            collectionDate: $('#date-picker-2').val(),
-            collectionTime: $('#collection-time').val(),
-            carId: "bmw-m2-2020" // ou à remplacer dynamiquement si tu as un système d'ID
+<!-- <script>
+    $(document).ready(function () {
+      $("#reservation").on("submit", function (e) {
+        e.preventDefault();
+  
+        // 👤 Vérification de la connexion
+        const isAuthenticated = window.isAuthenticated; // ← à adapter à ton système (ex: défini via script serveur)
+        if (!isAuthenticated) {
+          alert("Vous devez être connecté pour réserver !");
+          return;
+        }
+  
+        // 📅 Collecte des données du formulaire
+        const dateDebut = $("#date-picker").val() + " " + $("#pickup-time").val();
+        const dateFin = $("#date-picker-2").val() + " " + $("#collection-time").val();
+  
+        const data = {
+          annonceId: window.annonceId, // ← doit être défini dans ton HTML avant ce script
+          dateDebut,
+          dateFin,
+        };
+  
+        // 📡 Envoi de la requête AJAX
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:5000/api/locations/creerReservation", // ← ton endpoint backend
+          headers:{
+            Authorization: "Bearer " + localStorage.getItem("token"),   // ← à adapter à ton système (ex: défini via script serveur)
+          },
+          data: JSON.stringify(data),
+          contentType: "application/json",
+          success: function (res) {
+            console.log("Réservation effectuée :", res);
+  
+            // ✅ Affiche le modal
+            $("#successModal").fadeIn();
+  
+            // ⏳ Redirection après 1 seconde
+            setTimeout(() => {
+              window.location.href = "index.html";
+            }, 1000);
+          },
+          error: function (err) {
+            console.error("Erreur :", err.responseJSON);
+            alert("Erreur : " + err.responseJSON?.message || "Une erreur est survenue.");
+          }
+        });
+      });
+    });
+  </script>
+   -->
+    
+   <!-- <script>
+
+   localStorage.setItem("user", JSON.stringify({
+    isAuthenticated: true,
+    role: "locataire", // ou "proprietaire"
+    token: "JWT_ou_autre", // utile pour l'authentification backend
+  }));
+  </script> -->
+
+
+   <script>
+    $(document).ready(function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const annonceId = urlParams.get('id');
+  
+      // 🔐 Récupération des infos depuis localStorage
+      const user = JSON.parse(localStorage.getItem("utilisateur"));
+      const token = localStorage.getItem("token");
+  
+      const userRole = user?.role;
+
+      console.log("user", user);
+      console.log("user", userRole);
+      console.log("isAuthenticated", token);
+  
+      // ⛔ Si propriétaire → cacher formulaire
+      if (userRole === "proprietaire") {
+        $("#reservation").hide();
+        return;
+      }
+  
+      $("#reservation").on("submit", function (e) {
+        e.preventDefault();
+  
+        // ❌ Non connecté
+        if (!token ) {
+          alert("Vous devez être connecté pour réserver !");
+          return;
+        }
+  
+        // ✅ Récupération des dates
+        const dateDebut = $("#date-retrait").val() 
+        const dateFin = $("#date-depot").val()
+        const adresseDepot = $("#adresseDepot").val();
+        const adresseRetrait = $("#adresseRetrait").val();
+  
+        console.log("dateDebut", dateDebut);
+        console.log("dateFin", dateFin);
+        console.log("adresseDepot", adresseDepot);
+        console.log("adresseRetrait", adresseRetrait);
+       
+        const data = {
+          annonceId,
+          dateDebut,
+          dateFin,
+          adresseRetrait,
+          adresseDepot
         };
 
-        // Afficher dans la console pour debug
-        console.log("Formulaire envoyé :", formData);
-
+        console.log("data pour la reservation" , data);
+  
+        // ✅ Envoi de la requête AJAX
+  
         $.ajax({
-            url: '/api/rentals', // À adapter selon ta route backend Express
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(formData),
-            success: function (response) {
-                alert('Réservation réussie ! Nous vous contacterons sous peu.');
-                $('#contact_form')[0].reset(); // Réinitialiser le formulaire
-            },
-            error: function (xhr, status, error) {
-                console.error("Erreur serveur :", xhr.responseText);
-                alert('Une erreur est survenue. Veuillez réessayer plus tard.');
-            }
+          type: "POST",
+          url: "http://localhost:5000/api/locations/creerReservation",
+          data: JSON.stringify(data),
+          contentType: "application/json",
+          headers: {
+            Authorization:"Bearer " + localStorage.getItem("token"),
+          },
+          success: function (res) {
+            $("#successModal").fadeIn();
+            setTimeout(() => {
+              window.location.href = "/dashboard";
+            }, 1000);
+          },
+          error: function (err) {
+            const message = err.responseJSON?.message || "Une erreur est survenue.";
+            alert("Erreur : " + message);
+          }
         });
+      });
     });
-});
-</script>
-
-    
+  </script>
+  
+<!-- Modal de succès -->
+<div id="successModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h4>Réservation réussie !</h4>
+      <p>Vous allez être redirigé vers votre tableau de bord...</p>
+    </div>
+  </div>
+  
 </body>
 
 </html>

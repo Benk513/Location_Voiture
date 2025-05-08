@@ -175,7 +175,7 @@
             <div class="container">
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <h1>Mes voitures</h1>
+                  <h1>Mes Annonces</h1>
                 </div>
                 <div class="clearfix"></div>
               </div>
@@ -236,15 +236,12 @@
               </div>
               <div class="col-lg-9">
                 <div class="row">
-                    <a class="btn-main mb-4" href="ajouter_voiture.html"
-                    >Ajouter une voiture</a
+                  <a class="btn-main mb-4" href="ajouter_annonce.html"
+                    >Ajouter une annonce</a
                   >
 
-
-
                   <div class="col-lg-12" id="mes-voitures-container">
-                
-                    <!-- <div class="de-item-list no-border mb30">
+                    <div class="de-item-list no-border mb30">
                       <div class="d-img">
                         <img
                           src="images/cars/jeep-renegade.jpg"
@@ -272,22 +269,15 @@
                       <div class="d-price">
                         Tarif journalier <span>$265</span>
                         <a class="button-danger" href="car-single.html"
-                          >Supprimer cv</a
+                          >Supprimer</a
                         >
                         <a class="btn-main" href="car-single.html">Modifier</a>
-                        <a class="btn-main" href="car-single.html">Creer une  annonce</a>
                       </div>
                       <div class="clearfix"></div>
-                    </div> -->
+                    </div>
                   </div>
-
-
                 </div>
-
               </div>
-
-             
-            
             </div>
           </div>
         </section>
@@ -295,101 +285,6 @@
       <!-- content close -->
 
       <a href="#" id="back-to-top"></a>
-
-      <!-- footer begin -->
-      <!-- <footer class="text-light">
-        <div class="container">
-          <div class="row g-custom-x">
-            <div class="col-lg-3">
-              <div class="widget">
-                <h5>About Rentaly</h5>
-                <p>
-                  Where quality meets affordability. We understand the
-                  importance of a smooth and enjoyable journey without the
-                  burden of excessive costs. That's why we have meticulously
-                  crafted our offerings to provide you with top-notch vehicles
-                  at minimum expense.
-                </p>
-              </div>
-            </div>
-
-            <div class="col-lg-3">
-              <div class="widget">
-                <h5>Contact Info</h5>
-                <address class="s1">
-                  <span
-                    ><i class="id-color fa fa-map-marker fa-lg"></i>08 W 36th
-                    St, New York, NY 10001</span
-                  >
-                  <span
-                    ><i class="id-color fa fa-phone fa-lg"></i>+1 333 9296</span
-                  >
-                  <span
-                    ><i class="id-color fa fa-envelope-o fa-lg"></i
-                    ><a href="mailto:contact@example.com"
-                      >contact@example.com</a
-                    ></span
-                  >
-                  <span
-                    ><i class="id-color fa fa-file-pdf-o fa-lg"></i
-                    ><a href="#">Download Brochure</a></span
-                  >
-                </address>
-              </div>
-            </div>
-
-            <div class="col-lg-3">
-              <h5>Quick Links</h5>
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="widget">
-                    <ul>
-                      <li><a href="#">About</a></li>
-                      <li><a href="#">Blog</a></li>
-                      <li><a href="#">Careers</a></li>
-                      <li><a href="#">News</a></li>
-                      <li><a href="#">Partners</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-3">
-              <div class="widget">
-                <h5>Social Network</h5>
-                <div class="social-icons">
-                  <a href="#"><i class="fa fa-facebook fa-lg"></i></a>
-                  <a href="#"><i class="fa fa-twitter fa-lg"></i></a>
-                  <a href="#"><i class="fa fa-linkedin fa-lg"></i></a>
-                  <a href="#"><i class="fa fa-pinterest fa-lg"></i></a>
-                  <a href="#"><i class="fa fa-rss fa-lg"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="subfooter">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="de-flex">
-                  <div class="de-flex-col">
-                    <a href="index.html">
-                      Copyright 2025 - Rentaly by Designesia
-                    </a>
-                  </div>
-                  <ul class="menu-simple">
-                    <li><a href="#">Terms &amp; Conditions</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer> -->
-      <!-- footer close -->
     </div>
 
     <!-- Javascript Files
@@ -399,14 +294,13 @@
     <script src="js/plugins.js"></script>
     <script src="js/designesia.js"></script>
 
-
     <script>
-        $(".deconnexion").click(function () {
-          alert("À bientôt !");
-          localStorage.clear();
-          window.location.href = "login.html";
-        });
-      </script>
+      $(".deconnexion").click(function () {
+        alert("À bientôt !");
+        localStorage.clear();
+        window.location.href = "login.html";
+      });
+    </script>
     <script>
       $(document).ready(function () {
         // Charger les données du profil
@@ -603,83 +497,109 @@
         });
       });
     </script> -->
-  
+
     <script>
-        $(document).ready(function () {
-          function chargerMesVoitures() {
-            $.ajax({
-              url: "http://localhost:5000/api/voitures/mesVoitures",
-              method: "GET",
-              dataType: "json",
-              headers: {
-                Authorization: "Bearer " + localStorage.getItem("token"),
-              },
-      
-              success: function (res) {
-                const $container = $("#mes-voitures-container");
-                $container.empty();
-                const voitures = res.data;
-      
-                if (!voitures.length) {
-                  $container.append("<p>Aucune voiture trouvée.</p>");
-                  return;
-                }
-      
-                voitures.forEach(function (voiture) {
-                  const image = voiture.images?.[0] || "default.jpg";
-      
-                  const html = `
-                    <div class="de-item-list no-border mb30" data-id="${voiture._id}">
+      $(document).ready(function () {
+        function chargerMesVoitures() {
+          $.ajax({
+            url: "http://localhost:5000/api/annonces/listerMesAnnonces",
+            method: "GET",
+            dataType: "json",
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+
+            success: function (res) {
+              const $container = $("#mes-voitures-container");
+              $container.empty();
+              const voitures = res.data;
+
+              console.log(voitures);
+
+              if (!voitures.length) {
+                $container.append("<p>Aucune voiture trouvée.</p>");
+                return;
+              }
+
+              voitures.forEach(function (voiture) {
+                const image = voiture.voiture.images?.[0] || "default.jpg";
+
+                const html = `
+                    <div class="de-item-list no-border mb30" data-id="${
+                      voiture._id
+                    }">
                       <div class="d-img">
-                        <img src="http://localhost:5000/uploads/voitures/${image}" class="img-fluid" alt="${voiture.nom}" />
+                        <img src="http://localhost:5000/uploads/voitures/${image}" class="img-fluid" alt="${
+                  voiture.nom
+                }" />
                       </div>
                       <div class="d-info">
                         <div class="d-text">
-                          <h4>${voiture.nom}</h4>
+                          <h4>${voiture.voiture.nom}</h4>
                           <div class="d-atr-group">
                             <ul class="d-atr">
-                              <li><span>Sièges:</span> ${voiture.nombreDeSieges}</li>
-                              <li><span>Marque:</span> ${voiture.marque}</li>
-                              <li><span>Portes:</span> ${voiture.nombreDePortes}</li>
-                              <li><span>Kilométrage:</span> ${voiture.kilometrage}</li>
-                              <li><span>Horsepower:</span> ${voiture.horsepower || "N/A"}</li>
-                              <li><span>Modèle:</span> ${voiture.modele}</li>
-                              <li><span>Transmission:</span> ${voiture.transmission}</li>
-                              <li><span>Carburant:</span> ${voiture.carburant}</li>
+                              <li><span>Date de debut:</span> ${new Date(
+                                voiture.dateDebut
+                              ).toLocaleDateString("fr-FR", {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                              })}</li>
+                              <li><span>Date de fin:</span> ${new Date(
+                                voiture.dateFin
+                              ).toLocaleDateString("fr-FR", {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                              })}</li>
+                              <li><span>Lieu:</span> ${voiture.lieu}</li>
+                              <li><span>Description:</span> ${
+                                voiture.description || "N/A"
+                              }</li>
                             </ul>
                           </div>
                         </div>
                       </div>
                       <div class="d-price">
-                        Tarif journalier <span>$${voiture.tarifParJour}</span>
-                        <a href="#" class="bg-danger text-white btn-supprimer-voiture" data-id="${voiture._id}">Supprimer</a>
-                        <a class="" href="/voiture/${voiture._id}/modifier">Modifier</a>
-                        <a class="btn-main" href="ajouter_annonce.html?id=${voiture._id}">Creer une annonce</a>
+                        Tarif journalier <span>$${
+                          voiture.voiture.tarifParJour
+                        }</span>
+                        <a href="#" class="button-danger btn-supprimer-voiture" data-id="${
+                          voiture._id
+                        }">Supprimer</a>
+                        <a class="btn-main" href="/voiture/${
+                          voiture._id
+                        }/modifier">Modifier</a>
                       </div>
                       <div class="clearfix"></div>
                     </div>
                   `;
-                  $container.append(html);
-                });
-              },
-              error: function () {
-                console.error("Erreur lors du chargement des voitures du propriétaire.");
-                $("#mes-voitures-container").html("<p>Erreur de chargement.</p>");
-              },
-            });
-          }
-      
-          // Chargement initial
-          chargerMesVoitures();
-      
-          // Suppression en délégation
-          $("#mes-voitures-container").on("click", ".btn-supprimer-voiture", function (e) {
+                $container.append(html);
+              });
+            },
+            error: function () {
+              console.error(
+                "Erreur lors du chargement des voitures du propriétaire."
+              );
+              $("#mes-voitures-container").html("<p>Erreur de chargement.</p>");
+            },
+          });
+        }
+
+        // Chargement initial
+        chargerMesVoitures();
+
+        // Suppression en délégation
+        $("#mes-voitures-container").on(
+          "click",
+          ".btn-supprimer-voiture",
+          function (e) {
             e.preventDefault();
             const id = $(this).data("id");
-      
+
             if (confirm("Êtes-vous sûr de vouloir supprimer cette voiture ?")) {
               $.ajax({
-                url: `http://localhost:5000/api/voitures/${id}`,
+                url: `http://localhost:5000/api/annonces//${id}`,
                 method: "DELETE",
                 headers: {
                   Authorization: "Bearer " + localStorage.getItem("token"),
@@ -693,9 +613,9 @@
                 },
               });
             }
-          });
-        });
-      </script>
-      
-</body>
+          }
+        );
+      });
+    </script>
+  </body>
 </html>

@@ -2,10 +2,14 @@ import { Annonce } from "../models/annonce.model.js";
 import { Voiture } from "../models/voiture.model.js";
 import catchAsync from "../utils/catchAsync.js";
 
- 
-
 export const creerAnnonce = catchAsync(async (req, res, next) => {
-  const { voiture: voitureId, dateDebut, dateFin, description ,lieu } = req.body;
+  const {
+    voiture: voitureId,
+    dateDebut,
+    dateFin,
+    description,
+    lieu,
+  } = req.body;
 
   const voiture = await Voiture.findById(voitureId);
   if (!voiture) {
@@ -13,17 +17,36 @@ export const creerAnnonce = catchAsync(async (req, res, next) => {
   }
 
   if (voiture.proprietaire.toString() !== req.user.id) {
-    return next(new AppError("Vous ne pouvez créer une annonce que pour votre propre voiture.", 403));
+    return next(
+      new AppError(
+        "Vous ne pouvez créer une annonce que pour votre propre voiture.",
+        403
+      )
+    );
   }
 
   if (new Date(dateDebut) >= new Date(dateFin)) {
-    return next(new AppError("La date de début doit être antérieure à la date de fin.", 400));
+    return next(
+      new AppError(
+        "La date de début doit être antérieure à la date de fin.",
+        400
+      )
+    );
   }
 
   // Optionnel : vérifier les doublons
-  const existing = await Annonce.findOne({ voiture: voitureId, dateDebut, dateFin });
+  const existing = await Annonce.findOne({
+    voiture: voitureId,
+    dateDebut,
+    dateFin,
+  });
   if (existing) {
-    return next(new AppError("Une annonce existe déjà pour cette voiture à ces dates.", 400));
+    return next(
+      new AppError(
+        "Une annonce existe déjà pour cette voiture à ces dates.",
+        400
+      )
+    );
   }
 
   const annonce = await Annonce.create({
@@ -32,7 +55,7 @@ export const creerAnnonce = catchAsync(async (req, res, next) => {
     dateDebut,
     dateFin,
     description,
-    lieu
+    lieu,
   });
 
   res.status(201).json({
@@ -41,17 +64,16 @@ export const creerAnnonce = catchAsync(async (req, res, next) => {
   });
 });
 
-
-
-
+//  lister toutes les annonces
 export const listerAnnonces = catchAsync(async (req, res, next) => {
-  const { lieu, dateDebut, dateFin, prixMin, prixMax, sieges, carburant } = req.query;
+  const { lieu, dateDebut, dateFin, prixMin, prixMax, sieges, carburant } =
+    req.query;
 
   // Pipeline MongoDB
   const pipeline = [
     // 1. On ne prend que les annonces actives
     {
-      $match: { statut: "actif" },
+      $match: { statut: "disponible" },
     },
     // 2. On joint les voitures
     {
@@ -76,8 +98,10 @@ export const listerAnnonces = catchAsync(async (req, res, next) => {
 
   if (prixMin || prixMax) {
     voitureFilters["voiture.tarifParJour"] = {};
-    if (prixMin) voitureFilters["voiture.tarifParJour"].$gte = parseFloat(prixMin);
-    if (prixMax) voitureFilters["voiture.tarifParJour"].$lte = parseFloat(prixMax);
+    if (prixMin)
+      voitureFilters["voiture.tarifParJour"].$gte = parseFloat(prixMin);
+    if (prixMax)
+      voitureFilters["voiture.tarifParJour"].$lte = parseFloat(prixMax);
   }
 
   if (sieges) {
@@ -119,17 +143,51 @@ export const listerAnnonces = catchAsync(async (req, res, next) => {
     resultats: annonces.length,
     data: annonces,
   });
-
 });
 
+//  lister les annoonces du proprio
+export const listerAnnoncesProprio = catchAsync(async (req, res, next) => {
+  // const proprioId = req.params.id;
+
+  const proprioId = req.user._id;
+
+  const annonces = await Annonce.find({ proprietaire: proprioId }).populate(
+    "voiture"
+  );
+  res.status(200).json({
+    status: "succes",
+    resultats: annonces.length,
+    data: annonces,
+  });
+});
+
+// consulter une annonce par le proprietaire
+export const consulterAnnonceParProprietaire = catchAsync(
+  async (req, res, next) => {
+    const annonceId = req.params.id;
+
+    const annonce = await Annonce.findOne({
+      _id: annonceId,
+      proprietaire: req.user.id,
+    }).populate("voiture");
+
+    if (!annonce) {
+      return next(new AppError("Annonce introuvable", 404));
+    }
+
+    res.status(200).json({
+      status: "succes",
+      data: annonce,
+    });
+  }
+);
 
 //lister les 6 recentes annonces
 // controllers/annonceController.js
 
-
 export const listerRecentAnnonces = async (req, res) => {
   try {
-    const annonces = await Annonce.find()
+    const annonces = await Annonce.find({statut:"disponible"})
       .sort({ createdAt: -1 })
       .limit(6)
       .populate("voiture"); // pour avoir accès à voiture.nom, voiture.images, etc.
@@ -140,9 +198,6 @@ export const listerRecentAnnonces = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur" });
   }
 };
-
-
-
 
 export const detailAnnonce = catchAsync(async (req, res, next) => {
   try {
@@ -182,9 +237,8 @@ export const supprimerAnnonce = catchAsync(async (req, res, next) => {
   res.status(200).json({ message: "Annonce supprimée" });
 });
 
-
-
-
-
-
 // GET /api/annonces?lieu=sousse&prixMin=200&prixMax=500&sieges=4,5&carburant=essence&dateDebut=2025-05-10&dateFin=2025-05-15
+
+// ajouter la logique d'empecher la publication d'une annonce si elle est dans le futur
+// ajouter la logique de validation des dates de début et de fin
+// ajouter la logique de

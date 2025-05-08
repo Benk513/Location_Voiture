@@ -4,6 +4,7 @@ import {
   creerAnnonce,
   detailAnnonce,
   listerAnnonces,
+  listerAnnoncesProprio,
   listerRecentAnnonces,
   mettreAJourAnnonce,
   supprimerAnnonce,
@@ -14,6 +15,13 @@ const router = express.Router();
 // CRUD
 router.post("/", proteger, restreindreA("proprietaire"), creerAnnonce);
 router.get("/", listerAnnonces);
+router.get(
+  "/listerMesAnnonces",
+  proteger,
+  restreindreA("proprietaire"),
+  listerAnnoncesProprio
+);
+
 router.get("/recentes", listerRecentAnnonces);
 router.get("/:id", detailAnnonce);
 router.patch(

@@ -105,13 +105,13 @@
                     </li>
                   </ul>
                 </div>
-                <!-- <div class="de-flex-col">
+                <div class="de-flex-col" id="loginButton">
                   <div class="menu_side_area">
                     <a href="login.html" class="btn-main">Se connecter</a>
                     <span id="menu-btn"></span>
                   </div>
-                </div> -->
-                <div class="de-flex-col">
+                </div>
+                <div class="de-flex-col" id="profileButton">
                   <div class="menu_side_area">
                     <div class="de-login-menu">
                       <span id="de-click-menu-profile" class="de-menu-profile">
@@ -153,8 +153,8 @@
                               ><i class="fa fa-car"></i>My Favorite Cars</a
                             >
                           </li>
-                          <li>
-                            <a href="login.html"
+                          <li class="deconnexion">
+                            <a href="#"
                               ><i class="fa fa-sign-out"></i>Se deconnecter
                             </a>
                           </li>
@@ -541,14 +541,30 @@
                           <i class="fa fa-heart"></i><span>0</span>
                         </div>
                         <div class="d-atr-group">
-                          <span class="d-atr"><img src="images/icons/1-green.svg" alt="">${voiture.nombreDeSieges}</span>
-                          <span class="d-atr"><img src="images/icons/2-green.svg" alt="">${voiture.nombreDePortes}</span>
-                          <span class="d-atr"><img src="images/icons/3-green.svg" alt="">${voiture.transmission}</span>
-                          <span class="d-atr"><img src="images/icons/4-green.svg" alt="">${voiture.marque}</span>
+                          <span class="d-atr"><img src="images/icons/1-green.svg" alt="">${
+                            voiture.nombreDeSieges
+                          }</span>
+                          <span class="d-atr"><img src="images/icons/2-green.svg" alt="">${
+                            voiture.nombreDePortes
+                          }</span>
+                          <span class="d-atr"><img src="images/icons/3-green.svg" alt="">${
+                            voiture.transmission
+                          }</span>
+                          <span class="d-atr"><img src="images/icons/4-green.svg" alt="">${
+                            voiture.marque
+                          }</span>
                         </div>
+                        Disponible du ${new Date(
+                          annonce.dateDebut
+                        ).toLocaleDateString()} au ${new Date(
+                annonce.dateFin
+              ).toLocaleDateString()}
+ 
                         <div class="d-price">
                           A partir de <span>$${voiture.tarifParJour}</span>
-                          <a class="btn-main" href="car-single.html?id=${annonce._id}">Reserver maintenant</a>
+                          <a class="btn-main" href="car-single.html?id=${
+                            annonce._id
+                          }">Reserver maintenant</a>
                         </div>
                       </div>
                     </div>
@@ -573,6 +589,59 @@
       // Chargement initial
       $(document).ready(function () {
         chargerAnnonces();
+      });
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        // Charger les données du profil
+
+        const userProfileUrl = "http://localhost:5000/uploads/utilisateurs/";
+
+        if (!localStorage.getItem("token")) {
+          $("#loginButton").show();
+          $("#profileButton").hide();
+        } else {
+          $("#loginButton").hide();
+          $("#profileButton").show();
+        }
+        $.ajax({
+          url: "http://localhost:5000/api/utilisateurs/obtenirMonProfil",
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+          success: function (user) {
+            const profileUrl = userProfileUrl + user?.data.photo;
+            console.log(user?.data.photo);
+            $(".nom").text(user?.data?.nom);
+            $(".email").text(user?.data.email);
+            $(".photo").attr("src", profileUrl);
+            $("#photo").attr("src", profileUrl);
+
+            // Affichage conditionnel
+            if (
+              user?.data.role === "admin" ||
+              user?.data.role === "ambassadeur" ||
+              user?.data.role === "etudiant"
+            ) {
+              $("#info-administrative").hide(); // Masquer mot de passe
+              $("#info-academique").hide(); // Masquer mot de passe
+              $("#saveBtn").hide(); // Masquer bouton "Enregistrer"
+            }
+          },
+          error: function () {
+            console.log("Erreur lors du chargement du profil !");
+          },
+        });
+      });
+    </script>
+
+    <script>
+      $(".deconnexion").click(function () {
+        alert("À bientôt !");
+        localStorage.clear();
+        window.location.href = "index.html";
       });
     </script>
   </body>

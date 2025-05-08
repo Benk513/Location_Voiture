@@ -1,4 +1,4 @@
-import mongoose  from "mongoose";
+import mongoose from "mongoose";
 
 const annonceSchema = new mongoose.Schema(
   {
@@ -12,7 +12,7 @@ const annonceSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    
+
     dateDebut: {
       type: Date,
       required: true,
@@ -24,11 +24,11 @@ const annonceSchema = new mongoose.Schema(
     lieu: {
       type: String,
     },
-  
+
     statut: {
       type: String,
-      enum: ["actif", "inactif"],
-      default: "actif",
+      enum: ["reserve", "disponible"],
+      default: "reserve",
     },
     description: {
       type: String,

@@ -1,3 +1,9 @@
+<script>
+  const token = localStorage.getItem("token");
+  if (token) {
+    window.location.href = "index.html"; // Redirige vers page acceuil
+  }
+</script>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -268,6 +274,7 @@
               // 🔐 Stockage des infos
               localStorage.setItem("token", result.token);
               localStorage.setItem("utilisateur", JSON.stringify(result.data));
+              localStorage.setItem("role", result.data.role);
       
               // 🔁 Redirection selon le rôle
               switch (result.data.role) {
