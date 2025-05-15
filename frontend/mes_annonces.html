@@ -236,9 +236,9 @@
               </div>
               <div class="col-lg-9">
                 <div class="row">
-                  <a class="btn-main mb-4" href="ajouter_annonce.html"
+                  <!-- <a class="btn-main mb-4" href="ajouter_annonce.html"
                     >Ajouter une annonce</a
-                  >
+                  > -->
 
                   <div class="col-lg-12" id="mes-voitures-container">
                     <div class="de-item-list no-border mb30">
@@ -262,6 +262,7 @@
                               <li><span>Modele:</span></li>
                               <li><span>Transmission:</span></li>
                               <li><span>Carburant:</span></li>
+                              <li><span>Statut:</span></li>
                             </ul>
                           </div>
                         </div>
@@ -542,14 +543,14 @@
                                 voiture.dateDebut
                               ).toLocaleDateString("fr-FR", {
                                 year: "numeric",
-                                month: "short",
+                                month: "numeric",
                                 day: "numeric",
                               })}</li>
                               <li><span>Date de fin:</span> ${new Date(
                                 voiture.dateFin
                               ).toLocaleDateString("fr-FR", {
                                 year: "numeric",
-                                month: "short",
+                                month: "numeric",
                                 day: "numeric",
                               })}</li>
                               <li><span>Lieu:</span> ${voiture.lieu}</li>

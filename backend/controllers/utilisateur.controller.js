@@ -5,7 +5,9 @@ import { APIFiltres } from "../utils/apiFiltres.js";
 
 import multer from "multer";
 import sharp from "sharp";
-
+import { Voiture } from "../models/voiture.model.js";
+import { Annonce } from "../models/annonce.model.js";
+import Location  from "../models/location.model.js";
 const multerStockage = multer.memoryStorage();
 
 const multerFilter = (req, file, cb) => {
@@ -161,8 +163,8 @@ export const miseAJourProfile = catchAsync(async (req, res, next) => {
     req.user.id,
     filteredBody,
     {
-      new: true, // new means will create a new document and kill the previous one
-      runValidators: true,
+      new: false, // new means will create a new document and kill the previous one
+      runValidators: false,
     }
   );
 
@@ -172,3 +174,78 @@ export const miseAJourProfile = catchAsync(async (req, res, next) => {
     data: updatedUser,
   });
 });
+
+// export const getStatistiquesProprietaire = catchAsync(async (req, res, next) => {
+//   const userId = req.user._id;
+
+//   // 1. Total des voitures
+//   const totalVoitures = await Voiture.countDocuments({ proprietaire: userId });
+
+//   // 2. Total des annonces
+//   const totalAnnonces = await Annonce.countDocuments({ proprietaire: userId });
+
+//   // 3. Locations effectuées (statut "acceptee")
+//   const locations = await Location.find({ statut: "acceptee" }).populate("annonce");
+
+//   const locationsEffectuees = locations.filter(loc =>
+//     loc.annonce?.proprietaire?.toString() === userId.toString()
+//   );
+
+//   // 4. Montant total gagné
+//   const montantTotalGagne = locationsEffectuees.reduce((total, loc) => {
+//     return total + (loc.prixTotal || 0); // prixTotal doit exister dans ton modèle Location
+//   }, 0);
+
+//   res.status(200).json({
+//     status: "succès",
+//     data: {
+//       totalVoitures,
+//       totalAnnonces,
+//       totalLocations: locationsEffectuees.length,
+//       montantTotalGagne
+//     }
+//   });
+// });
+
+export const getStatistiquesProprietaire = catchAsync(
+  async (req, res, next) => {
+    const userId = req.user._id;
+
+    // Total des voitures du propriétaire
+    const totalVoitures = await Voiture.countDocuments({
+      proprietaire: userId,
+    });
+
+    // Total des annonces du propriétaire
+    const totalAnnonces = await Annonce.countDocuments({
+      proprietaire: userId,
+    });
+
+    // Locations acceptées liées aux annonces du propriétaire
+    const locationsAcceptees = await Location.find({
+      statut: "acceptee",
+    }).populate("annonce");
+
+    // Filtrer uniquement les locations dont l'annonce appartient à ce propriétaire
+    const locationsProprietaire = locationsAcceptees.filter(
+      (location) =>
+        location.annonce &&
+        location.annonce.proprietaire.toString() === userId.toString()
+    );
+
+    // Montant total gagné
+    const montantTotalGagne = locationsProprietaire.reduce((total, loc) => {
+      return total + (loc.montantTotal || 0);
+    }, 0);
+
+    res.status(200).json({
+      status: "succès",
+      data: {
+        totalVoitures,
+        totalAnnonces,
+        totalLocations: locationsProprietaire.length,
+        montantTotalGagne,
+      },
+    });
+  }
+);

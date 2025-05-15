@@ -89,6 +89,7 @@ import { Annonce } from "../models/annonce.model.js";
 
 import { isValid, parseISO } from "date-fns";
 
+// faire une demande de location🟦
 export const creerDemandeLocation = catchAsync(async (req, res, next) => {
   const { annonceId, dateDebut, dateFin, adresseDepot, adresseRetrait } =
     req.body;
@@ -142,8 +143,7 @@ export const creerDemandeLocation = catchAsync(async (req, res, next) => {
     adresseRetrait,
   });
 
-  annonce.statut = "reserve";
-  await annonce.save();
+ 
 
   res.status(201).json({
     status: "succès",
@@ -156,7 +156,7 @@ function calculerMontantTotal(tarif, debut, fin) {
   return nbJours * tarif;
 }
 
-// GET /api/locations/mes-demandes
+// GET /api/locations/mes-demandes 🟦
 export const listerDemandesProprio = catchAsync(async (req, res, next) => {
   const annonces = await Annonce.find({ proprietaire: req.user._id });
   const ids = annonces.map((a) => a._id);
@@ -176,6 +176,27 @@ export const listerDemandesProprio = catchAsync(async (req, res, next) => {
 });
 
 // PATCH /api/locations/:id
+// export const traiterDemandeLocation = catchAsync(async (req, res, next) => {
+//   const location = await Location.findById(req.params.id).populate("annonce");
+
+//   if (
+//     !location ||
+//     location.annonce.proprietaire.toString() !== req.user._id.toString()
+//   ) {
+//     return next(new AppError("Accès non autorisé", 403));
+//   }
+
+//   location.statut = req.body.action === "accepter" ? "acceptee" : "refusee";
+//   await location.save();
+
+//     annonce.statut = "reserve";
+//    await annonce.save();
+
+//   res.status(200).json({ status: "succès", data: location });
+// });
+
+
+// PATCH /api/locations/:id
 export const traiterDemandeLocation = catchAsync(async (req, res, next) => {
   const location = await Location.findById(req.params.id).populate("annonce");
 
@@ -186,11 +207,25 @@ export const traiterDemandeLocation = catchAsync(async (req, res, next) => {
     return next(new AppError("Accès non autorisé", 403));
   }
 
-  location.statut = req.body.action === "accepter" ? "acceptee" : "refusee";
+  const action = req.body.action;
+
+  // Mettre à jour le statut de la demande
+  location.statut = action === "accepter" ? "acceptee" : "refusee";
   await location.save();
 
-  res.status(200).json({ status: "succès", data: location });
+  // Si accepté, mettre aussi à jour le statut de l'annonce à "reserve"
+  if (action === "accepter") {
+    location.annonce.statut = "reserve"; // Par exemple : "disponible" ou "reserve"
+    await location.annonce.save();
+  }
+
+  res.status(200).json({
+    status: "succès",
+    message: `La demande a été ${action === "accepter" ? "acceptée" : "refusée"}.`,
+    data: location,
+  });
 });
+
 
 // Liste toutes les locations sur la plateforme
 export const listerLocations = catchAsync(async (req, res, next) => {
@@ -245,58 +280,6 @@ export const marquerCommePayer = catchAsync(async (req, res, next) => {
     .status(200)
     .json({ status: "succes", message: "Paiement validé, location payée." });
 });
-
-// // PATCH /api/locations/:id/decision
-// export const traiterDemandeLocation = catchAsync(async (req, res, next) => {
-//   const { action } = req.body;
-
-//   if (!["accepter", "refuser"].includes(action)) {
-//     return next(new AppError("Action invalide (accepter/refuser)", 400));
-//   }
-
-//   const location = await Location.findById(req.params.id).populate({
-//     path: "annonce",
-//     select: "proprietaire dateDebut dateFin",
-//   });
-
-//   if (!location) return next(new AppError("Location introuvable", 404));
-//   if (location.annonce.proprietaire.toString() !== req.user._id.toString()) {
-//     return next(new AppError("Non autorisé", 403));
-//   }
-
-//   if (location.statut !== "en_attente") {
-//     return next(new AppError("Cette demande a déjà été traitée.", 400));
-//   }
-
-//   if (action === "accepter") {
-//     // ✅ Vérifier les conflits avant de l'accepter
-//     const conflits = await Location.find({
-//       annonce: location.annonce._id,
-//       statut: "acceptee",
-//       $or: [
-//         {
-//           dateDebut: { $lte: location.dateFin },
-//           dateFin: { $gte: location.dateDebut },
-//         },
-//       ],
-//     });
-
-//     if (conflits.length > 0) {
-//       return next(new AppError("Conflit de dates avec une autre location.", 409));
-//     }
-
-//     location.statut = "acceptee";
-//   } else {
-//     location.statut = "refusee";
-//   }
-
-//   await location.save();
-
-//   res.status(200).json({
-//     status: "succès",
-//     data: location,
-//   });
-// });
 
 // GET /api/locations/mes-reservations
 export const listerMesReservations = catchAsync(async (req, res, next) => {

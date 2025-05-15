@@ -41,7 +41,15 @@ const creerEtEnvoyerToken = (utilisateur, statusCode, message, res) => {
 
 // registerUser	Inscription d’un nouvel utilisateur (Locataire ou Propriétaire)	POST	/api/users/register
 export const inscription = catchAsync(async (req, res, next) => {
-  const { nom, email, motDePasse, confirmationMotDePasse ,role } = req.body;
+  const {
+    nom,
+    email,
+    motDePasse,
+    confirmationMotDePasse,
+    role,
+    telephone,
+    adresse,
+  } = req.body;
 
   if (!nom || !email || !motDePasse || !confirmationMotDePasse)
     return next(
@@ -50,13 +58,15 @@ export const inscription = catchAsync(async (req, res, next) => {
         404
       )
     );
-    
+
   const nouvelUtilisateur = new Utilisateur({
     nom,
     email,
     motDePasse,
     confirmationMotDePasse,
-    role
+    role,
+    telephone,
+    adresse,
   });
   await nouvelUtilisateur.save();
 
@@ -82,7 +92,6 @@ export const connexion = catchAsync(async (req, res, next) => {
     "+motDePasse"
   );
 
-
   if (
     !utilisateur ||
     !(await utilisateur.correctMotDePasse(motDePasse, utilisateur.motDePasse))
@@ -97,8 +106,6 @@ export const connexion = catchAsync(async (req, res, next) => {
   );
 });
 
-
-
 export const deconnexion = catchAsync(async (req, res, next) => {
   //as we cannot delete the cookie in the browser due to the httpOnly to true , we must send a false value to log out
   res.cookie("jwt", "loggedout", {
@@ -109,7 +116,6 @@ export const deconnexion = catchAsync(async (req, res, next) => {
     .status(200)
     .json({ status: "success", message: "Déconnexion effectué avec success" });
 });
-
 
 export const proteger = catchAsync(async (req, res, next) => {
   //1.get token and check if it's there
@@ -160,4 +166,4 @@ export const restreindreA = (...roles) => {
     }
     next();
   };
-}
+};

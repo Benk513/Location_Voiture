@@ -1,5 +1,6 @@
 import { Annonce } from "../models/annonce.model.js";
 import { Voiture } from "../models/voiture.model.js";
+import AppError from "../utils/appError.js";
 import catchAsync from "../utils/catchAsync.js";
 
 export const creerAnnonce = catchAsync(async (req, res, next) => {
@@ -187,7 +188,7 @@ export const consulterAnnonceParProprietaire = catchAsync(
 
 export const listerRecentAnnonces = async (req, res) => {
   try {
-    const annonces = await Annonce.find({statut:"disponible"})
+    const annonces = await Annonce.find({ statut: "disponible" })
       .sort({ createdAt: -1 })
       .limit(6)
       .populate("voiture"); // pour avoir accès à voiture.nom, voiture.images, etc.

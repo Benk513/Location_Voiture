@@ -23,7 +23,10 @@
     <link href="css/plugins.css" rel="stylesheet" type="text/css" />
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <link href="css/coloring.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.12.1/font/bootstrap-icons.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.12.1/font/bootstrap-icons.min.css"
+    />
     <!-- color scheme -->
     <link
       id="colors"
@@ -479,8 +482,6 @@
               </div>
 
               <div class="col-lg-9">
-              
-
                 <div class="card p-4 rounded-5 mb25">
                   <h4>Mes Locations</h4>
 
@@ -563,21 +564,17 @@
                           </div>
                         </td>
                         <td>
-                           
                           <div class="badge rounded-pill bg-success">
                             <i class="bi bi-check-circle-fill"></i>
                           </div>
                           <div class="badge rounded-pill bg-danger">
-                            <i class="bi bi-x-circle"></i>
+                            <i class="bi bi-x-circle-fill"></i>
                           </div>
                         </td>
                       </tr>
-                       
                     </tbody>
                   </table>
                 </div>
-
-                
               </div>
             </div>
           </div>
@@ -685,7 +682,148 @@
 
     <!-- Javascript Files
     ================================================== -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/designesia.js"></script>
+
+    
+    <script>
+        $(".deconnexion").click(function () {
+          alert("À bientôt !");
+          localStorage.clear();
+          window.location.href = "login.html";
+        });
+      </script>
+
+
+    <script>
+      $(document).ready(function () {
+        const user = JSON.parse(localStorage.getItem("utilisateur"));
+        const token = localStorage.getItem("token")
+
+        if (!token) {
+          alert("Vous devez être connecté.");
+          return;
+        }
+
+        // Fonction pour formatter une date proprement
+        function formatDate(dateString) {
+          const options = { year: "numeric", month: "long", day: "numeric" };
+          return new Date(dateString).toLocaleDateString("fr-FR", options);
+        }
+
+        // Fonction pour charger les données
+        function chargerLocations() {
+          $.ajax({
+            url: "http://localhost:5000/api/locations/mesDemandesDeLocations",
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            success: function (res) {
+              const tbody = $(".de-table tbody");
+              tbody.empty(); // On vide le tableau
+const locations = res.data;
+              console.log(res)
+
+              if (locations.length === 0) {
+                tbody.append(`
+                    <tr>
+                      <td colspan="8" class="text-center">Aucune demande de location trouvée.</td>
+                    </tr>
+                  `);
+                return;
+              }
+
+              locations.forEach((loc) => {
+                const statutBadge =
+                  {
+                    en_attente: `<div class="badge rounded-pill bg-warning text-dark">En attente</div>`,
+                    approuvee: `<div class="badge rounded-pill bg-success">Approuvée</div>`,
+                    rejetee: `<div class="badge rounded-pill bg-danger">Rejetée</div>`,
+                    terminee: `<div class="badge rounded-pill bg-secondary">Terminée</div>`,
+                  }[loc.statut] || loc.statut;
+
+                const actions =
+                  loc.statut === "en_attente"
+                    ? `
+                      <div class="badge rounded-pill bg-success action-valider" data-id="${loc._id}">
+                        <i class="bi bi-check-circle-fill"></i>
+                      </div>
+                      <div class="badge rounded-pill bg-danger action-rejeter" data-id="${loc._id}">
+                        <i class="bi bi-x-circle-fill"></i>
+                      </div>
+                    `
+                    : `<span class="text-muted">-</span>`;
+
+                tbody.append(`
+                    <tr>
+                      <td><div class="badge bg-gray-100 text-dark">#${loc._id.slice(
+                        -5
+                      )}</div></td>
+                      <td><span class="bold">${
+                        loc.annonce?.voiture?.nom || "N/A"
+                      }</span></td>
+                      <td>${loc?.adresseRetrait || "N/A"}</td>
+                      <td>${loc?.adresseDepot || "N/A"}</td>
+                      <td>${formatDate(loc.dateDebut)}</td>
+                      <td>${formatDate(loc.dateFin)}</td>
+                      <td>${statutBadge}</td>
+                      <td>${actions}</td>
+                    </tr>
+                  `);
+              });
+            },
+            error: function (err) {
+              alert("Erreur lors du chargement des locations.");
+              console.error(err);
+            },
+          });
+        }
+
+        // Fonction pour traiter (accepter ou rejeter) une demande
+        function traiterDemande(locationId, action) {
+          const confirmation = confirm(
+            action === "accepter"
+              ? "Accepter cette demande ?"
+              : "Rejeter cette demande ?"
+          );
+          if (!confirmation) return;
+
+          $.ajax({
+            url: `http://localhost:5000/api/locations/traiterDemandeLocation/${locationId}`,
+            method: "PATCH",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            data: JSON.stringify({ statut: action }),
+            success: function () {
+              alert("Demande traitée avec succès !");
+              chargerLocations(); // Recharger les données
+            },
+            error: function (err) {
+              const msg =
+                err.responseJSON?.message || "Une erreur est survenue.";
+              alert("Erreur : " + msg);
+            },
+          });
+        }
+
+        // Charger les données au chargement
+        chargerLocations();
+
+        // Écouteurs d'événement délégués
+        $(document).on("click", ".action-valider", function () {
+          const id = $(this).data("id");
+          traiterDemande(id, "accepter");
+        });
+
+        $(document).on("click", ".action-rejeter", function () {
+          const id = $(this).data("id");
+          traiterDemande(id, "rejeter");
+        });
+      });
+    </script>
   </body>
 </html>

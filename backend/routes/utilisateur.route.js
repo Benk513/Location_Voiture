@@ -15,7 +15,9 @@ import {
   miseAJourProfile,
   televerserPhotoProfil,
   redimensionerPhotoUtilisateur,
+  getStatistiquesProprietaire,
 } from "../controllers/utilisateur.controller.js";
+import { uploadPhoto } from "../middlewares/uploadPhoto.js";
 
 const router = express.Router();
 
@@ -36,6 +38,11 @@ router.patch(
   miseAJourProfile
 );
 router.get("/obtenirMonProfil", proteger, obtenirMonProfil);
+router.patch("/mettreAjourMonProfil", proteger, uploadPhoto, miseAJourProfile);
+
+
+
+router.get("/statistiquesProprietaire", proteger, restreindreA("proprietaire"), getStatistiquesProprietaire);
 
 // administrer les utlisateurs par admin
 router

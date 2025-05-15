@@ -118,10 +118,7 @@
                                             <ul class="menu-col">
                                                 <li><a href="account-dashboard.html"><i class="fa fa-home"></i>Tableau de bord</a></li>
                                                 <li><a href="account-profile.html"><i class="fa fa-user"></i>Mon profile</a></li>
-                                                <li><a href="mes_voitures.html"><i class="fa fa-car"></i>Mes voitures</a></li>
-                                                <li><a href="mes_annonces.html"><i class="fa fa-car"></i>Mes Annocnes</a></li>
-                                                <li><a href="account-booking.html"><i class="fa fa-calendar"></i>Mes locaitons</a></li>
-                                                <!-- <li><span class="deconnexion"><i class="fa fa-sign-out"></i> Se deconnecter</span></li> -->
+                                                  <li><span class="deconnexion"><i class="fa fa-sign-out"></i> Se deconnecter</span></li> 
                                             </ul>
                                         </div>
                                         <span id="menu-btn"></span>
@@ -189,8 +186,8 @@
                                         <div class="symbol mb40">
                                             <i class="fa id-color fa-2x fa-calendar-check-o"></i>
                                         </div>
-                                        <span class="h1 mb0">03</span>
-                                        <span class="text-gray">Upcoming Orders</span>
+                                        <span class="h1 mb0" id="voitures"></span>
+                                        <span class="text-gray">Voitures</span>
                                     </div>
                                 </div>
 
@@ -199,8 +196,8 @@
                                         <div class="symbol mb40">
                                             <i class="fa id-color fa-2x fa-tags"></i>
                                         </div>
-                                        <span class="h1 mb0">12</span>
-                                        <span class="text-gray">Coupons</span>
+                                        <span class="h1 mb0" id="annonces"></span>
+                                        <span class="text-gray">Annonces</span>
                                     </div>
                                 </div>
 
@@ -209,8 +206,8 @@
                                         <div class="symbol mb40">
                                             <i class="fa id-color fa-2x fa-calendar"></i>
                                         </div>
-                                        <span class="h1 mb0">58</span>
-                                        <span class="text-gray">Total des locations</span>
+                                        <span class="h1 mb0" id="locations"></span>
+                                        <span class="text-gray">Locations</span>
                                     </div>
                                 </div>
 
@@ -219,8 +216,8 @@
                                         <div class="symbol mb40">
                                             <i class="fa id-color fa-2x fa-calendar-times-o"></i>
                                         </div>
-                                        <span class="h1 mb0">24</span>
-                                        <span class="text-gray">Cancel Orders</span>
+                                        <span class="h1 mb0" id="montantTotal"></span>
+                                        <span class="text-gray">Solde</span>
                                     </div>
                                 </div>
                             </div>
@@ -265,7 +262,7 @@
                                   </tbody>
                                 </table>
                             </div>
-                            <div class="card p-4 rounded-5">
+                            <!-- <div class="card p-4 rounded-5">
                                 <h4>My Favorites</h4>
                                 <div class="spacer-10"></div>
                                 <div class="de-item-list no-border mb30">
@@ -352,7 +349,7 @@
                                     <div class="clearfix"></div>
                                 </div>
 
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -386,12 +383,10 @@
 
 
     <script>
-
         $(document).ready(function () {
             // Charger les données du profil
 
             const userProfileUrl = "http://localhost:5000/uploads/utilisateurs/";
-
         $.ajax({
           url: "http://localhost:5000/api/utilisateurs/obtenirMonProfil",
           method: "GET",
@@ -426,6 +421,31 @@
             },
         });})
         </script>
+
+
+<script>
+  $(document).ready(function () {
+    $.ajax({
+      url: "http://localhost:5000/api/utilisateurs/statistiquesProprietaire",
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+      success: function (response) {
+        const stats = response.data;
+
+        $("#voitures").text(stats.totalVoitures);
+        $("#annonces").text(stats.totalAnnonces);
+        $("#locations").text(stats.totalLocations);
+        $("#montantTotal").text(stats.montantTotalGagne.toLocaleString() + " $");
+      },
+      error: function (err) {
+        console.error("Erreur lors de la récupération des statistiques :", err);
+        alert("Impossible de charger les statistiques.");
+      }
+    });
+  });
+</script>
 
 </body>
 

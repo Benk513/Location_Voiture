@@ -28,7 +28,7 @@ const annonceSchema = new mongoose.Schema(
     statut: {
       type: String,
       enum: ["reserve", "disponible"],
-      default: "reserve",
+      default: "disponible",
     },
     description: {
       type: String,
