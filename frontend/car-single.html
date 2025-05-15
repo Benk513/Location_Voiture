@@ -93,9 +93,37 @@
                                   </ul>
                             </div>
                             <div class="de-flex-col">
-                                <div class="menu_side_area">
-                                    <a href="login.html" class="btn-main">Se connecter </a>
-                                    <span id="menu-btn"></span>
+
+<div class="menu_side_area " id="loginUI">
+                    <a href="login.html" class="btn-main">Se connecter</a>
+                    <span id="menu-btn"></span>
+                  </div>
+
+                                <div class="menu_side_area" id="accountUI">
+                                    <div class="de-login-menu">
+
+                                        <span id="de-click-menu-profile" class="de-menu-profile">                           
+                                            <img src="images/profile/1.jpg" class="img-fluid photo" alt="">
+                                        </span>
+
+                                        
+
+                                        <div id="de-submenu-profile" class="de-submenu">
+                                            <div class="d-name">
+                                                <h4 class="nom">Monica Lucas</h4>
+                                                <span class="text-gray email">monica@rentaly.com</span>
+                                            </div>
+
+                                            <div class="d-line"></div>
+
+                                            <ul class="menu-col">
+                                                <li><a href="account-dashboard.html" id="accountRedirect"><i class="fa fa-home"></i>Tableau de bord</a></li>
+                                                <li><a href="account-profile.html"><i class="fa fa-user"></i>Mon profile</a></li>
+                                                  <li><span class="deconnexion"><i class="fa fa-sign-out"></i> Se deconnecter</span></li> 
+                                            </ul>
+                                        </div>
+                                        <span id="menu-btn"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -579,12 +607,32 @@ $('#slider-carousel').owlCarousel({
           headers: {
             Authorization:"Bearer " + localStorage.getItem("token"),
           },
-          success: function (res) {
-            $("#successModal").fadeIn();
-            setTimeout(() => {
-              window.location.href = "/dashboard";
-            }, 1000);
-          },
+        //   success: function (res) {
+        //     $("#successModal").fadeIn();
+        //     setTimeout(() => {
+        //       window.location.href = "espace_locataire.html";
+        //     }, 1000);
+        //   },
+        success: function (res) {
+  const location = res.data;
+
+  // Remplir les champs du modal avec les données de la location
+  $("#modalAnnonceId").text(location.annonce);
+  $("#modalDateDebut").text(new Date(location.dateDebut).toLocaleDateString());
+  $("#modalDateFin").text(new Date(location.dateFin).toLocaleDateString());
+  $("#modalAdresseRetrait").text(location.adresseRetrait);
+  $("#modalAdresseDepot").text(location.adresseDepot);
+  $("#modalMontant").text(location.montantTotal);
+
+  // Afficher la modale
+  $("#successModal").fadeIn();
+
+  // Redirection après un petit délai
+  setTimeout(() => {
+    window.location.href = "espace_locataire.html";
+  }, 4000);
+},
+
           error: function (err) {
             const message = err.responseJSON?.message || "Une erreur est survenue.";
             alert("Erreur : " + message);
@@ -593,14 +641,96 @@ $('#slider-carousel').owlCarousel({
       });
     });
   </script>
+
+
+
+
+
+
+
+
+ <script>
+        $(document).ready(function () {
+            // Charger les données du profil
+
+            const userProfileUrl = "http://localhost:5000/uploads/utilisateurs/";
+              const token = localStorage.getItem("token");
+
+    if (!token) {
+      // Aucune connexion
+      $("#loginUI").show();
+      $("#accountUI").hide();
+      return;
+    }else{
+      
+      $("#accountUI").show();
+      $("#loginUI").hide();
+    }
+        $.ajax({
+          url: "http://localhost:5000/api/utilisateurs/obtenirMonProfil",
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+          success: function (user) {
+              const profileUrl = userProfileUrl + user?.data.photo;
+            console.log(user?.data.photo)
+            $(".nom").text(user?.data?.nom);
+            $(".email").text(user?.data.email);
+            $(".photo").attr("src", profileUrl);
+            $("#photo").attr("src", profileUrl);
+            $("#pays").text(user?.data.pays || "Non renseigné.");
+            $("#dateNaissance").text(user?.data.dateNaissance || "Non renseigné.");
+            $("#biographie").text(user?.data.biographie || "Aucune biographie fournie.");
+            $("#adresse").text(user?.data.adresse || "Non renseigné.");
+            $("#telephone").text(user?.data.telephone || "Non renseignné.");
+            $(".role").text(user?.data.role || "Non renseignné.");
+            $("#sexe").text(user?.data.sexe || "Non renseignné.");
+
+
+                 // Affichage conditionnel
+      if (user?.data.role === "admin" || user?.data.role === "ambassadeur" || user?.data.role === "etudiant") {
+        $("#info-administrative").hide();     // Masquer mot de passe
+        $("#info-academique").hide();     // Masquer mot de passe
+        $("#saveBtn").hide();         // Masquer bouton "Enregistrer"
+      }
+
+      if(user?.data.role ==="proprietaire"){
+        $("#accountRedirect").attr("href", "account-dashboard.html");
+        $("#accountRedirect").text("Tableau de bord");
+        
+      }else{
+        
+        $("#accountRedirect").attr("href", "espace_locataire.html");
+        $("#accountRedirect").text("Mon compte");
+      }
+          },
+          error: function () {
+              console.log("Erreur lors du chargement du profil !");
+            },
+        });})
+        </script>
   
 <!-- Modal de succès -->
-<div id="successModal" class="modal" style="display:none;">
+<!-- <div id="successModal" class="modal" style="display:none;">
     <div class="modal-content">
       <h4>Réservation réussie !</h4>
       <p>Vous allez être redirigé vers votre tableau de bord...</p>
     </div>
+  </div> -->
+  <!-- Modal de succès avec détails -->
+<div id="successModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h4>Réservation réussie !</h4>
+    <p><strong>Annonce :</strong> <span id="modalAnnonceId"></span></p>
+    <p><strong>Date de début :</strong> <span id="modalDateDebut"></span></p>
+    <p><strong>Date de fin :</strong> <span id="modalDateFin"></span></p>
+    <p><strong>Adresse de retrait :</strong> <span id="modalAdresseRetrait"></span></p>
+    <p><strong>Adresse de dépôt :</strong> <span id="modalAdresseDepot"></span></p>
+    <p><strong>Montant total :</strong> <span id="modalMontant"></span> FCFA</p>
   </div>
+</div>
+
   
 </body>
 

@@ -151,6 +151,10 @@ export const creerDemandeLocation = catchAsync(async (req, res, next) => {
   });
 });
 
+
+
+
+
 function calculerMontantTotal(tarif, debut, fin) {
   const nbJours = Math.ceil((fin - debut) / (1000 * 60 * 60 * 24));
   return nbJours * tarif;

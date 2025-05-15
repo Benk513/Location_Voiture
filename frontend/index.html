@@ -139,7 +139,7 @@
                                             <div class="d-line"></div>
 
                                             <ul class="menu-col">
-                                                <li><a href="account-dashboard.html"><i class="fa fa-home"></i>Tableau de bord</a></li>
+                                                <li><a href="account-dashboard.html" id="accountRedirect"><i class="fa fa-home"></i>Tableau de bord</a></li>
                                                 <li><a href="account-profile.html"><i class="fa fa-user"></i>Mon profile</a></li>
                                                   <li><span class="deconnexion"><i class="fa fa-sign-out"></i> Se deconnecter</span></li> 
                                             </ul>
@@ -798,6 +798,16 @@
         $("#info-administrative").hide();     // Masquer mot de passe
         $("#info-academique").hide();     // Masquer mot de passe
         $("#saveBtn").hide();         // Masquer bouton "Enregistrer"
+      }
+
+      if(user?.data.role ==="proprietaire"){
+        $("#accountRedirect").attr("href", "account-dashboard.html");
+        $("#accountRedirect").text("Tableau de bord");
+        
+      }else{
+        
+        $("#accountRedirect").attr("href", "espace_locataire.html");
+        $("#accountRedirect").text("Mon compte");
       }
           },
           error: function () {
