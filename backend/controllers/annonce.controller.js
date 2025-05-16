@@ -238,6 +238,41 @@ export const supprimerAnnonce = catchAsync(async (req, res, next) => {
   res.status(200).json({ message: "Annonce supprimée" });
 });
 
+export const rechecherAnnonces = catchAsync(async (req, res) => {
+  try {
+    const { lieu, dateDebut, dateFin } = req.body;
+
+    // Convertir les dates en objets Date
+    const startDate = new Date(dateDebut);
+    const endDate = new Date(dateFin);
+
+    // Construire la requête de recherche
+    const query = {
+      statut: "disponible",
+      dateDebut: { $lte: startDate },
+      dateFin: { $gte: endDate },
+    };
+
+    if (lieu) {
+      query.lieu = new RegExp(lieu, "i");
+    }
+
+    const annonces = await Annonce.find(query)
+      .populate("voiture")
+      .populate("proprietaire", "nom email");
+
+    res.status(200).json({
+      status: "success",
+      results: annonces.length,
+      data: annonces,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+});
 // GET /api/annonces?lieu=sousse&prixMin=200&prixMax=500&sieges=4,5&carburant=essence&dateDebut=2025-05-10&dateFin=2025-05-15
 
 // ajouter la logique d'empecher la publication d'une annonce si elle est dans le futur

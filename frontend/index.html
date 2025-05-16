@@ -178,21 +178,20 @@
                       class="p-4 rounded-3 shadow-soft text-light"
                       data-bgcolor="rgba(0, 0, 0, .6)"
                     >
-                      <form name="contactForm" id="contact_form">
+                      <form   id="rechercher_annonces">
 
                           <h5>Recherchez. Réservez. Roulez</h5>
                         <div class="spacer-20"></div>
 
                         <div class="row">
-                          <div class="col-lg-6 mb20">
-                            <h5>Adresse de retrait</h5>
+                          <div class="col-lg-12 mb20">
+                            <h5>Lieu</h5>
                             <input
                               type="text"
                               name="PickupLocation"
-                              onfocus="geolocate()"
-                              placeholder="Entrer votre adresse de retrait"
-                              id="autocomplete"
-                              autocomplete="off"
+                              placeholder="Entrer le lieu ou vous cherchez une voiture"
+                              id="lieu"
+                           
                               class="form-control"
                             />
 
@@ -202,25 +201,7 @@
                               <div class="jls-address-preview__header"></div>
                             </div>
                           </div>
-
-                          <div class="col-lg-6 mb20">
-                            <h5>Adresse de depot</h5>
-                            <input
-                              type="text"
-                              name="DropoffLocation"
-                              onfocus="geolocate()"
-                              placeholder="Entrer l'adresse de  depot "
-                              id="autocomplete2"
-                              autocomplete="off"
-                              class="form-control"
-                            />
-
-                            <div
-                              class="jls-address-preview jls-address-preview--hidden"
-                            >
-                              <div class="jls-address-preview__header"></div>
-                            </div>
-                          </div>
+ 
 
                           <div class="col-lg-6 mb20">
                             <h5>Date de depot</h5>
@@ -233,7 +214,7 @@
                               />
                               <select name="Pick Up Time" id="pickup-time">
                                 <option selected disabled value="Select time">
-                                  Time
+                                  Heure
                                 </option>
                                 <option value="00:00">00:00</option>
                                 <option value="00:30">00:30</option>
@@ -301,7 +282,7 @@
                                 id="collection-time"
                               >
                                 <option selected disabled value="Select time">
-                                  Time
+                                  Heure
                                 </option>
                                 <option value="00:00">00:00</option>
                                 <option value="00:30">00:30</option>
@@ -357,7 +338,7 @@
                         </div>
 
                        
-                        <a  class="btn-main pull-right" href="cars.html">Rechercher</a>
+                        <button class="btn-main pull-right">Rechercher</button>
 
                         <div class="clearfix"></div>
                       </form>
@@ -367,7 +348,7 @@
               </div>
 
            
-
+   
              
               
             </div>
@@ -383,69 +364,19 @@
           <div class="container">
             <div class="row align-items-center">
               <div class="col-lg-6 offset-lg-3 text-center">
-                <h2>Nos dernieres annonces</h2>
-                <p>
-                 
-                  Notre meilleurs selection de la semaine
-                </p>
+                <h2>Resultat de votre recherche</h2>
+               
                 <div class="spacer-20"></div>
               </div>
 
               <div class="clearfix"></div>
-
-              <div id="items-carousel" class="owl-carousel wow fadeIn">
-                <div class="col-lg-12">
-                  <div class="de-item mb30">
-                    <div class="d-img">
-                      <img
-                        src="images/cars/jeep-renegade.jpg"
-                        class="img-fluid"
-                        alt=""
-                      />
-                    </div>
-                    <div class="d-info">
-                      <div class="d-text">
-                        <h4>Jeep Renegade</h4>
-                        <div class="d-item_like">
-                          <i class="fa fa-heart"></i><span>74</span>
-                        </div>
-                        <div class="d-atr-group">
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/1-green.svg"
-                              alt=""
-                            />5</span
-                          >
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/2-green.svg"
-                              alt=""
-                            />2</span
-                          >
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/3-green.svg"
-                              alt=""
-                            />4</span
-                          >
-                          <span class="d-atr"
-                            ><img
-                              src="images/icons/4-green.svg"
-                              alt=""
-                            />SUV</span
-                          >
-                        </div>
-                        <div class="d-price">
-                          Prix par jour a <span>$265</span>
-                          <a class="btn-main" href="car-single.html"
-                            >Reserver maintenant</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>            
+ 
+                
+              
+              <div class="col-lg-12" id="search-results-container">
+             <p>Pas encore de recherches</p>
               </div>
+             
             </div>
           </div>
         </section>
@@ -602,82 +533,268 @@
           window.location.href = "login.html";
         });
       </script>
+
+<script>
+  $(document).ready(function() {
+  $('#rechercher_annonces').submit(function(e) {
+    e.preventDefault();
+    
+    // Formatage des dates
+    const dateDebut = new Date($('#date-picker').val());
  
-      <script>
-        $(document).ready(function () {
-          const $carousel = $('#items-carousel');
+    const dateFin = new Date($('#date-picker-2').val())
+    
+    const formData = {
+      lieu: $('#lieu').val(),
+      dateDebut: dateDebut.toISOString(),
+      dateFin: dateFin.toISOString()
+    };
+
+    console.log(formData);
+    // Requête AJAX
+    $.ajax({
+      url: "http://localhost:5000/api/annonces/rechercherAnnonces",
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify(formData),
+      success: function(res) {
+        const baseUrl = "http://localhost:5000/uploads/voitures/";
+        const annonces = res.data;
+        console.log(annonces);
+        const conteneur = $("#search-results-container");
+        conteneur.empty();
+
+        if (!annonces || annonces.length === 0) {
+          conteneur.append("<div class='col-12 text-center py-5'><h4>Aucune annonce trouvée</h4></div>");
+          return;
+        }
+
+        annonces.forEach((annonce) => {
+          const voitureUrl = baseUrl + annonce.voiture.images[0];
+          const voiture = annonce.voiture;
+          const html = `
+            <div class="col-xl-3 col-lg-6">
+              <div class="de-item mb30">
+                <div class="d-img">
+                  <img src="${voitureUrl}" class="img-fluid" alt="${voiture.nom}">
+                </div>
+                <div class="d-info">
+                  <div class="d-text">
+                    <h4>${voiture.nom}</h4>
+                    <div class="d-item_like">
+                      <i class="fa fa-heart"></i><span>${voiture.nombreAvis}</span>
+                    </div>
+                    <div class="d-atr-group">
+                      <span class="d-atr">
+                        <img src="images/icons/1-green.svg" alt="Sièges">
+                        ${voiture.nombreDeSieges}
+                      </span>
+                      <span class="d-atr">
+                        <img src="images/icons/2-green.svg" alt="Portes">
+                        ${voiture.nombreDePortes}
+                      </span>
+                      <span class="d-atr">
+                        <img src="images/icons/3-green.svg" alt="Transmission">
+                        ${voiture.transmission}
+                      </span>
+                      <span class="d-atr">
+                        <img src="images/icons/4-green.svg" alt="Marque">
+                        ${voiture.marque}
+                      </span>
+                    </div>
+                    <small class="text-muted d-block mb-2">
+                      Disponible du ${new Date(annonce.dateDebut).toLocaleDateString('fr-FR')} 
+                      au ${new Date(annonce.dateFin).toLocaleDateString('fr-FR')}
+                    </small>
+                    <div class="d-price">
+                      À partir de <span>${voiture.tarifParJour}€/j</span>
+                      <a class="btn-main" href="car-single.html?id=${annonce._id}">Réserver maintenant</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+          conteneur.append(html);
+        });
+      },
+      error: function(err) {
+        console.error("Erreur :", err);
+        $("#search-results-container").html(`
+          <div class="col-12 alert alert-danger">
+            Erreur lors de la recherche : ${err.responseJSON?.message || 'Erreur serveur'}
+          </div>
+        `);
+      }
+    });
+  });
+});
+</script>
+
+<!-- <script>
+  $(document).ready(function() {
+  $('#rechercher_annonces').submit(async function(e) {
+    e.preventDefault();
+    
+    // Afficher le loader
+    $('#section-cars').addClass('d-none');
+    $('#loading-spinner').removeClass('d-none');
+
+    try {
+      // Récupération des données
+      const formData = {
+        lieu: $('#lieu').val(),
+        dateDebut: $('#date-picker').val() + 'T' + $('#pickup-time').val(),
+        dateFin: $('#date-picker-2').val() + 'T' + $('#collection-time').val()
+      };
+
+      console.log(formData);
+
+      // Requête AJAX
+      const response = await $.ajax({
+        url: 'https://localhost:5000/api/annonces/rechercherAnnonces',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(formData)
+      });
+
+      // Générer le HTML des résultats
+      const resultsHtml = generateResultsHtml(response.data);
       
-          // Si déjà initialisé, détruire proprement Owl Carousel
-          if ($carousel.hasClass('owl-loaded')) {
-            $carousel.trigger('destroy.owl.carousel');
-            $carousel.removeClass('owl-loaded owl-carousel owl-theme');
-            $carousel.find('.owl-stage-outer').children().unwrap(); // retire les wrappers Owl
-            $carousel.html(''); // vide le carrousel
-          }
+      // Mise à jour de l'UI
+      $('#search-results-container').html(resultsHtml);
+      $('#section-cars').removeClass('d-none');
       
-          $.ajax({
-            url: 'http://localhost:5000/api/annonces/recentes',
-            method: 'GET',
-            success: function (annonces) {
-              if (!annonces.length) {
-                $carousel.html('<p>Aucune annonce trouvée.</p>');
-                return;
-              }
-              const baseUrl = "http://localhost:5000/uploads/voitures/";
-              annonces.forEach(function (annonce) {
-                const voitureUrl = baseUrl + annonce.voiture.images[0];
-                const voiture = annonce.voiture;
-                const image = voiture.images[0] || 'default.jpg';
-      
-                const html = `
-                  <div class="item">
-                    <div class="de-item mb30">
-                      <div class="d-img">
-                        <img src="${voitureUrl}" class="img-fluid" alt="${voiture.nom}" />
-                      </div>
-                      <div class="d-info">
-                        <div class="d-text">
-                          <h4>${voiture.nom}</h4>
-                          <div class="d-item_like">
-                            <i class="fa fa-heart"></i><span>${voiture.nombreAvis || 0}</span>
-                          </div>
-                          <div class="d-atr-group">
-                            <span class="d-atr"><img src="images/icons/1-green.svg" alt="" />${voiture.nombreDeSieges}</span>
-                            <span class="d-atr"><img src="images/icons/2-green.svg" alt="" />${voiture.nombreDePortes}</span>
-                            <span class="d-atr"><img src="images/icons/3-green.svg" alt="" />${voiture.transmission}</span>
-                            <span class="d-atr"><img src="images/icons/4-green.svg" alt="" />${voiture.carburant}</span>
-                          </div>
-                          <div class="d-price">
-                            Prix par jour à <span>$${voiture.tarifParJour}</span>
-                            <a class="btn-main" href="car-single.html?id=${annonce._id}">Reserver maintenant</a>
-                          </div>
+    } catch (error) {
+      showError('Une erreur est survenue : ' + error.responseJSON?.message);
+    } finally {
+      $('#loading-spinner').addClass('d-none');
+    }
+  });
+
+  function generateResultsHtml(annonces) {
+    if (!annonces.length) {
+      return `<div class="col-12 text-center py-5">
+                <h4>Aucun véhicule trouvé pour ces critères</h4>
+              </div>`;
+    }
+
+  //   return annonces.map(annonce => {
+  //     const v = annonce.voiture;
+  //     return `
+  //       <div class="col-xl-4 col-lg-6">
+  //         <div class="de-item mb30">
+  //           <div class="d-img">
+  //             <img src="${v.images[0]}" class="img-fluid" alt="${v.marque} ${v.modele}">
+  //           </div>
+  //           <div class="d-info">
+  //             <div class="d-text">
+  //               <h4>${v.marque} ${v.modele}</h4>
+  //               <div class="d-item_like">
+  //                 <i class="fa fa-heart"></i><span>${v.nombreAvis}</span>
+  //               </div>
+  //               <div class="d-atr-group">
+  //                 <span class="d-atr">
+  //                   <img src="images/icons/4-green.svg" alt="Transmission">
+  //                   ${v.transmission}
+  //                 </span>
+  //                 <span class="d-atr">
+  //                   <img src="images/icons/3-green.svg" alt="Carburant">
+  //                   ${formatCarburant(v.carburant)}
+  //                 </span>
+  //                 <span class="d-atr">
+  //                   <img src="images/icons/1-green.svg" alt="Sièges">
+  //                   ${v.nombreDeSieges}
+  //                 </span>
+  //                 <span class="d-atr">
+  //                   <img src="images/icons/2-green.svg" alt="Portes">
+  //                   ${v.nombreDePortes}
+  //                 </span>
+  //               </div>
+  //               <div class="d-price">
+  //                 À partir de <span>${v.tarifParJour}€/jour</span>
+  //                 <a class="btn-main" href="car-single.html?id=${v._id}">Réserver maintenant</a>
+  //               </div>
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     `;
+  //   }).join('');
+  // }
+
+  return    annonces.forEach((annonce) => {
+   const baseUrl = "http://localhost:5000/uploads/voitures/";
+              const voitureUrl = baseUrl + annonce.voiture.images[0];
+              const voiture = annonce.voiture;
+              const html = `
+                <div class="col-xl-4 col-lg-6">
+                  <div class="de-item mb30">
+                    <div class="d-img">
+                      <img src="${voitureUrl}" class="img-fluid" alt="">
+                    </div>
+                    <div class="d-info">
+                      <div class="d-text">
+                        <h4>${voiture.nom}</h4>
+                        <div class="d-item_like">
+                          <i class="fa fa-heart"></i><span>0</span>
+                        </div>
+                        <div class="d-atr-group">
+                          <span class="d-atr"><img src="images/icons/1-green.svg" alt="">${
+                            voiture.nombreDeSieges
+                          }</span>
+                          <span class="d-atr"><img src="images/icons/2-green.svg" alt="">${
+                            voiture.nombreDePortes
+                          }</span>
+                          <span class="d-atr"><img src="images/icons/3-green.svg" alt="">${
+                            voiture.transmission
+                          }</span>
+                          <span class="d-atr"><img src="images/icons/4-green.svg" alt="">${
+                            voiture.marque
+                          }</span>
+                        </div>
+                        Disponible du ${new Date(
+                          annonce.dateDebut
+                        ).toLocaleDateString()} au ${new Date(
+                annonce.dateFin
+              ).toLocaleDateString()}
+ 
+                        <div class="d-price">
+                          A partir de <span>$${voiture.tarifParJour}</span>
+                          <a class="btn-main" href="car-single.html?id=${
+                            annonce._id
+                          }">Reserver maintenant</a>
                         </div>
                       </div>
                     </div>
                   </div>
-                `;
-      
-                $carousel.append(html);
-              });
-      
-              // Réinitialiser Owl Carousel après avoir ajouté les items
-              $carousel.owlCarousel({
-                items: 3,
-                loop: annonces.length > 3,
-                autoplay: true,
-                margin: 30,
-                nav: true,
-                dots: true
-              });
-            },
-            error: function () {
-              console.error("Erreur lors du chargement des annonces récentes.");
-              $carousel.html('<p>Impossible de charger les annonces.</p>');
-            }
-          });
-        });
-      </script>
+                </div>
+              `;
+              conteneur.append(html);
+            });
+          }
+  function formatCarburant(type) {
+    const types = {
+      'essence': 'Essence',
+      'diesel': 'Diesel',
+      'electrique': 'Électrique'
+    };
+    return types[type.toLowerCase()] || type;
+  }
 
+  function showError(message) {
+    const errorHtml = `
+      <div class="col-12 alert alert-danger">
+        ${message}
+      </div>
+    `;
+    $('#search-results-container').html(errorHtml);
+    $('#section-cars').removeClass('d-none');
+  }
+});
+</script> -->
+ 
+  
 
  <script>
         $(document).ready(function () {

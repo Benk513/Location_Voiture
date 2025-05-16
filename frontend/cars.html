@@ -105,42 +105,55 @@
                     </li>
                   </ul>
                 </div>
-                  <div class="de-flex-col">
-
-<div class="menu_side_area " id="loginUI">
+                <div class="de-flex-col">
+                  <div class="menu_side_area" id="loginUI">
                     <a href="login.html" class="btn-main">Se connecter</a>
                     <span id="menu-btn"></span>
                   </div>
-                                <div class="menu_side_area" id="accountUI">
-                                    <div class="de-login-menu">
+                  <div class="menu_side_area" id="accountUI">
+                    <div class="de-login-menu">
+                      <span id="de-click-menu-profile" class="de-menu-profile">
+                        <img
+                          src="images/profile/1.jpg"
+                          class="img-fluid photo"
+                          alt=""
+                        />
+                      </span>
 
-                                        <span id="de-click-menu-profile" class="de-menu-profile">                           
-                                            <img src="images/profile/1.jpg" class="img-fluid photo" alt="">
-                                        </span>
+                      <div id="de-submenu-profile" class="de-submenu">
+                        <div class="d-name">
+                          <h4 class="nom">Monica Lucas</h4>
+                          <span class="text-gray email"></span>
+                          <span class="text-gray role"></span>
+                        </div>
 
-                                        
+                        <div class="d-line"></div>
 
-                                        <div id="de-submenu-profile" class="de-submenu">
-                                            <div class="d-name">
-                                                <h4 class="nom">Monica Lucas</h4>
-                                                <span class="text-gray email"></span>
-                                                <span class="text-gray role"></span>
-                                            </div>
-
-                                            <div class="d-line"></div>
-
-                                            <ul class="menu-col">
-                                                <li><a href="account-dashboard.html" id="accountRedirect"><i class="fa fa-home"></i>Tableau de bord</a></li>
-                                                <li><a href="account-profile.html"><i class="fa fa-user"></i>Mon profile</a></li>
-                                                  <li><span class="deconnexion"><i class="fa fa-sign-out"></i> Se deconnecter</span></li> 
-                                            </ul>
-                                        </div>
-                                        <span id="menu-btn"></span>
-                                    </div>
-                                </div>
-                            </div>
-                
-                 
+                        <ul class="menu-col">
+                          <li>
+                            <a
+                              href="account-dashboard.html"
+                              id="accountRedirect"
+                              ><i class="fa fa-home"></i>Tableau de bord</a
+                            >
+                          </li>
+                          <li>
+                            <a href="account-profile.html"
+                              ><i class="fa fa-user"></i>Mon profile</a
+                            >
+                          </li>
+                          <li>
+                            <span class="deconnexion"
+                              ><i class="fa fa-sign-out"></i> Se
+                              deconnecter</span
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                      <span id="menu-btn"></span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -391,68 +404,6 @@
       <!-- content close -->
 
       <a href="#" id="back-to-top"></a>
-
-      <!-- footer begin -->
-      <footer class="text-light">
-        <div class="container">
-          <div class="row g-custom-x">
-            <div class="col-lg-6">
-              <div class="widget">
-                <h5>A propos de Aridias Cars</h5>
-                <p>
-                  Ardias Cars est une solution moderne de location de véhicules
-                  entre particuliers. Que vous soyez conducteur à la recherche
-                  d’un véhicule ou propriétaire souhaitant rentabiliser votre
-                  voiture, notre plateforme est faite pour vous.
-                </p>
-              </div>
-            </div>
-
-            <div class="col-lg-3">
-              <div class="widget">
-                <h5>Contact Info</h5>
-                <address class="s1">
-                  <span
-                    ><i class="id-color fa fa-map-marker fa-lg"></i>08 W 36th
-                    St, New York, NY 10001</span
-                  >
-                  <span
-                    ><i class="id-color fa fa-phone fa-lg"></i>+1 333 9296</span
-                  >
-                  <span
-                    ><i class="id-color fa fa-envelope-o fa-lg"></i
-                    ><a href="mailto:contact@example.com"
-                      >contact@example.com</a
-                    ></span
-                  >
-                  <span
-                    ><i class="id-color fa fa-file-pdf-o fa-lg"></i
-                    ><a href="#">Download Brochure</a></span
-                  >
-                </address>
-              </div>
-            </div>
-
-            <div class="col-lg-3">
-              <h5>Quick Links</h5>
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="widget">
-                    <ul>
-                      <li><a href="#">About</a></li>
-                      <li><a href="#">Blog</a></li>
-                      <li><a href="#">Careers</a></li>
-                      <li><a href="#">News</a></li>
-                      <li><a href="#">Partners</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-      <!-- footer close -->
     </div>
 
     <!-- Javascript Files
@@ -578,23 +529,22 @@
       });
     </script>
 
-   <script>
-        $(document).ready(function () {
-            // Charger les données du profil
+    <script>
+      $(document).ready(function () {
+        // Charger les données du profil
 
-            const userProfileUrl = "http://localhost:5000/uploads/utilisateurs/";
-              const token = localStorage.getItem("token");
+        const userProfileUrl = "http://localhost:5000/uploads/utilisateurs/";
+        const token = localStorage.getItem("token");
 
-    if (!token) {
-      // Aucune connexion
-      $("#loginUI").show();
-      $("#accountUI").hide();
-      return;
-    }else{
-      
-      $("#accountUI").show();
-      $("#loginUI").hide();
-    }
+        if (!token) {
+          // Aucune connexion
+          $("#loginUI").show();
+          $("#accountUI").hide();
+          return;
+        } else {
+          $("#accountUI").show();
+          $("#loginUI").hide();
+        }
         $.ajax({
           url: "http://localhost:5000/api/utilisateurs/obtenirMonProfil",
           method: "GET",
@@ -602,43 +552,49 @@
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
           success: function (user) {
-              const profileUrl = userProfileUrl + user?.data.photo;
-            console.log(user?.data.photo)
+            const profileUrl = userProfileUrl + user?.data.photo;
+            console.log(user?.data.photo);
             $(".nom").text(user?.data?.nom);
             $(".email").text(user?.data.email);
             $(".photo").attr("src", profileUrl);
             $("#photo").attr("src", profileUrl);
             $("#pays").text(user?.data.pays || "Non renseigné.");
-            $("#dateNaissance").text(user?.data.dateNaissance || "Non renseigné.");
-            $("#biographie").text(user?.data.biographie || "Aucune biographie fournie.");
+            $("#dateNaissance").text(
+              user?.data.dateNaissance || "Non renseigné."
+            );
+            $("#biographie").text(
+              user?.data.biographie || "Aucune biographie fournie."
+            );
             $("#adresse").text(user?.data.adresse || "Non renseigné.");
             $("#telephone").text(user?.data.telephone || "Non renseignné.");
             $(".role").text(user?.data.role || "Non renseignné.");
             $("#sexe").text(user?.data.sexe || "Non renseignné.");
 
+            // Affichage conditionnel
+            if (
+              user?.data.role === "admin" ||
+              user?.data.role === "ambassadeur" ||
+              user?.data.role === "etudiant"
+            ) {
+              $("#info-administrative").hide(); // Masquer mot de passe
+              $("#info-academique").hide(); // Masquer mot de passe
+              $("#saveBtn").hide(); // Masquer bouton "Enregistrer"
+            }
 
-                 // Affichage conditionnel
-      if (user?.data.role === "admin" || user?.data.role === "ambassadeur" || user?.data.role === "etudiant") {
-        $("#info-administrative").hide();     // Masquer mot de passe
-        $("#info-academique").hide();     // Masquer mot de passe
-        $("#saveBtn").hide();         // Masquer bouton "Enregistrer"
-      }
-
-      if(user?.data.role ==="proprietaire"){
-        $("#accountRedirect").attr("href", "account-dashboard.html");
-        $("#accountRedirect").text("Tableau de bord");
-        
-      }else{
-        
-        $("#accountRedirect").attr("href", "espace_locataire.html");
-        $("#accountRedirect").text("Mon compte");
-      }
+            if (user?.data.role === "proprietaire") {
+              $("#accountRedirect").attr("href", "account-dashboard.html");
+              $("#accountRedirect").text("Tableau de bord");
+            } else {
+              $("#accountRedirect").attr("href", "espace_locataire.html");
+              $("#accountRedirect").text("Mon compte");
+            }
           },
           error: function () {
-              console.log("Erreur lors du chargement du profil !");
-            },
-        });})
-        </script>
+            console.log("Erreur lors du chargement du profil !");
+          },
+        });
+      });
+    </script>
 
     <script>
       $(".deconnexion").click(function () {

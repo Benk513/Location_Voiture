@@ -9,7 +9,7 @@ const annonceSchema = new mongoose.Schema(
     },
     proprietaire: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Utilisateur",
       required: true,
     },
 
