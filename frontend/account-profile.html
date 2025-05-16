@@ -94,54 +94,39 @@
                 </div>
                 <div class="de-flex-col header-col-mid"></div>
                 <div class="de-flex-col">
-                  <div class="menu_side_area">
-                    <div class="de-login-menu">
-                      <span id="de-click-menu-profile" class="de-menu-profile">
-                        <img
-                          src="images/profile/1.jpg"
-                          class="img-fluid photo"
-                          alt=""
-                        />
-                      </span>
 
-                      <div id="de-submenu-profile" class="de-submenu">
-                        <div class="d-name">
-                          <h4 class="nom">Monica Lucas</h4>
-                          <span class="text-gray email"
-                            >monica@rentaly.com</span
-                          >
-                        </div>
-
-                        <div class="d-line"></div>
-
-                        <ul class="menu-col">
-                          <li>
-                            <a href="account-dashboard.html"
-                              ><i class="fa fa-home"></i>Dashboard</a
-                            >
-                          </li>
-                          <li>
-                            <a href="account-profile.html"
-                              ><i class="fa fa-user"></i>My Profile</a
-                            >
-                          </li>
-
-                          <li>
-                            <a href="account-favorite.html"
-                              ><i class="fa fa-car"></i>My Favorite Cars</a
-                            >
-                          </li>
-                          <li>
-                            <a href="login.html"
-                              ><i class="fa fa-sign-out"></i>Sign Out</a
-                            >
-                          </li>
-                        </ul>
-                      </div>
-                      <span id="menu-btn"></span>
-                    </div>
+<div class="menu_side_area " id="loginUI">
+                    <a href="login.html" class="btn-main">Se connecter</a>
+                    <span id="menu-btn"></span>
                   </div>
-                </div>
+                                <div class="menu_side_area" id="accountUI">
+                                    <div class="de-login-menu">
+
+                                        <span id="de-click-menu-profile" class="de-menu-profile">                           
+                                            <img src="images/profile/1.jpg" class="img-fluid photo" alt="">
+                                        </span>
+
+                                        
+
+                                        <div id="de-submenu-profile" class="de-submenu">
+                                            <div class="d-name">
+                                                <h4 class="nom">Monica Lucas</h4>
+                                                <span class="text-gray email"></span>
+                                                <span class="text-gray role"></span>
+                                            </div>
+
+                                            <div class="d-line"></div>
+
+                                            <ul class="menu-col">
+                                                <li><a href="account-dashboard.html" id="accountRedirect"><i class="fa fa-home"></i>Tableau de bord</a></li>
+                                                <li><a href="account-profile.html"><i class="fa fa-user"></i>Mon profile</a></li>
+                                                  <li><span class="deconnexion"><i class="fa fa-sign-out"></i> Se deconnecter</span></li> 
+                                            </ul>
+                                        </div>
+                                        <span id="menu-btn"></span>
+                                    </div>
+                                </div>
+                            </div>
               </div>
             </div>
           </div>
