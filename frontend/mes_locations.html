@@ -417,11 +417,23 @@
 
 
 
-    <script>
+     <script>
         $(document).ready(function () {
             // Charger les données du profil
 
             const userProfileUrl = "http://localhost:5000/uploads/utilisateurs/";
+              const token = localStorage.getItem("token");
+
+    if (!token) {
+      // Aucune connexion
+      $("#loginUI").show();
+      $("#accountUI").hide();
+      return;
+    }else{
+      
+      $("#accountUI").show();
+      $("#loginUI").hide();
+    }
         $.ajax({
           url: "http://localhost:5000/api/utilisateurs/obtenirMonProfil",
           method: "GET",
@@ -449,6 +461,16 @@
         $("#info-administrative").hide();     // Masquer mot de passe
         $("#info-academique").hide();     // Masquer mot de passe
         $("#saveBtn").hide();         // Masquer bouton "Enregistrer"
+      }
+
+      if(user?.data.role ==="proprietaire"){
+        $("#accountRedirect").attr("href", "account-dashboard.html");
+        $("#accountRedirect").text("Tableau de bord");
+        
+      }else{
+        
+        $("#accountRedirect").attr("href", "espace_locataire.html");
+        $("#accountRedirect").text("Mon compte");
       }
           },
           error: function () {

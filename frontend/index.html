@@ -96,22 +96,13 @@
                   <ul id="mainmenu">
                     <li>
                       <a class="menu-item" href="index.html">Accueil</a>
-                   
-                     
-                     
                     </li>
                     <li>
                       <a class="menu-item" href="cars.html">Voitures</a>
-                       
                     </li>
                     <li>
                       <a class="menu-item" href="cars.html">Contact</a>
-                       
-                    </li>
-                    
-                
-                  
-                     
+                    </li>                  
                   </ul>
                 </div>
                  <div class="de-flex-col">
@@ -120,7 +111,6 @@
                     <a href="login.html" class="btn-main">Se connecter</a>
                     <span id="menu-btn"></span>
                   </div>
-
                                 <div class="menu_side_area" id="accountUI">
                                     <div class="de-login-menu">
 
@@ -133,7 +123,8 @@
                                         <div id="de-submenu-profile" class="de-submenu">
                                             <div class="d-name">
                                                 <h4 class="nom">Monica Lucas</h4>
-                                                <span class="text-gray email">monica@rentaly.com</span>
+                                                <span class="text-gray email"></span>
+                                                <span class="text-gray role"></span>
                                             </div>
 
                                             <div class="d-line"></div>
@@ -603,9 +594,7 @@
       async=""
       defer=""
     ></script>
-
-
-    
+   
     <script>
         $(".deconnexion").click(function () {
           alert("À bientôt !");
@@ -613,71 +602,7 @@
           window.location.href = "login.html";
         });
       </script>
-
-
-
-    <!-- <script>
-      $(document).ready(function () {
-        $.ajax({
-          url: 'http://localhost:5000/api/annonces/recentes',
-          method: 'GET',
-          success: function (annonces) {
-            console.log(annonces);
-            const $carousel = $('#items-carousel');
-            $carousel.empty(); // vider le contenu existant
-      
-            annonces.forEach(function (annonce) {
-              const voiture = annonce.voiture;
-              const image = voiture.images[0] || 'default.jpg'; // fallback si aucune image
-      
-              const html = `
-              <div class="col-lg-12">
-                <div class="de-item mb30">
-                  <div class="d-img">
-                    <img src="/uploads/${image}" class="img-fluid" alt="${voiture.nom}" />
-                  </div>
-                  <div class="d-info">
-                    <div class="d-text">
-                      <h4>${voiture.nom}</h4>
-                      <div class="d-item_like">
-                        <i class="fa fa-heart"></i><span>${voiture.nombreAvis || 0}</span>
-                      </div>
-                      <div class="d-atr-group">
-                        <span class="d-atr"><img src="images/icons/1-green.svg" alt="" />${voiture.nombreDeSieges}</span>
-                        <span class="d-atr"><img src="images/icons/2-green.svg" alt="" />${voiture.nombreDePortes}</span>
-                        <span class="d-atr"><img src="images/icons/3-green.svg" alt="" />${voiture.transmission}</span>
-                        <span class="d-atr"><img src="images/icons/4-green.svg" alt="" />${voiture.carburant}</span>
-                      </div>
-                      <div class="d-price">
-                        Prix par jour à <span>$${voiture.tarifParJour}</span>
-                        <a class="btn-main" href="/annonce/${annonce._id}">Réserver maintenant</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>`;
-      
-              $carousel.append(html);
-            });
-      
-            // Réinitialiser OwlCarousel
-            $carousel.owlCarousel('destroy');
-            $carousel.owlCarousel({
-              items: 3,
-              loop: true,
-              autoplay: true,
-              margin: 30,
-              nav: true,
-              dots: true
-            });
-          },
-            
-          error: function () {
-            console.error("Erreur lors du chargement des annonces récentes.");
-          }
-        });
-      });
-      </script> -->
+ 
       <script>
         $(document).ready(function () {
           const $carousel = $('#items-carousel');
