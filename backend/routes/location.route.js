@@ -3,6 +3,8 @@ import {
   creerDemandeLocation,
   listerDemandesProprio,
   listerLocations,
+  listerMesReservations,
+  mettreAJourStatutLocation,
   traiterDemandeLocation,
 } from "../controllers/location.controller.js";
 import { proteger, restreindreA } from "../controllers/auth.controller.js";
@@ -23,6 +25,12 @@ router.get(
   restreindreA("proprietaire"),
   listerDemandesProprio
 );
+router.get(
+  "/mesReservations",
+  proteger,
+  restreindreA("locataire"),
+  listerMesReservations
+);
 
 router.patch(
   "/traiterDemandeLocation/:id",
@@ -30,4 +38,13 @@ router.patch(
   restreindreA("proprietaire"),
   traiterDemandeLocation
 );
+
+
+router.patch(
+  "/mettreAJourStatutLocation/:id",
+  proteger,
+  restreindreA("locataire"),
+  mettreAJourStatutLocation
+);
+
 export default router;

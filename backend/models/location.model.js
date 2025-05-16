@@ -1,10 +1,5 @@
 import mongoose from "mongoose";
 
-// export default Location;
-
-// models/locationModel.js
-// import mongoose from "mongoose";
-
 const locationSchema = new mongoose.Schema(
   {
     annonce: {

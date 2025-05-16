@@ -2,9 +2,8 @@
   const token = localStorage.getItem("token");
   const role= localStorage.getItem("role")
   if (!token) {
-    window.location.href = "/frontend/login.html"; // Redirige vers login
+    window.location.href = "login.html"; // Redirige vers login
   }
-
 </script>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -177,7 +176,7 @@
                               <ul class="menu-col">
                                   <li><a href="" class="active"><i class="fa fa-home"></i>Tableau de bord</a></li>
                                   <li><a href="account-profile.html"><i class="fa fa-user"></i>Mon Profil</a></li>
-                                  <li><a href="mes_locations.html"><i class="fa fa-calendar"></i>Mes locations</a></li>
+                                  <li><a href="mes_reservations.html"><i class="fa fa-calendar"></i>Mes Reservations</a></li>
                                   <li><span class="deconnexion" type="button"  ><i class="fa fa-sign-out"></i>Se deconnecter</button=></li>
                               </ul>
                           </div>
@@ -227,37 +226,29 @@
                           </div> -->
 
                           <div class="card p-4 rounded-5 mb25">
-                              <h4>Mes locations recentes</h4>
+                              <h4>Mes Reservations recentes</h4>
 
                               <table class="table de-table">
                                 <thead>
                                   <tr>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Order ID</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Car Name</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Location</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Drop Off Location</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Date</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Return Date</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Status</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">N°</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Voiture</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Lieu de Location</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Date de Location</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Date  Date</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Montant</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Statut</span></th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <td><span class="d-lg-none d-sm-block">Order ID</span><div class="badge bg-gray-100 text-dark">#01236</div></td>
-                                    <td><span class="d-lg-none d-sm-block">Car Name</span><span class="bold">Jeep Renegade</span></td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Location</span>New York</td>
-                                    <td><span class="d-lg-none d-sm-block">Drop Off Location</span>Los Angeles</td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Date</span>March 2, 2023</td>
-                                    <td><span class="d-lg-none d-sm-block">Return Date</span>March 10, 2023</td>
-                                    <td><div class="badge rounded-pill bg-success">completed</div></td>
-                                  </tr>
+                                  
                                   <tr>
                                     <td><span class="d-lg-none d-sm-block">Order ID</span><div class="badge bg-gray-100 text-dark">#01263</div></td>
                                     <td><span class="d-lg-none d-sm-block">Car Name</span><span class="bold">Mini Cooper</span></td>
                                     <td><span class="d-lg-none d-sm-block">Pick Up Location</span>San Fransisco</td>
-                                    <td><span class="d-lg-none d-sm-block">Drop Off Location</span>Chicago</td>
                                     <td><span class="d-lg-none d-sm-block">Pick Up Date</span>March 8, 2023</td>
                                     <td><span class="d-lg-none d-sm-block">Return Date</span>March 10, 2023</td>
+                                    <td><span class="d-lg-none d-sm-block">Return Date</span>2000$</td>
                                     <td><div class="badge rounded-pill bg-danger">cancelled</div></td>
                                   </tr>
                                
@@ -446,6 +437,96 @@
               console.log("Erreur lors du chargement du profil !");
             },
         });})
+        </script>
+        
+
+
+
+        <script>
+            $(document).ready(function() {
+  // Fonction de formatage des dates
+  function formaterDate(dateISO) {
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    return new Date(dateISO).toLocaleDateString('fr-FR', options);
+  }
+
+  // Fonction de traduction du statut
+  function traduireStatut(statut) {
+    const traductions = {
+      'en_attente': 'En attente',
+      'acceptee': 'Acceptée',
+      'refusee': 'Refusée',
+      'terminee': 'Terminée',
+      'annulee': 'Annulée'
+    };
+    return traductions[statut] || statut;
+  }
+
+  // Fonction de couleur du badge
+  function getCouleurStatut(statut) {
+    const couleurs = {
+      'en_attente': 'warning',
+      'acceptee': 'success',
+      'refusee': 'danger',
+      'terminee': 'primary',
+      'annulee': 'secondary'
+    };
+    return couleurs[statut] || 'dark';
+  }
+
+  // Chargement des réservations
+  $.ajax({
+    url: 'http://localhost:5000/api/locations/mesReservations',
+    type: 'GET',
+      headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+    success: function(response) {
+      const tbody = $('.de-table tbody');
+      tbody.empty();
+
+      if (!response.data || response.data.length === 0) {
+        tbody.append(`
+          <tr>
+            <td colspan="7" class="text-center py-4">
+              Aucune réservation trouvée
+            </td>
+          </tr>
+        `);
+        return;
+      }
+
+      response.data.forEach((reservation, index) => {
+        const ligne = `
+          <tr>
+            <td><div class="badge bg-gray-100 text-dark">#${reservation._id.toString().substring(18)}</div></td>
+            <td><span class="bold">${reservation.annonce.voiture.marque} ${reservation.annonce.voiture.modele}</span></td>
+            <td>${reservation.adresseRetrait}</td>
+            <td>${formaterDate(reservation.dateDebut)}</td>
+            <td>${formaterDate(reservation.dateFin)}</td>
+            <td>${reservation.montantTotal.toFixed(2)}€</td>
+            <td>
+              <div class="badge rounded-pill bg-${getCouleurStatut(reservation.statut)}">
+                ${traduireStatut(reservation.statut)}
+              </div>
+            </td>
+          </tr>
+        `;
+        tbody.append(ligne);
+      });
+    },
+    error: function(xhr) {
+      console.error('Erreur:', xhr.responseJSON);
+      $('.de-table tbody').html(`
+        <tr>
+          <td colspan="7" class="text-center text-danger py-4">
+            Erreur lors du chargement des réservations
+          </td>
+        </tr>
+      `);
+    }
+  });
+});
         </script>
 
 </body>

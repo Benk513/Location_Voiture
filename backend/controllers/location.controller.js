@@ -361,3 +361,106 @@ export const listerDemandesSurMesAnnonces = catchAsync(
     });
   }
 );
+
+
+//  lister les reservations d'un utilisateur
+// export const listerMesRéservations = catchAsync(async (req, res, next) => {
+//   // On cherche les annonces de ce propriétaire
+//   const mesAnnonces = await Annonce.find(
+//     { proprietaire: req.user._id },
+//     "_id"
+//   );
+//   const mesAnnonceIds = mesAnnonces.map((a) => a._id);
+//   // On récupère toutes les réservations liées
+//   const demandes = await Location.find({ annonce: { $in: mesAnnonceIds } })
+//     .populate("locataire", "nom email")
+//     .populate({
+//       path: "annonce",
+//       populate: {
+//         path: "voiture",
+//       },
+//     })
+//     .sort({ createdAt: -1 });
+//   res.status(200).json({
+//     status: "succès",
+//     résultats: demandes.length,
+//     data: demandes,
+//   });
+// });
+//  lister les reservations d'un utilisateur
+
+
+export const mettreAJourStatutLocation = catchAsync(async (req, res, next) => {
+  const location = await Location.findById(req.params.id)
+    .populate('annonce')
+    .populate('locataire');
+
+  if (!location) {
+    return next(new AppError('Réservation introuvable', 404));
+  }
+
+  // Vérification des autorisations
+  const isProprietaire = location.annonce.proprietaire.toString() === req.user._id.toString();
+  const isLocataire = location.locataire._id.toString() === req.user._id.toString();
+
+  if (!isProprietaire && !isLocataire) {
+    return next(new AppError('Action non autorisée', 403));
+  }
+
+  // Logique de transition d'état
+  const nouvelEtat = req.body.etat;
+  const etatsAutorises = ['terminee', 'annulee'];
+  
+  if (!etatsAutorises.includes(nouvelEtat)) {
+    return next(new AppError('État de réservation invalide', 400));
+  }
+
+  // Validation des transitions
+  if (nouvelEtat === 'terminee' && !isProprietaire) {
+    return next(new AppError('Seul le propriétaire peut terminer une réservation', 403));
+  }
+
+  if (nouvelEtat === 'annulee') {
+    const maintenant = new Date();
+    if (maintenant > location.dateDebut) {
+      return next(new AppError('Annulation impossible après la date de début', 400));
+    }
+  }
+
+  // Mise à jour de la réservation
+  location.statut = nouvelEtat;
+  await location.save();
+
+  // Réactivation de l'annonce si nécessaire
+  if (['terminee', 'annulee'].includes(nouvelEtat)) {
+    location.annonce.statut = 'disponible';
+    await location.annonce.save();
+
+    // Optionnel : Remboursement partiel si annulation
+    if (nouvelEtat === 'annulee') {
+      await effectuerRemboursement(location);
+    }
+  }
+
+  res.status(200).json({
+    status: 'success',
+    message: `Réservation ${nouvelEtat === 'terminee' ? 'terminée' : 'annulée'} avec succès`,
+    data: {
+      location
+    }
+  });
+});
+
+// // Fonction helper pour le remboursement
+// const effectuerRemboursement = async (location) => {
+//   // Implémentez votre logique de remboursement Stripe ici
+//   // Exemple simplifié :
+//   /*
+//   if (location.paiementId) {
+//     await stripe.refunds.create({
+//       payment_intent: location.paiementId,
+//       amount: Math.floor(location.montantTotal * 0.8) // 80% de remboursement
+//     });
+//   }
+//   */
+// };

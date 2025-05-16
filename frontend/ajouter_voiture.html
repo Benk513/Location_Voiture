@@ -1,3 +1,14 @@
+<script>
+    const token = localStorage.getItem("token");
+    const role= localStorage.getItem("role")
+    if (!token) {
+      window.location.href = "index.html"; // Redirige vers login
+    }
+    if(role !=="proprietaire"){
+         window.location.href = "index.html";
+    }
+ 
+  </script>
 <!DOCTYPE html>
 <html lang="zxx">
   <head>
