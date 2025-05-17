@@ -181,6 +181,7 @@
                               </ul>
                           </div>
                       </div>
+                      
 
                       <div class="col-lg-9">
                           <!-- <div class="row">
@@ -265,94 +266,7 @@
                                 </tbody>
                               </table>
                           </div>
-                          <!-- <div class="card p-4 rounded-5">
-                              <h4>My Favorites</h4>
-                              <div class="spacer-10"></div>
-                              <div class="de-item-list no-border mb30">
-                                  <div class="d-img">
-                                      <img src="images/cars/jeep-renegade.jpg" class="img-fluid" alt="">
-                                  </div>
-                                  <div class="d-info">
-                                      <div class="d-text">
-                                          <h4>Jeep Renegade</h4>
-                                          <div class="d-atr-group">
-                                              <ul class="d-atr">
-                                                  <li><span>Seats:</span>4</li>
-                                                  <li><span>Luggage:</span>2</li>
-                                                  <li><span>Doors:</span>4</li>
-                                                  <li><span>Fuel:</span>Petrol</li>
-                                                  <li><span>Horsepower:</span>500</li>
-                                                  <li><span>Engine:</span>3000</li>
-                                                  <li><span>Drive:</span>4x4</li>
-                                                  <li><span>Type:</span>Hatchback</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="d-price">
-                                      Daily rate from <span>$265</span>
-                                      <a class="btn-main" href="car-single.html">Rent Now</a>
-                                  </div>
-                                  <div class="clearfix"></div>
-                              </div>
-
-                              <div class="de-item-list no-border mb30">
-                                  <div class="d-img">
-                                      <img src="images/cars/bmw-m5.jpg" class="img-fluid" alt="">
-                                  </div>
-                                  <div class="d-info">
-                                      <div class="d-text">
-                                          <h4>BMW M2</h4>
-                                          <div class="d-atr-group">
-                                              <ul class="d-atr">
-                                                  <li><span>Seats:</span>4</li>
-                                                  <li><span>Luggage:</span>2</li>
-                                                  <li><span>Doors:</span>4</li>
-                                                  <li><span>Fuel:</span>Petrol</li>
-                                                  <li><span>Horsepower:</span>500</li>
-                                                  <li><span>Engine:</span>3000</li>
-                                                  <li><span>Drive:</span>4x4</li>
-                                                  <li><span>Type:</span>Hatchback</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="d-price">
-                                      Daily rate from <span>$244</span>
-                                      <a class="btn-main" href="car-single.html">Rent Now</a>
-                                  </div>
-                                  <div class="clearfix"></div>
-                              </div>
-
-                              <div class="de-item-list no-border mb30">
-                                  <div class="d-img">
-                                      <img src="images/cars/ferrari-enzo.jpg" class="img-fluid" alt="">
-                                  </div>
-                                  <div class="d-info">
-                                      <div class="d-text">
-                                          <h4>Ferarri Enzo</h4>
-                                          <div class="d-atr-group">
-                                              <ul class="d-atr">
-                                                  <li><span>Seats:</span>4</li>
-                                                  <li><span>Luggage:</span>2</li>
-                                                  <li><span>Doors:</span>4</li>
-                                                  <li><span>Fuel:</span>Petrol</li>
-                                                  <li><span>Horsepower:</span>500</li>
-                                                  <li><span>Engine:</span>3000</li>
-                                                  <li><span>Drive:</span>4x4</li>
-                                                  <li><span>Type:</span>Hatchback</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="d-price">
-                                      Daily rate from <span>$167</span>
-                                      <a class="btn-main" href="car-single.html">Rent Now</a>
-                                  </div>
-                                  <div class="clearfix"></div>
-                              </div>
-
-                          </div> -->
+                           
                       </div>
                   </div>
               </div>
@@ -445,6 +359,94 @@
               console.log("Erreur lors du chargement du profil !");
             },
         });})
+        </script>
+
+
+<script>
+            $(document).ready(function() {
+  // Fonction de formatage des dates
+  function formaterDate(dateISO) {
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    return new Date(dateISO).toLocaleDateString('fr-FR', options);
+  }
+
+  // Fonction de traduction du statut
+  function traduireStatut(statut) {
+    const traductions = {
+      'en_attente': 'En attente',
+      'acceptee': 'Acceptée',
+      'refusee': 'Refusée',
+      'terminee': 'Terminée',
+      'annulee': 'Annulée'
+    };
+    return traductions[statut] || statut;
+  }
+
+  // Fonction de couleur du badge
+  function getCouleurStatut(statut) {
+    const couleurs = {
+      'en_attente': 'warning',
+      'acceptee': 'success',
+      'refusee': 'danger',
+      'terminee': 'primary',
+      'annulee': 'secondary'
+    };
+    return couleurs[statut] || 'dark';
+  }
+
+  // Chargement des réservations
+  $.ajax({
+    url: 'http://localhost:5000/api/locations/mesReservations',
+    type: 'GET',
+      headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+    success: function(response) {
+      const tbody = $('.de-table tbody');
+      tbody.empty();
+
+      if (!response.data || response.data.length === 0) {
+        tbody.append(`
+          <tr>
+            <td colspan="7" class="text-center py-4">
+              Aucune réservation trouvée
+            </td>
+          </tr>
+        `);
+        return;
+      }
+
+      response.data.forEach((reservation, index) => {
+        const ligne = `
+          <tr>
+            <td><div class="badge bg-gray-100 text-dark">#${reservation._id.toString().substring(18)}</div></td>
+            <td><span class="bold">${reservation.annonce.voiture.marque} ${reservation.annonce.voiture.modele}</span></td>
+            <td>${reservation.adresseRetrait}</td>
+            <td>${formaterDate(reservation.dateDebut)}</td>
+            <td>${formaterDate(reservation.dateFin)}</td>
+            <td>${reservation.montantTotal.toFixed(2)}€</td>
+            <td>
+              <div class="badge rounded-pill bg-${getCouleurStatut(reservation.statut)}">
+                ${traduireStatut(reservation.statut)}
+              </div>
+            </td>
+          </tr>
+        `;
+        tbody.append(ligne);
+      });
+    },
+    error: function(xhr) {
+      console.error('Erreur:', xhr.responseJSON);
+      $('.de-table tbody').html(`
+        <tr>
+          <td colspan="7" class="text-center text-danger py-4">
+            Erreur lors du chargement des réservations
+          </td>
+        </tr>
+      `);
+    }
+  });
+});
         </script>
 
 </body>

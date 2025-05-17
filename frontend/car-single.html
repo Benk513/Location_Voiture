@@ -380,6 +380,8 @@
                     </div>
                 </div>
             </section>
+
+      
 			
 			
         </div>
@@ -399,11 +401,6 @@
     <script src="js/designesia.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-
- 
-
-
-
     <script>
     $(document).ready(function () {
 
@@ -421,7 +418,9 @@
             method: 'GET',
             success: function (data) {
                 const voiture = data.voiture;
+                 
     console.log(data)
+
                 $('#voiture-nom').text(voiture.nom);
                 $('#voiture-image').attr('src', `/uploads/${voiture.images[0]}`); // adapte le chemin selon ton backend
                 $('#voiture-marque').text(voiture.marque);
@@ -477,65 +476,6 @@ $('#slider-carousel').owlCarousel({
     });
     </script>
 
-
-<script>
-    window.annonceId = "6818c2e1961a0ad1680f8a07"; // ← ID réel injecté côté serveur
-    window.isAuthenticated = true; // ← true si utilisateur connecté
-  </script>
-  
-
-<!-- <script>
-    $(document).ready(function () {
-      $("#reservation").on("submit", function (e) {
-        e.preventDefault();
-  
-        // 👤 Vérification de la connexion
-        const isAuthenticated = window.isAuthenticated; // ← à adapter à ton système (ex: défini via script serveur)
-        if (!isAuthenticated) {
-          alert("Vous devez être connecté pour réserver !");
-          return;
-        }
-  
-        // 📅 Collecte des données du formulaire
-        const dateDebut = $("#date-picker").val() + " " + $("#pickup-time").val();
-        const dateFin = $("#date-picker-2").val() + " " + $("#collection-time").val();
-  
-        const data = {
-          annonceId: window.annonceId, // ← doit être défini dans ton HTML avant ce script
-          dateDebut,
-          dateFin,
-        };
-  
-        // 📡 Envoi de la requête AJAX
-        $.ajax({
-          type: "POST",
-          url: "http://localhost:5000/api/locations/creerReservation", // ← ton endpoint backend
-          headers:{
-            Authorization: "Bearer " + localStorage.getItem("token"),   // ← à adapter à ton système (ex: défini via script serveur)
-          },
-          data: JSON.stringify(data),
-          contentType: "application/json",
-          success: function (res) {
-            console.log("Réservation effectuée :", res);
-  
-            // ✅ Affiche le modal
-            $("#successModal").fadeIn();
-  
-            // ⏳ Redirection après 1 seconde
-            setTimeout(() => {
-              window.location.href = "index.html";
-            }, 1000);
-          },
-          error: function (err) {
-            console.error("Erreur :", err.responseJSON);
-            alert("Erreur : " + err.responseJSON?.message || "Une erreur est survenue.");
-          }
-        });
-      });
-    });
-  </script>
-   -->
-    
  
 
    <script>
@@ -606,22 +546,25 @@ $('#slider-carousel').owlCarousel({
         //     }, 1000);
         //   },
         success: function (res) {
-  const location = res.data;
 
-  // Remplir les champs du modal avec les données de la location
-  $("#modalAnnonceId").text(location.annonce);
-  $("#modalDateDebut").text(new Date(location.dateDebut).toLocaleDateString());
-  $("#modalDateFin").text(new Date(location.dateFin).toLocaleDateString());
-  $("#modalAdresseRetrait").text(location.adresseRetrait);
-  $("#modalAdresseDepot").text(location.adresseDepot);
-  $("#modalMontant").text(location.montantTotal);
+          const reservationId = res.data._id;
+          const location = res.data;
+          
+          // Remplir les champs du modal avec les données de la location
+  //         $("#modalAnnonceId").text(location.annonce);
+  //         $("#modalDateDebut").text(new Date(location.dateDebut).toLocaleDateString());
+  //         $("#modalDateFin").text(new Date(location.dateFin).toLocaleDateString());
+  //         $("#modalAdresseRetrait").text(location.adresseRetrait);
+  // $("#modalAdresseDepot").text(location.adresseDepot);
+  // $("#modalMontant").text(location.montantTotal);
 
   // Afficher la modale
-  $("#successModal").fadeIn();
-
+  // $("#successModal").fadeIn();
+  
   // Redirection après un petit délai
   setTimeout(() => {
-    window.location.href = "espace_locataire.html";
+     window.location.href = `detail_reservation.html?id=${reservationId}`;
+    // window.location.href = "espace_locataire.html";
   }, 4000);
 },
 
@@ -633,13 +576,6 @@ $('#slider-carousel').owlCarousel({
       });
     });
   </script>
-
-
-
-
-
-
-
 
  <script>
         $(document).ready(function () {

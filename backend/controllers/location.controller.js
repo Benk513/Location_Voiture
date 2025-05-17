@@ -451,6 +451,32 @@ export const mettreAJourStatutLocation = catchAsync(async (req, res, next) => {
   });
 });
 
+
+
+// Consulter le détail d'une location par le locataire
+export const consulterDetailLocationLocataire = catchAsync(async (req, res, next) => {
+  const location = await Location.findById(req.params.id)
+    .populate({
+      path: "annonce",
+      populate: { path: "voiture", populate: { path: "proprietaire" } },
+    })
+    .populate("locataire", "nom email");
+
+  if (!location) {
+    return next(new AppError("Location non trouvée", 404));
+  }
+
+  // Vérifie que le locataire est bien celui connecté
+  if (location.locataire._id.toString() !== req.user._id.toString()) {
+    return next(new AppError("Accès non autorisé", 403));
+  }
+
+  res.status(200).json({
+    status: "succès",
+    data: location,
+  });
+});
+
 // // Fonction helper pour le remboursement
 // const effectuerRemboursement = async (location) => {
 //   // Implémentez votre logique de remboursement Stripe ici

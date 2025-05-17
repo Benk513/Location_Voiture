@@ -5,7 +5,7 @@ import {
   detailAnnonce,
   listerAnnonces,
   listerAnnoncesProprio,
-  listerRecentAnnonces,
+
   mettreAJourAnnonce,
   rechecherAnnonces,
   supprimerAnnonce,
@@ -24,9 +24,6 @@ router.get(
   listerAnnoncesProprio
 );
 
-
-
-router.get("/recentes", listerRecentAnnonces);
 router.get("/:id", detailAnnonce);
 router.patch(
   "/:id",

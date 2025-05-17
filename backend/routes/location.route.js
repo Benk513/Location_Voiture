@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  consulterDetailLocationLocataire,
   creerDemandeLocation,
   listerDemandesProprio,
   listerLocations,
@@ -39,12 +40,17 @@ router.patch(
   traiterDemandeLocation
 );
 
-
 router.patch(
   "/mettreAJourStatutLocation/:id",
   proteger,
   restreindreA("locataire"),
   mettreAJourStatutLocation
+);
+router.get(
+  "/consulterDetailReservation/:id",
+  proteger,
+  restreindreA("locataire"),
+  consulterDetailLocationLocataire
 );
 
 export default router;
