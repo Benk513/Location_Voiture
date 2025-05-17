@@ -269,16 +269,55 @@ export const consulterAnnonceParProprietaire = catchAsync(
   }
 );
 
+// export const detailAnnonce = catchAsync(async (req, res, next) => {
+//   try {
+//     const annonce = await Annonce.findById(req.params.id)
+//       .populate("voiture")
+
+//     if (!annonce)
+//       return res.status(404).json({ message: "Annonce non trouvée" });
+//     res.status(200).json(annonce);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });
+
 export const detailAnnonce = catchAsync(async (req, res, next) => {
   try {
-    const annonce = await Annonce.findById(req.params.id).populate("voiture");
-    if (!annonce)
+    const annonce = await Annonce.findById(req.params.id)
+      .populate("voiture")
+      .populate("proprietaire"); // 👈 Ajout de la population du propriétaire complet
+
+    if (!annonce) {
       return res.status(404).json({ message: "Annonce non trouvée" });
+    }
+
     res.status(200).json(annonce);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
+// export const detailAnnonce = catchAsync(async (req, res, next) => {
+//   try {
+//     const annonce = await Annonce.findById(req.params.id).populate({
+//       path: "voiture",
+//       populate: {
+//         path: "proprietaire", // 👈 populate imbriqué
+//         model: "Utilisateur",
+//         select: "nom email photo role", // 👈 Optionnel : sélectionner les champs utiles
+//       },
+//     });
+
+//     if (!annonce) {
+//       return res.status(404).json({ message: "Annonce non trouvée" });
+//     }
+
+//     res.status(200).json(annonce);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });
 
 // mettre a jour
 export const mettreAJourAnnonce = catchAsync(async (req, res, next) => {
