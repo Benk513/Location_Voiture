@@ -143,17 +143,11 @@ export const creerDemandeLocation = catchAsync(async (req, res, next) => {
     adresseRetrait,
   });
 
- 
-
   res.status(201).json({
     status: "succès",
     data: location,
   });
 });
-
-
-
-
 
 function calculerMontantTotal(tarif, debut, fin) {
   const nbJours = Math.ceil((fin - debut) / (1000 * 60 * 60 * 24));
@@ -199,7 +193,6 @@ export const listerDemandesProprio = catchAsync(async (req, res, next) => {
 //   res.status(200).json({ status: "succès", data: location });
 // });
 
-
 // PATCH /api/locations/:id
 export const traiterDemandeLocation = catchAsync(async (req, res, next) => {
   const location = await Location.findById(req.params.id).populate("annonce");
@@ -214,22 +207,28 @@ export const traiterDemandeLocation = catchAsync(async (req, res, next) => {
   const action = req.body.action;
 
   // Mettre à jour le statut de la demande
-  location.statut = action === "accepter" ? "acceptee" : "refusee";
+  // Enum des statuts possibles
+  // "en_attente", "acceptee", "refusee", "terminee", "annulee"
+
+    location.statut = action;
+ 
   await location.save();
 
   // Si accepté, mettre aussi à jour le statut de l'annonce à "reserve"
-  if (action === "accepter") {
+  
+  if (action === "accepter" || action === "acceptee") {
     location.annonce.statut = "reserve"; // Par exemple : "disponible" ou "reserve"
     await location.annonce.save();
   }
 
   res.status(200).json({
     status: "succès",
-    message: `La demande a été ${action === "accepter" ? "acceptée" : "refusée"}.`,
+    message: `La demande a été ${
+      action === "accepter" ? "acceptée" : "refusée"
+    }.`,
     data: location,
   });
 });
-
 
 // Liste toutes les locations sur la plateforme
 export const listerLocations = catchAsync(async (req, res, next) => {
@@ -362,7 +361,6 @@ export const listerDemandesSurMesAnnonces = catchAsync(
   }
 );
 
-
 //  lister les reservations d'un utilisateur
 // export const listerMesRéservations = catchAsync(async (req, res, next) => {
 //   // On cherche les annonces de ce propriétaire
@@ -389,41 +387,46 @@ export const listerDemandesSurMesAnnonces = catchAsync(
 // });
 //  lister les reservations d'un utilisateur
 
-
 export const mettreAJourStatutLocation = catchAsync(async (req, res, next) => {
   const location = await Location.findById(req.params.id)
-    .populate('annonce')
-    .populate('locataire');
+    .populate("annonce")
+    .populate("locataire");
 
   if (!location) {
-    return next(new AppError('Réservation introuvable', 404));
+    return next(new AppError("Réservation introuvable", 404));
   }
 
   // Vérification des autorisations
-  const isProprietaire = location.annonce.proprietaire.toString() === req.user._id.toString();
-  const isLocataire = location.locataire._id.toString() === req.user._id.toString();
+  const isProprietaire =
+    location.annonce.proprietaire.toString() === req.user._id.toString();
+  const isLocataire =
+    location.locataire._id.toString() === req.user._id.toString();
 
   if (!isProprietaire && !isLocataire) {
-    return next(new AppError('Action non autorisée', 403));
+    return next(new AppError("Action non autorisée", 403));
   }
 
   // Logique de transition d'état
   const nouvelEtat = req.body.etat;
-  const etatsAutorises = ['terminee', 'annulee'];
-  
+  const etatsAutorises = ["terminee", "annulee"];
+
   if (!etatsAutorises.includes(nouvelEtat)) {
-    return next(new AppError('État de réservation invalide', 400));
+    return next(new AppError("État de réservation invalide", 400));
   }
 
   // Validation des transitions
-  if (nouvelEtat === 'terminee' && !isProprietaire) {
-    return next(new AppError('Seul le propriétaire peut terminer une réservation', 403));
+  if (nouvelEtat === "terminee" && !isProprietaire) {
+    return next(
+      new AppError("Seul le propriétaire peut terminer une réservation", 403)
+    );
   }
 
-  if (nouvelEtat === 'annulee') {
+  if (nouvelEtat === "annulee") {
     const maintenant = new Date();
     if (maintenant > location.dateDebut) {
-      return next(new AppError('Annulation impossible après la date de début', 400));
+      return next(
+        new AppError("Annulation impossible après la date de début", 400)
+      );
     }
   }
 
@@ -432,61 +435,52 @@ export const mettreAJourStatutLocation = catchAsync(async (req, res, next) => {
   await location.save();
 
   // Réactivation de l'annonce si nécessaire
-  if (['terminee', 'annulee'].includes(nouvelEtat)) {
-    location.annonce.statut = 'disponible';
+  if (["terminee", "annulee"].includes(nouvelEtat)) {
+    location.annonce.statut = "disponible";
     await location.annonce.save();
 
     // Optionnel : Remboursement partiel si annulation
-    if (nouvelEtat === 'annulee') {
+    if (nouvelEtat === "annulee") {
       await effectuerRemboursement(location);
     }
   }
 
   res.status(200).json({
-    status: 'success',
-    message: `Réservation ${nouvelEtat === 'terminee' ? 'terminée' : 'annulée'} avec succès`,
+    status: "success",
+    message: `Réservation ${
+      nouvelEtat === "terminee" ? "terminée" : "annulée"
+    } avec succès`,
     data: {
-      location
-    }
+      location,
+    },
   });
 });
-
-
 
 // Consulter le détail d'une location par le locataire
-export const consulterDetailLocationLocataire = catchAsync(async (req, res, next) => {
-  const location = await Location.findById(req.params.id)
-    .populate({
-      path: "annonce",
-      populate: { path: "voiture", populate: { path: "proprietaire" } },
-    })
-    .populate("locataire", "nom email");
+export const consulterDetailLocationLocataire = catchAsync(
+  async (req, res, next) => {
+    const location = await Location.findById(req.params.id)
+      .populate({
+        path: "annonce",
+        populate: { path: "voiture", populate: { path: "proprietaire" } },
+      })
+      .populate("locataire", "nom email").populate({ path:"annonce", populate: { path: "proprietaire", }})
 
-  if (!location) {
-    return next(new AppError("Location non trouvée", 404));
+    if (!location) {
+      return next(new AppError("Location non trouvée", 404));
+    }
+
+    // Vérifie que le locataire est bien celui connecté
+    if (location.locataire._id.toString() !== req.user._id.toString()) {
+      return next(new AppError("Accès non autorisé", 403));
+    }
+
+    res.status(200).json({
+      status: "succès",
+      data: location,
+    });
   }
+);
 
-  // Vérifie que le locataire est bien celui connecté
-  if (location.locataire._id.toString() !== req.user._id.toString()) {
-    return next(new AppError("Accès non autorisé", 403));
-  }
 
-  res.status(200).json({
-    status: "succès",
-    data: location,
-  });
-});
-
-// // Fonction helper pour le remboursement
-// const effectuerRemboursement = async (location) => {
-//   // Implémentez votre logique de remboursement Stripe ici
-//   // Exemple simplifié :
-//   /*
-//   if (location.paiementId) {
-//     await stripe.refunds.create({
-//       payment_intent: location.paiementId,
-//       amount: Math.floor(location.montantTotal * 0.8) // 80% de remboursement
-//     });
-//   }
-//   */
-// };
+ 

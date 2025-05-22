@@ -58,7 +58,7 @@ const schemaVoiture = new mongoose.Schema(
     estDisponible: {
       type: Boolean,
       default: true,
-    },
+    }, 
     isFeatured: {
       type: Boolean,
       default: false,

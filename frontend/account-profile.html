@@ -94,39 +94,54 @@
                 </div>
                 <div class="de-flex-col header-col-mid"></div>
                 <div class="de-flex-col">
-
-<div class="menu_side_area " id="loginUI">
+                  <div class="menu_side_area" id="loginUI">
                     <a href="login.html" class="btn-main">Se connecter</a>
                     <span id="menu-btn"></span>
                   </div>
-                                <div class="menu_side_area" id="accountUI">
-                                    <div class="de-login-menu">
+                  <div class="menu_side_area" id="accountUI">
+                    <div class="de-login-menu">
+                      <span id="de-click-menu-profile" class="de-menu-profile">
+                        <img
+                          src="images/profile/1.jpg"
+                          class="img-fluid photo"
+                          alt=""
+                        />
+                      </span>
 
-                                        <span id="de-click-menu-profile" class="de-menu-profile">                           
-                                            <img src="images/profile/1.jpg" class="img-fluid photo" alt="">
-                                        </span>
+                      <div id="de-submenu-profile" class="de-submenu">
+                        <div class="d-name">
+                          <h4 class="nom"></h4>
+                          <span class="text-gray email"></span>
+                          <span class="text-gray role"></span>
+                        </div>
 
-                                        
+                        <div class="d-line"></div>
 
-                                        <div id="de-submenu-profile" class="de-submenu">
-                                            <div class="d-name">
-                                                <h4 class="nom">Monica Lucas</h4>
-                                                <span class="text-gray email"></span>
-                                                <span class="text-gray role"></span>
-                                            </div>
-
-                                            <div class="d-line"></div>
-
-                                            <ul class="menu-col">
-                                                <li><a href="account-dashboard.html" id="accountRedirect"><i class="fa fa-home"></i>Tableau de bord</a></li>
-                                                <li><a href="account-profile.html"><i class="fa fa-user"></i>Mon profile</a></li>
-                                                  <li><span class="deconnexion"><i class="fa fa-sign-out"></i> Se deconnecter</span></li> 
-                                            </ul>
-                                        </div>
-                                        <span id="menu-btn"></span>
-                                    </div>
-                                </div>
-                            </div>
+                        <ul class="menu-col">
+                          <li>
+                            <a
+                              href="account-dashboard.html"
+                              id="accountRedirect"
+                              ><i class="fa fa-home"></i>Tableau de bord</a
+                            >
+                          </li>
+                          <li>
+                            <a href="account-profile.html"
+                              ><i class="fa fa-user"></i>Mon profil</a
+                            >
+                          </li>
+                          <li>
+                            <span class="deconnexion"
+                              ><i class="fa fa-sign-out"></i> Se
+                              deconnecter</span
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                      <span id="menu-btn"></span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -171,27 +186,23 @@
                   <ul class="menu-col">
                     <li>
                       <a href="account-dashboard.html"
-                        ><i class="fa fa-home"></i>Dashboard</a
+                        ><i class="fa fa-home"></i>Tableau de bord</a
                       >
                     </li>
                     <li>
                       <a href="account-profile.html" class="active"
-                        ><i class="fa fa-user"></i>My Profile</a
+                        ><i class="fa fa-user"></i>Mon profil</a
                       >
                     </li>
-                    <li>
+                    <!-- <li>
                       <a href="account-booking.html"
-                        ><i class="fa fa-calendar"></i>My Orders</a
+                        ><i class="fa fa-calendar"></i></a
                       >
                     </li>
-                    <li>
-                      <a href="account-favorite.html"
-                        ><i class="fa fa-car"></i>My Favorite Cars</a
-                      >
-                    </li>
-                    <li>
-                      <a href="login.html"
-                        ><i class="fa fa-sign-out"></i>Sign Out</a
+                      -->
+                    <li >
+                      <span class="deconnexion"
+                        ><i class="fa fa-sign-out"></i>Se deconnecter</span
                       >
                     </li>
                   </ul>
@@ -324,23 +335,22 @@
         window.location.href = "login.html";
       });
     </script>
- <script>
-        $(document).ready(function () {
-            // Charger les données du profil
+    <script>
+      $(document).ready(function () {
+        // Charger les données du profil
 
-            const userProfileUrl = "http://localhost:5000/uploads/utilisateurs/";
-              const token = localStorage.getItem("token");
+        const userProfileUrl = "http://localhost:5000/uploads/utilisateurs/";
+        const token = localStorage.getItem("token");
 
-    if (!token) {
-      // Aucune connexion
-      $("#loginUI").show();
-      $("#accountUI").hide();
-      return;
-    }else{
-      
-      $("#accountUI").show();
-      $("#loginUI").hide();
-    }
+        if (!token) {
+          // Aucune connexion
+          $("#loginUI").show();
+          $("#accountUI").hide();
+          return;
+        } else {
+          $("#accountUI").show();
+          $("#loginUI").hide();
+        }
         $.ajax({
           url: "http://localhost:5000/api/utilisateurs/obtenirMonProfil",
           method: "GET",
@@ -348,43 +358,49 @@
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
           success: function (user) {
-              const profileUrl = userProfileUrl + user?.data.photo;
-            console.log(user?.data.photo)
+            const profileUrl = userProfileUrl + user?.data.photo;
+            console.log(user?.data.photo);
             $(".nom").text(user?.data?.nom);
             $(".email").text(user?.data.email);
             $(".photo").attr("src", profileUrl);
             $("#photo").attr("src", profileUrl);
             $("#pays").text(user?.data.pays || "Non renseigné.");
-            $("#dateNaissance").text(user?.data.dateNaissance || "Non renseigné.");
-            $("#biographie").text(user?.data.biographie || "Aucune biographie fournie.");
+            $("#dateNaissance").text(
+              user?.data.dateNaissance || "Non renseigné."
+            );
+            $("#biographie").text(
+              user?.data.biographie || "Aucune biographie fournie."
+            );
             $("#adresse").text(user?.data.adresse || "Non renseigné.");
             $("#telephone").text(user?.data.telephone || "Non renseignné.");
             $(".role").text(user?.data.role || "Non renseignné.");
             $("#sexe").text(user?.data.sexe || "Non renseignné.");
 
+            // Affichage conditionnel
+            if (
+              user?.data.role === "admin" ||
+              user?.data.role === "ambassadeur" ||
+              user?.data.role === "etudiant"
+            ) {
+              $("#info-administrative").hide(); // Masquer mot de passe
+              $("#info-academique").hide(); // Masquer mot de passe
+              $("#saveBtn").hide(); // Masquer bouton "Enregistrer"
+            }
 
-                 // Affichage conditionnel
-      if (user?.data.role === "admin" || user?.data.role === "ambassadeur" || user?.data.role === "etudiant") {
-        $("#info-administrative").hide();     // Masquer mot de passe
-        $("#info-academique").hide();     // Masquer mot de passe
-        $("#saveBtn").hide();         // Masquer bouton "Enregistrer"
-      }
-
-      if(user?.data.role ==="proprietaire"){
-        $("#accountRedirect").attr("href", "account-dashboard.html");
-        $("#accountRedirect").text("Tableau de bord");
-        
-      }else{
-        
-        $("#accountRedirect").attr("href", "espace_locataire.html");
-        $("#accountRedirect").text("Mon compte");
-      }
+            if (user?.data.role === "proprietaire") {
+              $("#accountRedirect").attr("href", "account-dashboard.html");
+              $("#accountRedirect").text("Tableau de bord");
+            } else {
+              $("#accountRedirect").attr("href", "espace_locataire.html");
+              $("#accountRedirect").text("Mon compte");
+            }
           },
           error: function () {
-              console.log("Erreur lors du chargement du profil !");
-            },
-        });})
-        </script>
+            console.log("Erreur lors du chargement du profil !");
+          },
+        });
+      });
+    </script>
 
     <script>
       $(document).ready(function () {

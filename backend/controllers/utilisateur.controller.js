@@ -139,41 +139,41 @@ export const obtenirMonProfil = catchAsync(async (req, res, next) => {
 });
 
 // updateUserProfile	Modifier les informations du profil	PUT	/api/users/profile/:id
-export const miseAJourProfile = catchAsync(async (req, res, next) => {
-  if (req.body.motDePasse || req.body.confirmationMotDePasse)
-    return next(
-      new AppError(
-        "La modification des mots de passe n'est pas autorisée sur cette route !"
-      )
-    );
+// export const miseAJourProfile = catchAsync(async (req, res, next) => {
+//   if (req.body.motDePasse || req.body.confirmationMotDePasse)
+//     return next(
+//       new AppError(
+//         "La modification des mots de passe n'est pas autorisée sur cette route !"
+//       )
+//     );
 
-  const filteredBody = filteredObj(
-    req.body,
-    "nom",
-    "email",
-    "biographie",
-    "telephone",
-    "adresse"
-  );
+//   const filteredBody = filteredObj(
+//     req.body,
+//     "nom",
+//     "email",
+//     "biographie",
+//     "telephone",
+//     "adresse"
+//   );
 
-  if (req.file) filteredBody.photo = req.file.filename;
+//   if (req.file) filteredBody.photo = req.file.filename;
 
-  //3 update user doc
-  const updatedUser = await Utilisateur.findByIdAndUpdate(
-    req.user.id,
-    filteredBody,
-    {
-      new: false, // new means will create a new document and kill the previous one
-      runValidators: false,
-    }
-  );
+//   //3 update user doc
+//   const updatedUser = await Utilisateur.findByIdAndUpdate(
+//     req.user.id,
+//     filteredBody,
+//     {
+//       new: false, // new means will create a new document and kill the previous one
+//       runValidators: false,
+//     }
+//   );
 
-  res.status(200).json({
-    status: "succes",
-    message: "Profil mis a jour avec succes",
-    data: updatedUser,
-  });
-});
+//   res.status(200).json({
+//     status: "succes",
+//     message: "Profil mis a jour avec succes",
+//     data: updatedUser,
+//   });
+// });
 
 // export const getStatistiquesProprietaire = catchAsync(async (req, res, next) => {
 //   const userId = req.user._id;
@@ -249,3 +249,56 @@ export const getStatistiquesProprietaire = catchAsync(
     });
   }
 );
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 	Modifier les informations du profil	PUT	/api/users/profile/:id
+export const miseAJourProfile = catchAsync(async (req, res, next) => {
+  if (req.body.motDePasse || req.body.confirmationMotDePasse)
+    return next(
+      new AppError(
+        "La modification des mots de passe n'est pas autorisée sur cette route !"
+      )
+    );
+
+  const filteredBody = filteredObj(
+    req.body,
+    "nom",
+    "dateNaissance",
+    "pays",
+    "sexe",
+
+    "email",
+    "biographie",
+    "telephone",
+    "adresse"
+  );
+
+  if (req.file) filteredBody.photo = req.file.filename;
+
+  //3 update user doc
+  const updatedUser = await Utilisateur.findByIdAndUpdate(
+    req.user.id,
+    filteredBody,
+    {
+      new: true,
+      runValidators: false,
+    }
+  );
+
+  res.status(200).json({
+    status: "succes",
+    message: "Profil mis a jour avec succes",
+    data: updatedUser,
+  });
+});

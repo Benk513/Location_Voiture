@@ -174,7 +174,7 @@
           <div class="container">
             <div class="row">
               <div class="col-md-12 text-center">
-                <h1>Détails de votre réservation</h1>
+                <h1>Confirmation de réservation</h1>
               </div>
             </div>
           </div>
@@ -278,6 +278,17 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/designesia.js"></script>
+
+
+     <script>
+      $(".deconnexion").click(function () {
+        alert("À bientôt !");
+        localStorage.clear();
+        window.location.href = "login.html";
+      });
+    </script>
+
+
     <script>
       $(document).ready(function () {
         const urlParams = new URLSearchParams(window.location.search);
@@ -301,11 +312,13 @@
 
         // Charger les détails de la réservation
         $.ajax({
-          url: `http://localhost:5000/api/locations/${reservationId}`,
+          url: `http://localhost:5000/api/locations/consulterDetailReservation/${reservationId}`,
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
           success: function (response) {
             const reservation = response.data;
+
+            console.log(reservation);
 
             // Mettre à jour les informations principales
             $("#reservation-id").text(reservation._id);
@@ -337,19 +350,19 @@
                              alt="${reservation.annonce.voiture.marque}">
                     </div>
                     <div class="col-md-8">
-                        <h5>${reservation.annonce.voiture.marque} ${reservation.annonce.voiture.modele}</h5>
+                        <h5>${reservation.annonce.voiture.marque} ${reservation?.annonce?.voiture?.modele}</h5>
                         <div class="de-spec">
                             <div class="d-row">
-                                <span class="d-title">Année</span>
-                                <span class="d-value">${reservation.annonce.voiture.annee}</span>
+                                <span class="d-title">Kilometrage</span>
+                                <span class="d-value">${reservation?.annonce?.voiture?.kilometrage}</span>
                             </div>
                             <div class="d-row">
                                 <span class="d-title">Carburant</span>
-                                <span class="d-value">${reservation.annonce.voiture.carburant}</span>
+                                <span class="d-value">${reservation?.annonce?.voiture?.carburant}</span>
                             </div>
                             <div class="d-row">
                                 <span class="d-title">Transmission</span>
-                                <span class="d-value">${reservation.annonce.voiture.transmission}</span>
+                                <span class="d-value">${reservation?.annonce?.voiture?.transmission}</span>
                             </div>
                         </div>
                     </div>
@@ -360,30 +373,31 @@
             const ownerHtml = `
                     <div class="d-flex align-items-center mb-3">
                         <img src="http://localhost:5000/uploads/utilisateurs/${
-                          reservation.annonce.proprietaire.photo ||
-                          "default.jpg"
+                          reservation?.annonce?.proprietaire?.photo ||
+                          "/frontend/images/profile/1.jpg"
                         }" 
                              class="rounded-circle me-3" 
                              width="60" 
-                             alt="${reservation.annonce.proprietaire.nom}">
+                             alt="${reservation?.annonce?.proprietaire?.nom}">
                         <div>
                             <h5 class="mb-0">${
-                              reservation.annonce.proprietaire.nom
+                              reservation?.annonce?.proprietaire?.nom
                             }</h5>
                             <div class="text-muted">${
-                              reservation.annonce.proprietaire.email
+                              reservation?.annonce?.proprietaire?.email
                             }</div>
                             <div>${
-                              reservation.annonce.proprietaire.telephone
+                              reservation?.annonce?.proprietaire?.telephone
                             }</div>
                         </div>
                     </div>
                 `;
+
             $("#owner-details").html(ownerHtml);
 
             // Gérer les boutons d'action
             let actions = "";
-            if (reservation.statut === "en_attente") {
+            if (reservation?.statut === "en_attente") {
               actions = `
                         <button class="btn btn-danger btn-fullwidth mb-2 annuler-btn">
                             Annuler la réservation
@@ -418,5 +432,64 @@
         });
       });
     </script>
+
+
+ <script>
+        $(document).ready(function () {
+            // Charger les données du profil
+
+            const userProfileUrl = "http://localhost:5000/uploads/utilisateurs/";
+              const token = localStorage.getItem("token");
+
+    if (!token) {
+      // Aucune connexion
+      $("#loginUI").show();
+      $("#accountUI").hide();
+      return;
+    }else{
+      
+      $("#accountUI").show();
+      $("#loginUI").hide();
+    }
+        $.ajax({
+          url: "http://localhost:5000/api/utilisateurs/obtenirMonProfil",
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+          success: function (user) {
+              const profileUrl = userProfileUrl + user?.data.photo;
+            console.log(user?.data.photo)
+            $(".nom").text(user?.data?.nom);
+            $(".email").text(user?.data.email);
+            $(".photo").attr("src", profileUrl);
+            $("#photo").attr("src", profileUrl);
+            $("#pays").text(user?.data.pays || "Non renseigné.");
+            $("#dateNaissance").text(user?.data.dateNaissance || "Non renseigné.");
+            $("#biographie").text(user?.data.biographie || "Aucune biographie fournie.");
+            $("#adresse").text(user?.data.adresse || "Non renseigné.");
+            $("#telephone").text(user?.data.telephone || "Non renseignné.");
+            $(".role").text(user?.data.role || "Non renseignné.");
+            $("#sexe").text(user?.data.sexe || "Non renseignné.");
+
+
+   
+
+      if(user?.data.role ==="proprietaire"){
+        $("#accountRedirect").attr("href", "account-dashboard.html");
+        $("#accountRedirect").text("Tableau de bord");
+        
+      }else{
+        
+        $("#accountRedirect").attr("href", "espace_locataire.html");
+        $("#accountRedirect").text("Mon compte");
+      }
+          },
+          error: function () {
+              console.log("Erreur lors du chargement du profil !");
+            },
+        });})
+        </script>
+        
   </body>
 </html>

@@ -143,7 +143,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12 text-center">
-									<h1>Detail de la voiture</h1>
+									<h1>Reservation de la voiture</h1>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -477,13 +477,13 @@ const userProfileUrl = "http://localhost:5000/uploads/utilisateurs/";
                 const htmlProprietaire =`
                     <div class="col-md-12 mt-4">
                                 <h4 class="">Propriétaire  </h4>
-                                <p>Nom et Prenom : ${data.proprietaire.nom}</p>
-                                <p>Adresse :${data.proprietaire.adresse}</p>
-                                <p>Numero de Telephone : ${data.proprietaire.telephone}</p>
-                                <p>Email : ${data.proprietaire.email}</p>
+                                <p>Nom et Prenom : ${data?.proprietaire?.nom}</p>
+                                <p>Adresse :${data?.proprietaire?.adresse}</p>
+                                <p>Numero de Telephone : ${data?.proprietaire?.telephone}</p>
+                                <p>Email : ${data?.proprietaire?.email}</p>
 
                                
- <img src="${userProfileUrl}${data.proprietaire.photo}" class="img-fluid small" width="50" alt="">
+ <img src="${userProfileUrl}${data?.proprietaire?.photo}" class="img-fluid small" width="50" alt="">
                               
                               
                               </div>`
